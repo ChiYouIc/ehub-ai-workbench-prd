@@ -2,6 +2,19 @@
 
 本文件记录文档工程的全部重要变更，按日期倒序。格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
 
+## 2026-08-21
+
+### Added
+- **定时任务 v1 PRD 草案**（`plans/scheduled-task-prd.md`，r2）：write-a-prd 流程两轮访谈共 21 问（Q1–Q21）全部采纳推荐；用户终审提出部署形态更正为**多实例共库**（推翻 Q1 单实例前提），r2 修订——
+  - 调度：各实例 `@Scheduled` 轮询 + **DB 行级原子抢占**（单语句 `UPDATE ... WHERE run_state='IDLE'`，即 `SELECT FOR UPDATE` 折叠形式），多实例同一任务至多一个执行，不引入 Quartz/xxl-job
+  - 到期比较用 DB `NOW()` 消除实例时钟偏差；僵死复位带 RUNNING 守卫（多实例至多一个成功）
+  - 执行：非流式 `Application.call`（超时 120s 可配）；失败不重试记 `last_run_status`；任务严格串行
+  - 数据：新表 `ai_scheduled_task` + 绑定会话组 `type=SCHEDULED(6)`，产出写 user/assistant 两行（`params` 标 `trigger/taskId`）；连续记忆复用 sessionId；现有两表不改 DDL
+  - 接口：`/task` 六接口（创建/分页列表/更新/删除/手动执行/详情）；cron 相邻触发 ≥5 分钟、每用户 20 个上限、prompt ≤8000
+  - 顺带修正：`GET /chat/conversations` 硬编码 `type=CHAT` → type 可选过滤（对齐管理 PRD 原决策）
+  - 测试四层：cron 校验 / 调度触发（固定 Clock）/ 执行服务（mock 百炼）/ 六端点 MockMvc
+- **定时任务数据模型拆解**（`requirements/scheduled-task/04-数据模型.md`）：`ai_scheduled_task` 建表语句（含 `idx_sched`/`idx_user` 索引）、`last_run_time` 兼作 RUNNING 起算（省 `running_since` 列）、既有表 `type=6` 与 `params` 扩展用法、关键写路径（抢占/成功/失败/僵死复位/建删）与调度语义对应表
+
 ## 2026-08-20
 
 ### Added

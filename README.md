@@ -14,7 +14,8 @@ ehub-ai-workbench-prd/
 ├── plans/                   # PRD 母本（write-a-prd 流程产出，访谈决策记录）
 │   ├── ai-chat-sse-prd.md   #   AI Chat v1 PRD（已定版 v1.0）
 │   ├── chat-conversation-management-prd.md # 会话组与对话内容管理 PRD（已定版 v1.0）
-│   └── chat-conversation-content-prd.md # 会话内容管理（只读查询）PRD（已定版 v1.0）
+│   ├── chat-conversation-content-prd.md # 会话内容管理（只读查询）PRD（已定版 v1.0）
+│   └── scheduled-task-prd.md #  定时任务 PRD（草案 r2，多实例共库口径）
 ├── requirements/            # 需求文档集（按功能模块组织）
 │   ├── auth/                #   全工程通用约定（单一事实源）
 │   │   └── 01-接口认证.md   #   接口认证：JWT / UserContext / 跨线程 / 失败错误
@@ -33,6 +34,8 @@ ehub-ai-workbench-prd/
 │       ├── 03-接口规范.md   #   列表/重命名/删除/历史查询四接口
 │       ├── 04-数据模型.md   #   逻辑删除语义、内容行保留
 │       └── 05-非功能需求与风险.md # NFR-xx + R-xx
+│   └── scheduled-task/      #   定时任务模块（拆解中，暂仅数据模型）
+│       └── 04-数据模型.md   #   ai_scheduled_task 建表 + 既有表扩展用法
 ├── specs/                   # 实现 spec（约束实现的技术决策）
 │   ├── ai-chat-spec.md      #   实现决策、测试决策、现状差距清单
 │   └── chat-conversation-spec.md # 管理接口实现决策、测试决策、差距清单
@@ -82,3 +85,4 @@ flowchart LR
 | AI 对话 v1 | `plans/ai-chat-sse-prd.md` (v1.0) | `requirements/ai-chat/01~05` | `specs/ai-chat-spec.md` | `designs/ai-chat-design.md` | 已定版，待开发 |
 | 会话组与对话内容管理 v1 | `plans/chat-conversation-management-prd.md` (v1.0) | `requirements/chat-conversation/01~05` | `specs/chat-conversation-spec.md` | `designs/chat-conversation-design.md` | 已定版，待开发 |
 | 会话内容管理（只读查询）v1 | `plans/chat-conversation-content-prd.md` (v1.0) | —（与上 FR-04 同一接口） | — | `designs/chat-conversation-design.md` §7.1（承接） | 已定版，待开发（并入上实现） |
+| 定时任务 v1 | `plans/scheduled-task-prd.md` (草案 r2) | `requirements/scheduled-task/04`（其余拆解中） | — | — | 访谈完成，待终审定版 |
