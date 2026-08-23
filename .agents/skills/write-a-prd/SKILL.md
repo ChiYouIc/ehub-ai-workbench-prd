@@ -28,6 +28,15 @@ Use `/decaf-planning:grill-me` to interview the user about every aspect of the p
 
 Skip this step if the user was already grilled on this topic in the current conversation (e.g., a prior `/decaf-planning:grill-me` session covered the same ground). Use judgement — if the grill-me session was on a related but different aspect, a brief follow-up interview may still be needed to fill gaps specific to the PRD.
 
+**Persist the interview record.** The PRD cites decisions by question number (`Q1`, `Q2`, ...), and downstream docs (specs, designs, requirements) trace their decisions back to those same numbers. Chat history is NOT a durable store — if the questions are not written down when the interview happens, the numbers become dead references no one can decode later. Therefore, as soon as the interview concludes (before drafting the PRD), write the full Q&A to `./plans/<feature-name>-interview.md`, one entry per question:
+
+- the number and title exactly as asked (`Q1`, `Q2`, ... — never renumber)
+- the question body, including any multiple-choice options
+- your recommended answer
+- the user's actual answer, and any later revision (e.g. `r2`) that overturned it
+
+If you are drafting a PRD whose interview happened in an earlier conversation and no record exists on disk, reconstruct the interview file from the PRD's `Qn` citations and clearly mark it as reconstructed, for the user to verify.
+
 ### 4. Determine the output target
 
 @../../../../conventions/work-items.md

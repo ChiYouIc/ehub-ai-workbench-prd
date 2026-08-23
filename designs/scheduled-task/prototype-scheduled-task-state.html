@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="UTF-8">
+<title>定时任务调度状态机 · 一次性原型（PROTOTYPE）</title>
+<style>
+  :root { --ink:#1f2937; --sub:#6b7280; --line:#e5e7eb; --accent:#2563eb; --ok:#16a34a; --warn:#d97706; --bad:#dc2626; --bg:#f9fafb; }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:"Segoe UI","Microsoft YaHei",sans-serif; color:var(--ink); background:var(--bg); line-height:1.6; padding:32px 40px 80px; max-width:1180px; margin:0 auto; }
+  h1 { font-size:22px; margin-bottom:4px; }
+  .proto-badge { display:inline-block; background:#fef3c7; color:#92400e; border:1px solid #fcd34d; font-size:12px; padding:1px 8px; border-radius:10px; vertical-align:middle; margin-left:8px; }
+  .intro { color:var(--sub); font-size:14px; max-width:900px; margin:8px 0 20px; }
+  .cols { display:grid; grid-template-columns: 400px 1fr; gap:24px; align-items:start; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px 20px; }
+  .card h2 { font-size:15px; margin-bottom:10px; color:var(--ink); }
+  .field { display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px dashed var(--line); font-size:14px; }
+  .field:last-child { border-bottom:none; }
+  .field .k { color:var(--sub); }
+  .pill { display:inline-block; padding:1px 10px; border-radius:10px; font-size:12px; font-weight:600; }
+  .pill.idle { background:#dcfce7; color:#166534; }
+  .pill.running { background:#dbeafe; color:#1e40af; }
+  .pill.enabled { background:#dcfce7; color:#166534; }
+  .pill.disabled { background:#f3f4f6; color:#6b7280; }
+  .pill.deleted { background:#fee2e2; color:#991b1b; }
+  .pill.success { background:#dcfce7; color:#166534; }
+  .pill.failed { background:#fee2e2; color:#991b1b; }
+  .pill.none { background:#f3f4f6; color:#9ca3af; }
+  .btns { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  button { font:inherit; font-size:13px; padding:6px 14px; border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer; transition:background .12s; }
+  button:hover { background:#f3f4f6; }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+  button.primary:hover { background:#1d4ed8; }
+  button:disabled { opacity:.45; cursor:not-allowed; }
+  button.step { width:100%; text-align:left; margin-bottom:6px; }
+  button.step.done { border-color:var(--ok); color:var(--ok); background:#f0fdf4; }
+  button.step.current { border-color:var(--accent); box-shadow:0 0 0 2px #bfdbfe; }
+  .tabs { display:flex; gap:6px; border-bottom:1px solid var(--line); margin-bottom:12px; flex-wrap:wrap; }
+  .tab { padding:6px 14px; font-size:13px; cursor:pointer; border:1px solid transparent; border-bottom:none; border-radius:8px 8px 0 0; color:var(--sub); }
+  .tab.active { background:#fff; border-color:var(--line); color:var(--accent); font-weight:600; margin-bottom:-1px; background-fff:#fff; }
+  .scen-desc { font-size:13px; color:var(--sub); background:var(--bg); border-radius:8px; padding:10px 12px; margin-bottom:12px; }
+  .log { margin-top:16px; background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px 18px; }
+  .log h2 { font-size:15px; margin-bottom:8px; }
+  .log ul { list-style:none; max-height:220px; overflow-y:auto; font-size:13px; }
+  .log li { padding:3px 0; border-bottom:1px dashed var(--line); color:var(--ink); }
+  .log li .t { color:#9ca3af; margin-right:8px; font-variant-numeric:tabular-nums; }
+  .log li.reject { color:var(--bad); }
+  .log li.ok { color:var(--ok); }
+  .log li.warn { color:var(--warn); }
+  .footer-note { margin-top:18px; font-size:12px; color:#9ca3af; }
+  .changed { animation:flash .8s ease; }
+  @keyframes flash { 0% { background:#fef9c3; } 100% { background:transparent; } }
+</style>
+</head>
+<body>
+
+<h1>定时任务调度状态机 <span class="proto-badge">PROTOTYPE · 一次性原型</span></h1>
+<p class="intro">
+  <b>这个演示回答的问题</b>：一份任务在「启停（status）× 执行态（run_state）× 排程（next_fire_time）」三个维度上流转——
+  到点抢占、手动执行、停用重启用、逻辑删除、多实例争抢、僵死复位、错过合并，这些场景下状态如何变？
+  守卫（"执行中不可再触发"）在哪些路径上生效？点下面的按钮，亲眼看状态变化。
+  依据：`designs/scheduled-task/scheduled-task-design.md` §3/§4（决策 2/3/6/14/15，Q9/Q11/Q14/Q15/Q19）。
+</p>
+
+<div class="cols">
+  <div>
+    <div class="card">
+      <h2>当前任务状态</h2>
+      <div id="state-panel"></div>
+    </div>
+    <div class="card" style="margin-top:16px;">
+      <h2>自由操作（任意顺序点）</h2>
+      <div class="btns" id="free-buttons"></div>
+      <p class="footer-note">灰掉的按钮 = 当前状态下该动作被守卫拦截（这正是要验证的规则）。</p>
+    </div>
+  </div>
+
+  <div>
+    <div class="card">
+      <h2>引导走查（按场景一步步点）</h2>
+      <div class="tabs" id="tabs"></div>
+      <div class="scen-desc" id="scen-desc"></div>
+      <div id="steps"></div>
+    </div>
+    <div class="log">
+      <h2>动作日志（发生了什么 / 被什么拦截）</h2>
+      <ul id="log"></ul>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+ * 纯逻辑模块（可回收）：定时任务状态机 reducer
+ * 与 DOM 完全解耦。答案验证后，本块可整体搬进真实模块。
+ * 形状：显式状态机——"哪些动作在当前状态合法"本身就是问题的一部分。
+ * 状态形状忠实对齐 ai_scheduled_task 关键列。
+ * ============================================================ */
+const CRON = "0 0 9 * * *";            // 每天 09:00（演示用固定 cron）
+const STEP_MIN = 5;                    // 分钟——演示的"时间粒子"，避免真实等待
+const STALE_MIN = 30;                  // RUNNING 超 30 分钟视为僵死
+
+const initialTask = () => ({
+  id: 1,
+  name: "每日晨报",
+  enabled: true,                       // status：1=ENABLED / 0=DISABLED
+  runState: "IDLE",                    // run_state：IDLE / RUNNING
+  nextFire: 9 * 60,                    // next_fire_time（分钟数，09:00）
+  lastRunTime: null,                   // 分钟数
+  lastRunStatus: null,                 // SUCCESS / FAILED
+  lastRunError: null,
+  isDel: false,
+  runningSince: null,                  // 抢占时刻（僵死判定基准）
+  manualRunning: false,                // 手动执行中的标记（手动不推进排程）
+});
+
+// 竞争对手"实例 B"的视角：单语句抢占返回影响行数
+// —— 与主状态分离，因为互斥问题是"两个执行者看同一行"的问题。
+function tryPreempt(task) {
+  if (task.runState !== "IDLE") return 0;   // 守卫：WHERE run_state='IDLE'
+  return 1;
+}
+
+function nextFireAfter(min) { return min + 24 * 60; }  // 每天 cron 的下一未来点
+
+// reducer：(state, action) => { state, events[] }
+// events 用领域语言记录发生了什么，供页面渲染日志。
+function reduce(state, action) {
+  const s = { ...state, task: { ...state.task } };
+  const t = s.task;
+  const ev = (msg, cls = "") => s.events.push({ msg, cls });
+  s.events = [];
+  s.justChanged = [];
+
+  switch (action.type) {
+    case "TICK": {                       // 时间前进（模拟 DB NOW() 流逝）
+      s.now = state.now + action.minutes;
+      if (t.runState === "RUNNING" && s.now - t.runningSince >= STALE_MIN && !t.manualRunning) {
+        // 僵死复位：带 RUNNING 守卫的 UPDATE，不补跑、不回写结局
+        t.runState = "IDLE"; t.runningSince = null;
+        ev(`⏱ RUNNING 超 ${STALE_MIN} 分钟 → 僵死复位为 IDLE（不补跑，last_run_* 保持原值）`, "warn");
+        s.justChanged.push("runState");
+      }
+      break;
+    }
+    case "SCHED_POLL": {                 // 实例 A 轮询：扫描 + 抢占
+      if (t.isDel) { ev("🗑 任务已逻辑删除，扫描条件不命中", ""); break; }
+      if (!t.enabled) { ev("⛔ 停用中（next_fire_time=null），扫描条件不命中", ""); break; }
+      if (t.runState === "RUNNING") { ev("⛔ 执行中，抢占守卫拦截（影响行数=0）", "reject"); break; }
+      if (t.nextFire === null || s.now < t.nextFire) { ev(`🔍 未到期（下次 ${fmt(t.nextFire)}，现在 ${fmt(s.now)}），无事发生`, ""); break; }
+      if (tryPreempt(t) === 0) { ev("⛔ 他实例已抢（影响行数=0），跳过", "reject"); break; }
+      // 抢占成功：置 RUNNING + 推进 next_fire_time + 记 last_run_time 起点
+      t.runState = "RUNNING"; t.runningSince = s.now; t.lastRunTime = s.now;
+      t.nextFire = nextFireAfter(t.nextFire); t.manualRunning = false;
+      ev(`✅ 抢占成功（影响行数=1）→ RUNNING；next_fire_time 推进到 ${fmt(t.nextFire)}（错过合并为一次）`, "ok");
+      s.justChanged.push("runState", "nextFire", "lastRunTime");
+      break;
+    }
+    case "RIVAL_POLL": {                 // 实例 B 同瞬间对同一任务抢占
+      const rows = tryPreempt(t);
+      if (rows === 0) { ev("🥊 实例 B 抢占 → 影响行数=0，跳过（跨实例互斥生效）", "reject"); break; }
+      t.runState = "RUNNING"; t.runningSince = s.now; t.lastRunTime = s.now;
+      t.nextFire = nextFireAfter(t.nextFire); t.manualRunning = false;
+      ev("✅ 实例 B 抢占成功（演示里 A 未抢时才会发生）", "ok");
+      break;
+    }
+    case "RUN_NOW": {                    // 手动执行：不推进排程
+      if (t.isDel) { ev("⛔ 任务不存在（已删）", "reject"); break; }
+      if (t.runState === "RUNNING") { ev("⛔ 任务正在执行 → PARAM_ERROR「任务正在执行」", "reject"); break; }
+      t.runState = "RUNNING"; t.runningSince = s.now; t.lastRunTime = s.now;
+      t.manualRunning = true;
+      ev("✅ 手动执行 → RUNNING（不推进 next_fire_time，trigger=MANUAL）", "ok");
+      s.justChanged.push("runState", "lastRunTime");
+      break;
+    }
+    case "EXEC_FINISH_OK": {             // execute 成功终局回写
+      if (t.runState !== "RUNNING") { ev("⛔ 非 RUNNING，无在途执行可回写", "reject"); break; }
+      t.runState = "IDLE"; t.runningSince = null; t.manualRunning = false;
+      t.lastRunStatus = "SUCCESS"; t.lastRunError = null;
+      ev("✅ 执行成功 → IDLE，last_run_status=SUCCESS，产出两行已落绑定会话组", "ok");
+      s.justChanged.push("runState", "lastRunStatus");
+      break;
+    }
+    case "EXEC_FINISH_FAIL": {           // 失败/超时：不重试
+      if (t.runState !== "RUNNING") { ev("⛔ 非 RUNNING，无在途执行可回写", "reject"); break; }
+      t.runState = "IDLE"; t.runningSince = null; t.manualRunning = false;
+      t.lastRunStatus = "FAILED"; t.lastRunError = "百炼调用超时（120s）";
+      ev("⚠ 执行失败 → IDLE，last_run_status=FAILED + 摘要；不重试，等下个触发点", "warn");
+      s.justChanged.push("runState", "lastRunStatus");
+      break;
+    }
+    case "TOGGLE": {                     // 启停切换（更新接口的 enabled 分支）
+      if (t.isDel) { ev("⛔ 任务不存在（已删）", "reject"); break; }
+      t.enabled = !t.enabled;
+      if (!t.enabled) { t.nextFire = null; ev("⏸ 停用 → next_fire_time=null，不再被扫描（在途执行不受影响）", "warn"); }
+      else { t.nextFire = nextFireAfter(s.now); ev("▶ 重新启用 → next_fire_time 重算为 " + fmt(t.nextFire), "ok"); }
+      s.justChanged.push("enabled", "nextFire");
+      break;
+    }
+    case "DELETE": {                     // 逻辑删除：在途跑完
+      if (t.isDel) { ev("⛔ 已删，NOT_FOUND", "reject"); break; }
+      t.isDel = true;
+      ev("🗑 逻辑删除 is_del=1 → 不再被扫描；若在途执行，本轮跑完照常落库；绑定会话组保留", "warn");
+      s.justChanged.push("isDel");
+      break;
+    }
+    case "RESET": {
+      const ns = initState();
+      return ns;
+    }
+    default: break;
+  }
+  return s;
+}
+
+function initState() {
+  return { task: initialTask(), now: 8 * 60, events: [], justChanged: [] };  // 从 08:00 开始
+}
+
+/* ============================================================
+ * 页面壳（丢弃部分）：渲染 + 按钮接线。只调 reducer，不含规则。
+ * ============================================================ */
+let state = initState();
+
+const fmt = m => m === null || m === undefined ? "—" : `${String(Math.floor(m / 60) % 24).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+
+const ACTIONS = [
+  { type: "TICK", label: "时间 +5 分钟", minutes: 5 },
+  { type: "TICK", label: "时间 +2 小时", minutes: 120 },
+  { type: "SCHED_POLL", label: "实例A 轮询（扫描+抢占）" },
+  { type: "RIVAL_POLL", label: "实例B 同瞬间抢占" },
+  { type: "RUN_NOW", label: "手动立即执行" },
+  { type: "EXEC_FINISH_OK", label: "执行成功结束" },
+  { type: "EXEC_FINISH_FAIL", label: "执行失败/超时" },
+  { type: "TOGGLE", label: "停用 / 重新启用" },
+  { type: "DELETE", label: "逻辑删除" },
+  { type: "RESET", label: "重置演示" },
+];
+
+const SCENARIOS = [
+  {
+    name: "到点执行（快乐路径）",
+    desc: "09:00 到期 → 实例 A 轮询抢占 → 执行 5 分钟成功 → 状态回 IDLE。注意抢占瞬间 next_fire_time 已推进到明天 09:00，执行期间不会被再次触发。",
+    steps: ["SCHED_POLL", "TICK:5", "EXEC_FINISH_OK", "SCHED_POLL"],
+  },
+  {
+    name: "多实例争抢（互斥验证）",
+    desc: "任务到期且 IDLE：实例 A 先抢（影响行数=1），实例 B 再抢同一行 → 影响行数=0 跳过。这是「RUNNING 至多一个执行者」不变式的机制性验证。",
+    steps: ["SCHED_POLL", "RIVAL_POLL", "TICK:5", "EXEC_FINISH_OK"],
+  },
+  {
+    name: "手动执行（不推进排程）",
+    desc: "停用状态也可手动执行；手动路径只置 RUNNING，不动 next_fire_time（此场景里它保持 null）。执行中再点手动 → PARAM_ERROR「任务正在执行」。",
+    steps: ["TOGGLE", "RUN_NOW", "RUN_NOW", "EXEC_FINISH_OK"],
+  },
+  {
+    name: "停用期间错过触发点",
+    desc: "停用（next_fire_time=null）→ 时间前进 2 小时（跨过原 09:00 触发点）→ 轮询无事发生；重新启用 → next_fire_time 重算到**明天**（今天 09:00 已过），错过的点不补跑。",
+    steps: ["TOGGLE", "TICK:120", "SCHED_POLL", "TOGGLE", "SCHED_POLL"],
+  },
+  {
+    name: "执行失败不重试",
+    desc: "抢占成功后执行失败 → FAILED + 摘要落 last_run_error；立刻轮询不会补跑（next_fire_time 已是明天）。等下一触发点或手动执行。",
+    steps: ["SCHED_POLL", "EXEC_FINISH_FAIL", "SCHED_POLL", "RUN_NOW", "EXEC_FINISH_OK"],
+  },
+  {
+    name: "僵死复位（实例被杀）",
+    desc: "抢占后模拟实例宕机：执行线程消失，永远等不到 EXEC_FINISH。时间前进 30+ 分钟 → 任意实例轮询发现 RUNNING 超时 → 带守卫复位为 IDLE。注意：last_run_status 保持原值（复位不算一次结局），也不补跑。",
+    steps: ["SCHED_POLL", "TICK:120", "SCHED_POLL", "SCHED_POLL"],
+  },
+  {
+    name: "删除时在途执行",
+    desc: "执行中收到删除 → is_del=1，本轮照常跑完落库（会话组保留），之后轮询不再扫描到它。",
+    steps: ["SCHED_POLL", "DELETE", "EXEC_FINISH_OK", "SCHED_POLL"],
+  },
+];
+
+function dispatch(action) {
+  state = reduce(state, action);
+  render();
+}
+
+function render() {
+  const t = state.task;
+  const panel = document.getElementById("state-panel");
+  const row = (k, v, key) => `<div class="field ${state.justChanged.includes(key) ? "changed" : ""}"><span class="k">${k}</span><span>${v}</span></div>`;
+  panel.innerHTML =
+    row("任务", `${t.name}（id=${t.id}）`) +
+    row("status（业务启停）", `<span class="pill ${t.isDel ? "deleted" : t.enabled ? "enabled" : "disabled"}">${t.isDel ? "已删除" : t.enabled ? "ENABLED" : "DISABLED"}</span>`, "enabled") +
+    row("run_state（执行态）", `<span class="pill ${t.runState.toLowerCase()}">${t.runState}</span>`, "runState") +
+    row("next_fire_time", t.nextFire === null ? `<span class="pill none">null（不参与扫描）</span>` : fmt(t.nextFire), "nextFire") +
+    row("last_run_time", fmt(t.lastRunTime), "lastRunTime") +
+    row("last_run_status", t.lastRunStatus === null ? `<span class="pill none">—</span>` : `<span class="pill ${t.lastRunStatus.toLowerCase()}">${t.lastRunStatus}</span>`, "lastRunStatus") +
+    row("last_run_error", t.lastRunError ?? "—") +
+    row("is_del", t.isDel ? "1（逻辑删除）" : "0") +
+    row("DB NOW()（演示时钟）", fmt(state.now));
+
+  // 自由按钮：始终可点（守卫在 reducer 里拦截并记日志），灰掉只用于提示
+  const fb = document.getElementById("free-buttons");
+  fb.innerHTML = "";
+  ACTIONS.forEach(a => {
+    const b = document.createElement("button");
+    b.textContent = a.label;
+    if (a.type === "SCHED_POLL") b.classList.add("primary");
+    b.onclick = () => dispatch(a);
+    fb.appendChild(b);
+  });
+
+  renderLog();
+  renderScenario();
+}
+
+let activeTab = 0, stepIdx = 0, scenarioLive = false;
+
+function renderScenario() {
+  const tabs = document.getElementById("tabs");
+  tabs.innerHTML = "";
+  SCENARIOS.forEach((sc, i) => {
+    const el = document.createElement("div");
+    el.className = "tab" + (i === activeTab ? " active" : "");
+    el.textContent = sc.name;
+    el.onclick = () => { activeTab = i; stepIdx = 0; scenarioLive = false; render(); };
+    tabs.appendChild(el);
+  });
+  const sc = SCENARIOS[activeTab];
+  document.getElementById("scen-desc").textContent = sc.desc;
+  const box = document.getElementById("steps");
+  box.innerHTML = "";
+  sc.steps.forEach((code, i) => {
+    const [type, mins] = code.split(":");
+    const def = ACTIONS.find(a => a.type === type);
+    const label = mins ? `${def.label}（+${mins} 分钟）` : def.label;
+    const b = document.createElement("button");
+    b.className = "step" + (i < stepIdx ? " done" : i === stepIdx ? " current" : "");
+    b.textContent = `${i + 1}. ${label}`;
+    b.disabled = i !== stepIdx;
+    b.onclick = () => {
+      dispatch({ type, minutes: mins ? +mins : 0 });
+      stepIdx++;
+      if (stepIdx >= sc.steps.length) scenarioLive = false;
+      render();
+    };
+    box.appendChild(b);
+  });
+}
+
+function renderLog() {
+  const ul = document.getElementById("log");
+  const items = state.events.map(e => `<li class="${e.cls}"><span class="t">${fmt(state.now)}</span>${e.msg}</li>`);
+  // 日志跨动作累积：保留最近 40 条（重置清空）
+  if (!window._logBuf) window._logBuf = [];
+  if (state.events.length) window._logBuf = [...window._logBuf, ...items].slice(-40);
+  if (state.events.length && state.events[0].msg.includes("重置")) window._logBuf = [];
+  ul.innerHTML = window._logBuf.join("") || "<li style='color:#9ca3af'>（尚无动作）</li>";
+}
+
+render();
+</script>
+</body>
+</html>

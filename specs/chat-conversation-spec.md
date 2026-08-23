@@ -1,6 +1,6 @@
 # Spec — 会话组与对话内容管理 v1
 
-> 关联 PRD 母本：`plans/chat-conversation-management-prd.md` (v1.0) ｜ 关联需求：`requirements/chat-conversation/01~05` ｜ 关联设计：`designs/chat-conversation-design.md` ｜ 状态：已定版
+> 关联 PRD 母本：`plans/chat-conversation-management-prd.md` (v1.0) ｜ 关联需求：`requirements/chat-conversation/01~05` ｜ 关联设计：`designs/chat-conversation/chat-conversation-design.md` ｜ 状态：已定版
 >
 > 本文约束**实现**：技术决策、测试 seam、与现状代码的差距。决策可溯源至母本访谈问题号（Qxx）。
 

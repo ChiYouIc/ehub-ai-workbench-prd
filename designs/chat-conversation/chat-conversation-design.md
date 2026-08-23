@@ -38,7 +38,7 @@ flowchart LR
 
 ### 2.2 请求与响应要点
 
-- **认证**：遵循全工程统一约定（见 [`requirements/auth/01-接口认证.md`](../requirements/auth/01-接口认证.md)）；`userId` 由服务端从用户上下文获取，客户端不传用户标识
+- **认证**：遵循全工程统一约定（见 [`requirements/auth/01-接口认证.md`](../../requirements/auth/01-接口认证.md)）；`userId` 由服务端从用户上下文获取，客户端不传用户标识
 - **入参**：`page`（默认 1，`<1` 归 1）、`size`（默认 20，上限 50，非法 → `PARAM_ERROR`）、`type`（可选过滤）；重命名请求体仅 `name`（非空白且 ≤100 字符）
 - **响应形态**：列表/历史查询返回 `TablePageResponse`（`{code,total,data}`，空列表 `total=0,data=[]`）；重命名/删除返回 `SuccessResponse`（`{code,data:null}`）
 - **视图字段**：`ConversationVO` = `id/name/type/crtTime`（不含最近消息摘要）；`ContentVO` = `id/role/content/crtTime/models/inputToken/outputToken`（不含 `tools/params/media_content`）

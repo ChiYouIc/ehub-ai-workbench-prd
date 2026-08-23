@@ -1,6 +1,6 @@
 # Spec — AI 对话 v1（POST /chat/sse）
 
-> 关联 PRD 母本：`plans/ai-chat-sse-prd.md` (v1.0) ｜ 关联需求：`requirements/ai-chat/01~05` ｜ 关联设计：`designs/ai-chat-design.md` ｜ 状态：已定版
+> 关联 PRD 母本：`plans/ai-chat-sse-prd.md` (v1.0) ｜ 关联需求：`requirements/ai-chat/01~05` ｜ 关联设计：`designs/ai-chat/ai-chat-design.md` ｜ 状态：已定版
 >
 > 本文约束**实现**：技术决策、测试 seam、与现状代码的差距。决策可溯源至母本访谈问题号（Qxx）。
 

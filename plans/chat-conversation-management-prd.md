@@ -84,4 +84,4 @@
 - **现状差距**：`ErrorCodeEnum` 无 `PARAM_ERROR` 枚举项（v1 spec 已引用）；MyBatis-Plus 分页插件未配置——两者为本功能前置开发项
 - **与 v1 的关系**：本 PRD 消费 v1 已落库数据（`ai_conversation` / `ai_conversation_content`），不依赖 v1 开发完成即可先行定义；v1 未开发前，管理接口测试可用当前 service/mapper 能力直接验证
 - **并发边界记录**：删除会话组与进行中 SSE 流并发的行为（Q17）已明确接受，若后续要求「删除即停流」需评估取消机制，另行评估
-- **已拆解**：需求文档 `requirements/chat-conversation/01~05`、实现 spec `specs/chat-conversation-spec.md`、设计 `designs/chat-conversation-design.md`，本文作为**决策母本**保留
+- **已拆解**：需求文档 `requirements/chat-conversation/01~05`、实现 spec `specs/chat-conversation-spec.md`、设计 `designs/chat-conversation/chat-conversation-design.md`，本文作为**决策母本**保留

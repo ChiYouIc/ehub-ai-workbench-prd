@@ -53,5 +53,5 @@
 - **与既有 PRD 的关系**：`chat-conversation-management-prd.md` 的 FR-04 已定义同一接口（历史消息查询）。本 PRD 独立成文、聚焦"内容只读"这一极简范围；实现时两者为**同一接口**，不重复开发
 - **现状差距**：`ErrorCodeEnum` 无 `PARAM_ERROR`（需在 2000 段补充，与既有模块共用）；MyBatis-Plus 分页插件未配置（`PaginationInnerInterceptor` 为前置开发项）
 - **数据来源**：内容数据由 chat 接口每轮落库（user + assistant 两条），查询直接读 `ai_conversation_content`
-- **设计承接**：接口设计与既有 `designs/chat-conversation-design.md` 为同一实现（见其 §7.1），不另立平行设计文档
+- **设计承接**：接口设计与既有 `designs/chat-conversation/chat-conversation-design.md` 为同一实现（见其 §7.1），不另立平行设计文档
 - **已定版**：本文作为**决策母本**保留；实现上与 `chat-conversation-management-prd.md` FR-04 为同一接口，合并开发
