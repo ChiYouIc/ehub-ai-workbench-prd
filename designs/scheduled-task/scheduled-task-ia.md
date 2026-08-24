@@ -4,7 +4,9 @@
 >
 > 2026-08-22 产出的初版原型（`.pen` + PNG）因跳过草图/评审两步已于 2026-08-24 废弃删除；本文件为标准链路正向重启后的交互草图基线。
 >
-> 🖊 **草图文件**：`scheduled-task-wireframe.pen`（同目录）——P1/P2/P3/P4 + 配额 toast 五画板，与本文 §3 ASCII 线框一一对应；色彩 token 遵循 `../ui-baseline.md` §2（工程 UI 基线）。后续高保真原型以本文档 + 草图文件为蓝本绘制。
+> 🖊 **草图文件**：`scheduled-task-wireframe.pen`（同目录）——P1/P2/P3/P4 + 配额 toast 五画板，与本文 §3 ASCII 线框一一对应；色彩 token 遵循 `../ui-baseline.md` §2（工程 UI 基线）。
+>
+> 🖌 **高保真原型**（已产出）：`scheduled-task-pages.pen`（同目录）——以本文档 + 草图为蓝本、按 ui-baseline/ui-spec 规范绘制，同名导出 PNG（`page-p1-list.png` … `page-p5-quota-toast.png`，scale 2）；同样遵循「`.pen` 为唯一源，修改后须重导同名 PNG」。
 >
 > 🖼 **草图图片**：各小节内嵌 PNG（`wireframe-p1-*.png` …）由 `.pen` 对应画板导出（scale 2）；**`.pen` 为唯一源，草图修改后须重新导出同名 PNG**，否则图文不一致。
 
