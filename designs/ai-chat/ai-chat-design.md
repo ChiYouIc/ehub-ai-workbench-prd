@@ -165,7 +165,7 @@ sequenceDiagram
 |---|---|---|
 | FR-01 流式回复 | P2 增量渲染光标 ▌ + end 后 token 汇总 | ✅ |
 | FR-02 隐式建组 | P1 空态直发无建组步骤 | ✅ |
-| FR-03 续聊归属 | 深链 `?conversationId=` 回填（ia.md §4）+ NOT_FOUND toast（ui-spec §3.3） | ✅ |
+| FR-03 续聊归属 | 深链 `/chat/{conversationId}` 回填（ia.md §4）+ NOT_FOUND toast（ui-spec §3.3） | ✅ |
 | FR-04~07 落库/记忆/回收 | 非界面可观察（服务端域），中断/错误以终局态呈现于 P3 | ➖ 正确排除 |
 | FR-08 断连/停止 | P2「停止」按钮（主动 abort）；被动断连同终局（P3 已中断标注） | ✅ |
 | FR-09 入参校验 | P1 发送禁用前置 + P3 toast 兜底 | ✅ |

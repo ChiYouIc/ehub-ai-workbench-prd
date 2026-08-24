@@ -9,6 +9,7 @@
 ## 1. 设计定位
 
 - 管理界面挂载于 `/chat` 页内（非独立导航项）：对话页左侧**会话列表栏**承载 FR-01/02/03，选中会话的主区即历史回看（FR-04）。
+- 查看历史会话的路由形态为 **`/chat/{conversationId}`（路径参数）**：选中会话即把 `conversationId` 写入路由路径（非 query 参数），刷新/深链直达定位；`/chat`（无参）= 新会话空态。
 - 与 ai-chat 前端同页协作：选中新会话/历史会话 → 主区切换对话面（ai-chat P1/P2）；本模块只负责列表与内容展示，SSE 交互全部复用 ai-chat 前端。
 - v1 列表不含「最近一条消息摘要」（Out of Scope）、无置顶/搜索。
 
@@ -85,11 +86,11 @@ flowchart TD
     HIST -->|底部输入续聊| SSE[ai-chat P2 进行中]
     LIST -->|行内重命名| REN[P2 重命名]
     LIST -->|行内删除| DEL[P3 删除确认]
-    TASK[scheduled-task 列表·会话组入口] -.->|?conversationId=| HIST
+    TASK[scheduled-task 列表·会话组入口] -.->|"/chat/{conversationId} 路径参数"| HIST
 ```
 
 - 与 ai-chat 前端同页嵌合：本模块出列表栏与历史渲染，ai-chat 出输入区与 SSE 消费
-- 定时任务列表的「会话组入口」深链在此激活（`scheduled-task-ia.md` §4 预留位兑现）
+- 定时任务列表的「会话组入口」深链在此激活（`scheduled-task-ia.md` §4 预留位兑现），形态 `/chat/{conversationId}`——`conversationId` 拼在路由路径中（非 query）
 
 ## 5. 状态展示表
 

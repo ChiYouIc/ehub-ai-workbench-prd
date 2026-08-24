@@ -14,6 +14,7 @@
 - **关卡② 设计验收通过（`scheduled-task-design.md` §9）**——三轴验收：FR/NFR 覆盖（FR-07/08、NFR-01~06 正确排除）、原型走查（任务流四路径 + 状态矩阵全覆盖；空态/校验红态/编辑回填降级等运行时状态有意不入静态画板，交实现按 ui-spec §4 执行）、文档齐套（PRD/requirements 01–05/ia/原型/ui-spec/design 六件）；**定时任务设计链路闭环，可进开发**。
 
 ### Changed
+- **会话历史路由形态定为路径参数 `/chat/{conversationId}`**（原预留 `/chat?conversationId=` query 形态废弃）——查看历史会话时 `conversationId` 直接拼接在路由路径中：外壳 01 §3 路由表新增 `/chat/:conversationId` 行（与 `/chat` 同组件仅定位差异）、深链说明改路径参数；`chat-conversation-ia.md` §1/§4（选中会话写入路径、刷新/深链直达）、`ai-chat-ia.md` §2/§3.2/§4、`ai-chat-design.md` §8 FR-03 行同步。
 - **`designs/web/01-应用外壳与导航.md` 导航表/路由表状态同步（对话项）**——「对话」导航项「待设计（PRD Out of Scope，按标准链路后补）」→「设计完成（关卡② 通过，可进开发）」（模块 = ai-chat 前端 + chat-conversation 管理面）；路由表 `/chat` 设计产物补两模块 ia + pages.pen；scheduled-task → 会话组深链预留兑现为 `/chat?conversationId=` 定案。
 - **`README.md` 同步**：目录树 `designs/ai-chat/`、`designs/chat-conversation/` 注记补齐四件产物与关卡状态；文档索引两模块行 Design 列更新、状态改「已定版，设计链路全部通过，可进开发」；标准链路底注补记两模块前端链路 2026-08-24 补齐——三模块前端全部就绪。
 - **`designs/architecture.md` §4 部署视图 mermaid 修复**——圆柱节点 `DB[(MySQL 单库）]` 全角右括号改半角，解析错误消除。

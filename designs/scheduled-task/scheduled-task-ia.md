@@ -134,7 +134,7 @@ flowchart TD
 ```
 
 - 一级仅 P1；三个对话框全部模态、完成后回列表刷新（量级 ≤20，不做局部行更新）
-- 跨模块出口（凭 `conversationId` 跳会话历史，FR-06 验收 1）：跳转目标页面尚不存在，**本版在列表行预留入口位**（占位不实现），待 chat-conversation 前端补齐后激活
+- 跨模块出口（凭 `conversationId` 跳会话历史，FR-06 验收 1）：跳转目标为 `/chat/{conversationId}`（chat-conversation 前端已补齐，路径参数形态见其 ia.md §1），**本版在列表行预留入口位**（占位不实现），激活时按此目标拼接
 
 ## 5. 状态展示表（status × run_state × last_run_status）
 

@@ -23,7 +23,7 @@
 | P3 | 对话页（错误/中断态） | 同页内联错误 | FR-06/07/08 | §3.3 |
 | — | 入参错误 toast | toast（非页面） | FR-09 | §3.3 |
 
-**页面策略**：单页三态（空态→进行中→结束/错误），无独立子路由——`/chat?conversationId=` 为续聊深链预留（外壳 01 §3），v1 由跳转方拼接。
+**页面策略**：单页三态（空态→进行中→结束/错误），无独立子路由——续聊深链为 `/chat/{conversationId}`（`conversationId` 拼在路由路径中，与 `/chat` 同组件仅定位差异；外壳 01 §3），v1 由跳转方拼接。
 
 ## 3. 线框
 
@@ -69,7 +69,7 @@
 - 首个 `message` 分片携带 `conversationId`，前端立即纳入当前会话上下文（FR-01 验收 3）
 - 流式期间输入区禁用、发送变「停止」（abort 主动中断，FR-06/08 语义：中断即终局，已收内容保留渲染）
 - `end` 事件后：流式光标消失，助手气泡尾部展示 `inputToken/outputToken` 汇总（FR-01 验收 2）
-- 续聊（FR-03/04）：从会话历史进入（`?conversationId=`）时消息流回填历史，上下文由百炼 sessionId 维持，前端不组装
+- 续聊（FR-03/04）：从会话历史进入（`/chat/{conversationId}`）时消息流回填历史，上下文由百炼 sessionId 维持，前端不组装
 
 ### 3.3 P3 错误/中断态 + 入参 toast
 
@@ -94,7 +94,7 @@ flowchart TD
     P2 -->|error| P3[内联错误卡]
     P2 -->|停止/断连| P2I[中断态·内容保留]
     P2R -->|再发送| P2
-    CONV[chat-conversation 会话历史] -.->|?conversationId= 深链| P1
+    CONV[chat-conversation 会话历史] -.->|"/chat/{conversationId} 深链"| P1
 ```
 
 - 单页状态机：空态 → 进行中 ⇄ 结束态；错误/中断为进行中的终局分支
