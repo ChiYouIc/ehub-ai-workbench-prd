@@ -5,6 +5,15 @@
 ## 2026-08-24
 
 ### Added
+- **外壳侧边栏可折叠 + 菜单结构定稿（`01-应用外壳与导航.md` §1/§2 + `app-shell-wireframe.pen` 双画板）**：
+  - **可折叠**：展开 **250px** / 折叠 **64px 图标栏**，顶栏右侧 « / 中段 » 切换，状态 localStorage 持久化；折叠态隐藏历史会话列表与文字。
+  - **三段式 + 分割线**：顶栏 h56 **space-between**（左 logo+应用名 / 右折叠钮 «，下边分割线）；中段 = **新建对话按钮（primary）→ 菜单（工具/分析/技能/聊天）→ 分割线 → 历史会话区（标题+列表+弹性空位+分页）**；底部用户条 h64（上边分割线）。
+  - **菜单结构**（§2 重写）：＋新建对话（→ `/chat` 空态）/ 1 工具 🧰（**定时任务入口**跳 `/task`，其余 v2）/ 2 分析 📊（v1 占位）/ 3 技能 ⚡（v1 占位）/ 4 聊天 💬（**最后一个菜单项**，`/chat`）——聊天项下方分割线后直接列历史会话（chat-conversation FR-01 的外壳承载位），点击进入 `/chat/{conversationId}`。
+  - **原型**：`app-shell-wireframe.pen` 重建为两画板（展开 `DbMIr` / 折叠 `qnRUr`，problems 校验干净）；PNG 拆分导出为 `app-shell-expanded.png` / `app-shell-collapsed.png`（原单张 `app-shell-wireframe.png` 删除）。
+- **chat-conversation P1 侧边栏同步重建（`chat-conversation-pages.pen`）**——P1 侧栏改为外壳中段结构（菜单+分割线+历史会话区+弹性空位+分页），三画板 PNG 重导；`chat-conversation-ia.md`（§1 设计定位/§3.1 线框/§2 页面登记/§4 mermaid）与 `chat-conversation-ui-spec.md`（§1 布局范式登记/§3.1 栏描述）同步：会话列表栏由 `/chat` 页内 280px 改为**外壳侧边栏中段承载**（250px，菜单归外壳 01 §2，模块只管历史会话列表内容）。
+- **ai-chat-ia.md / scheduled-task-ia.md 入口表述同步**——ai-chat §3.1 补「新会话入口 = 外壳『＋新建对话』」；scheduled-task §3.1 注记与 §4 mermaid 改「菜单『工具』→ 定时任务」。
+
+### Added
 - **ai-chat / chat-conversation 前端设计链路补齐（两模块同步闭环，均按标准链路正向产出）**：
   - **交互草图（`ai-chat-ia.md` / `chat-conversation-ia.md`，定稿 r1）**：ai-chat 单页三态（P1 空态/P2 进行中/P3 错误与中断分呈现）+ 流状态展示表 + 续聊深链 `?conversationId=` 消费；chat-conversation 管理面与对话面**同页嵌合**（`/chat` 左侧 280px 会话列表栏 + 主区历史回看，不设独立导航项）；两模块**关卡①（FR 覆盖核对）通过**（ai-chat FR-04~07 服务端域正确排除；chat-conversation FR-01~04 全覆盖）。
   - **高保真原型（`ai-chat-pages.pen` 3 画板 + `page-p1-empty/p2-streaming/p3-error-interrupted.png`；`chat-conversation-pages.pen` 3 画板 + `page-p1-list-history/p2-rename/p3-delete.png`）**：色彩全量走 ui-baseline §2 变量，结构经 bounds 校验无溢出；`.pen` 为唯一源，修改后须重导同名 PNG。

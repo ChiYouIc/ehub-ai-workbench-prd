@@ -1,5 +1,626 @@
 {
   "version": "2.17",
-  "children": [],
+  "children": [
+    {
+      "type": "frame",
+      "id": "WcJlc",
+      "x": 0,
+      "y": 0,
+      "name": "P1 对话空态",
+      "width": 1280,
+      "height": 820,
+      "fill": "$fill_page",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "orTtV",
+          "name": "欢迎区",
+          "width": 1240,
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "u5aDvT",
+              "name": "欢迎图标",
+              "fill": "$el_primary",
+              "content": "💬",
+              "fontFamily": "Inter",
+              "fontSize": 44,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "gWJJc",
+              "name": "欢迎主文案",
+              "fill": "$text_primary",
+              "content": "你好，我是 AI 助手",
+              "fontFamily": "Inter",
+              "fontSize": 22,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "o6rTw",
+              "name": "欢迎副文案",
+              "fill": "$text_secondary",
+              "content": "有什么可以帮你？输入问题开始对话",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "CA1cc",
+          "name": "输入区-空态",
+          "width": 1240,
+          "layout": "vertical",
+          "gap": 8,
+          "padding": [
+            0,
+            20,
+            24,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "J2dij",
+              "name": "输入框",
+              "width": "fill_container",
+              "height": 120,
+              "fill": "$fill_blank",
+              "cornerRadius": 8,
+              "stroke": "$border_color",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "padding": 12,
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "SP0NG",
+                  "name": "输入占位",
+                  "fill": "$text_placeholder",
+                  "content": "输入你的问题，Enter 发送 · Shift+Enter 换行",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "XlNRp",
+                  "name": "输入底行",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "hPJxV",
+                      "name": "字数",
+                      "fill": "$text_secondary",
+                      "content": "0 / 8000",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "InQw1",
+                      "name": "btn-发送-禁用",
+                      "opacity": 0.5,
+                      "width": 64,
+                      "height": 32,
+                      "fill": "$el_primary",
+                      "cornerRadius": 4,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "woE6k",
+                          "name": "发送文字",
+                          "fill": "#FFFFFF",
+                          "content": "发送",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "eWauw",
+      "x": 1360,
+      "y": 0,
+      "name": "P2 对话进行中",
+      "width": 1280,
+      "height": 820,
+      "fill": "$fill_page",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "u4U23f",
+          "name": "消息流",
+          "width": 1240,
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            24,
+            20,
+            16,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "No9pH",
+              "name": "行-用户提问",
+              "width": "fill_container",
+              "justifyContent": "end",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "CHU8W",
+                  "name": "气泡-用户提问",
+                  "width": 560,
+                  "fill": "$el_primary",
+                  "cornerRadius": 8,
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": [
+                    12,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "yYBK2",
+                      "name": "用户文字",
+                      "fill": "#FFFFFF",
+                      "textGrowth": "fixed-width",
+                      "width": 528,
+                      "content": "帮我汇总本周的销售数据，按渠道分组，并给出环比变化。",
+                      "lineHeight": 1.6,
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "r42EcS",
+              "name": "行-助手流式",
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "HbERz",
+                  "name": "气泡-助手流式",
+                  "width": 560,
+                  "fill": "$fill_blank",
+                  "cornerRadius": 8,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#00000012",
+                    "offset": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "blur": 4
+                  },
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": [
+                    12,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "pvuZ9",
+                      "name": "助手流式文字",
+                      "fill": "$text_primary",
+                      "textGrowth": "fixed-width",
+                      "width": 528,
+                      "content": "本周销售数据汇总如下：\n· 电商渠道：GMV 128 万，环比 +12%▌",
+                      "lineHeight": 1.6,
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "q0XhTY",
+                      "name": "token汇总",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "vq3VN",
+                          "name": "token文字",
+                          "fill": "$text_secondary",
+                          "content": "输入 356 tokens · 输出 1,204 tokens",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "zsBUr",
+          "name": "输入区-进行中",
+          "width": 1240,
+          "layout": "vertical",
+          "gap": 8,
+          "padding": [
+            0,
+            20,
+            24,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "Swdx9",
+              "name": "输入框-进行中",
+              "width": "fill_container",
+              "height": 120,
+              "fill": "$fill_page",
+              "cornerRadius": 8,
+              "stroke": "$border_light",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "padding": 12,
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "s9jeGq",
+                  "name": "禁用提示",
+                  "fill": "$text_placeholder",
+                  "content": "回复生成中…",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "VaWCz",
+                  "name": "输入底行-进行中",
+                  "width": "fill_container",
+                  "justifyContent": "end",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "EPGdT",
+                      "name": "btn-停止",
+                      "width": 64,
+                      "height": 32,
+                      "fill": "$fill_blank",
+                      "cornerRadius": 4,
+                      "stroke": "$border_color",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "n8BQR6",
+                          "name": "停止文字",
+                          "fill": "$text_regular",
+                          "content": "停止",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "VhzOu",
+      "x": 2720,
+      "y": 0,
+      "name": "P3 错误与中断态",
+      "width": 1280,
+      "height": 820,
+      "fill": "$fill_page",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "nG0z9",
+          "name": "消息流-错误页",
+          "width": 1240,
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            24,
+            20,
+            16,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "zwntx",
+              "name": "行-错误页用户",
+              "width": "fill_container",
+              "justifyContent": "end",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "QMnuK",
+                  "name": "气泡-错误页用户",
+                  "width": 560,
+                  "fill": "$el_primary",
+                  "cornerRadius": 8,
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": [
+                    12,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "FRPTu",
+                      "name": "用户文字-错误页",
+                      "fill": "#FFFFFF",
+                      "textGrowth": "fixed-width",
+                      "width": 528,
+                      "content": "帮我生成上周的库存对账报告",
+                      "lineHeight": 1.6,
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "t504o",
+              "name": "行-中断气泡",
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "aWY94",
+                  "name": "气泡-中断气泡",
+                  "width": 560,
+                  "fill": "$fill_blank",
+                  "cornerRadius": 8,
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": [
+                    12,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "fwTcI",
+                      "name": "中断文字",
+                      "fill": "$text_primary",
+                      "textGrowth": "fixed-width",
+                      "width": 528,
+                      "content": "上周库存对账数据如下：\n· SKU 总数 1,203，较前周……",
+                      "lineHeight": 1.6,
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "tcPwY",
+                      "name": "中断标注",
+                      "fill": "$text_secondary",
+                      "content": "⏸ 已中断",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "SVLwI",
+              "name": "行-错误卡",
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "N4q6YA",
+                  "name": "内联错误卡",
+                  "width": 560,
+                  "fill": "$tag_danger_bg",
+                  "cornerRadius": 8,
+                  "stroke": "$el_danger",
+                  "strokeWidth": 1,
+                  "gap": 8,
+                  "padding": [
+                    12,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "AoCnr",
+                      "name": "错误图标",
+                      "fill": "$el_danger",
+                      "content": "⚠",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "qECjI",
+                      "name": "错误文字",
+                      "fill": "$el_danger",
+                      "textGrowth": "fixed-width",
+                      "width": 496,
+                      "content": "回复生成失败，请稍后重试（SYSTEM_ERROR）",
+                      "lineHeight": 1.6,
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "SnbaD",
+          "layoutPosition": "absolute",
+          "x": 410,
+          "y": 24,
+          "name": "toast-入参错误",
+          "fill": "$fill_blank",
+          "cornerRadius": 4,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000040",
+            "offset": {
+              "x": 0,
+              "y": 4
+            },
+            "blur": 12
+          },
+          "gap": 8,
+          "padding": [
+            10,
+            16
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "ppAnj",
+              "name": "toast图标",
+              "fill": "$el_danger",
+              "content": "⚠",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "VuBM3",
+              "name": "toast文案",
+              "fill": "$text_regular",
+              "content": "请输入内容后再发送",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "el_primary": {
+      "type": "color",
+      "value": "#409EFF"
+    },
+    "el_success": {
+      "type": "color",
+      "value": "#67C23A"
+    },
+    "el_danger": {
+      "type": "color",
+      "value": "#F56C6C"
+    },
+    "el_info": {
+      "type": "color",
+      "value": "#909399"
+    },
+    "text_primary": {
+      "type": "color",
+      "value": "#303133"
+    },
+    "text_regular": {
+      "type": "color",
+      "value": "#606266"
+    },
+    "text_secondary": {
+      "type": "color",
+      "value": "#909399"
+    },
+    "text_placeholder": {
+      "type": "color",
+      "value": "#A8ABB2"
+    },
+    "border_color": {
+      "type": "color",
+      "value": "#DCDFE6"
+    },
+    "border_light": {
+      "type": "color",
+      "value": "#E4E7ED"
+    },
+    "fill_blank": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "fill_page": {
+      "type": "color",
+      "value": "#F2F3F5"
+    },
+    "tag_danger_bg": {
+      "type": "color",
+      "value": "#FEF0F0"
+    },
+    "primary_light": {
+      "type": "color",
+      "value": "#ECF5FF"
+    }
+  },
   "fileToken": "4fe5492d-5c15-407a-ab3a-5e07ef921079"
 }
