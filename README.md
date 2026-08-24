@@ -56,8 +56,12 @@ ehub-ai-workbench-prd/
 │   │   ├── <feature>-pages.pen #  高保真交互原型（Element Plus 风格，附 PNG 预览）
 │   │   ├── <feature>-ui-spec.md # UI 设计文档（主题/组件视觉规范）
 │   │   └── <feature>-design.md #  模块设计文档（模块/seam/状态机/线程模型，D-xx + 设计验收小节）
-│   ├── ai-chat/             #   AI 对话模块设计（-design.md：轮次状态机、线程模型）
-│   ├── chat-conversation/   #   管理模块设计（-design.md：HTTP 接口定义独立章节、归属校验状态机）
+│   ├── ai-chat/             #   AI 对话模块设计（-design.md：轮次状态机、线程模型、设计验收；
+│   │                        #   -ia.md 交互草图三态画板+关卡①；-pages.pen 高保真原型 3 画板 + page-p*.png；
+│   │                        #   -ui-spec.md 继承工程 UI 基线；关卡②已过，可进开发）
+│   ├── chat-conversation/   #   管理模块设计（-design.md：归属校验状态机、设计验收；
+│   │                        #   -ia.md 列表栏/重命名/删除/历史回看+关卡①；-pages.pen 3 画板 + page-p*.png；
+│   │                        #   -ui-spec.md 继承工程 UI 基线；关卡②已过，可进开发）
 │   └── scheduled-task/      #   任务模块设计（-design.md：调度状态机、抢占时序、线程模型、D-xx、设计验收小节；
                              #   -ia.md 信息架构+关卡①结论；-ui-spec.md UI 设计文档（继承工程 UI 基线）；
                              #   -wireframe.pen 低保真草图 5 画板 + 同名导出 PNG（ia.md 内嵌引用）；
@@ -169,9 +173,9 @@ flowchart LR
 |---|---|---|---|---|---|
 | 接口认证（全工程通用） | — | `requirements/auth/01-接口认证.md` | — | — | 已定版（单一事实源） |
 | Web 层约定（全工程通用） | — | `requirements/web/01~02` | — | — | 已定版（单一事实源，实现规则见代码工程 skill `web-conventions`） |
-| AI 对话 v1 | `plans/ai-chat-sse-prd.md` (v1.0) | `requirements/ai-chat/01~05` | `specs/ai-chat-spec.md` | `designs/ai-chat/ai-chat-design.md` | 已定版，待开发 |
-| 会话组与对话内容管理 v1 | `plans/chat-conversation-management-prd.md` (v1.0) | `requirements/chat-conversation/01~05` | `specs/chat-conversation-spec.md` | `designs/chat-conversation/chat-conversation-design.md` | 已定版，待开发 |
+| AI 对话 v1 | `plans/ai-chat-sse-prd.md` (v1.0) | `requirements/ai-chat/01~05` | `specs/ai-chat-spec.md` | `designs/ai-chat/`：`-design.md`（关卡②通过）+ `-ia.md`（关卡①通过）+ `-pages.pen`（高保真 3 画板）+ `-ui-spec.md`（继承 `designs/ui-baseline.md`） | **已定版，设计链路全部通过，可进开发** |
+| 会话组与对话内容管理 v1 | `plans/chat-conversation-management-prd.md` (v1.0) | `requirements/chat-conversation/01~05` | `specs/chat-conversation-spec.md` | `designs/chat-conversation/`：`-design.md`（关卡②通过）+ `-ia.md`（关卡①通过）+ `-pages.pen`（高保真 3 画板）+ `-ui-spec.md`（继承 `designs/ui-baseline.md`） | **已定版，设计链路全部通过，可进开发** |
 | 会话内容管理（只读查询）v1 | `plans/chat-conversation-content-prd.md` (v1.0) | —（与上 FR-04 同一接口） | — | `designs/chat-conversation/chat-conversation-design.md` §7.1（承接） | 已定版，待开发（并入上实现） |
 | 定时任务 v1 | `plans/scheduled-task-prd.md` (v1.0) | `requirements/scheduled-task/`（01–05 全量） | —（决策内嵌 design D1–D10） | `designs/scheduled-task/`：`-design.md`（关卡②通过）+ `-ia.md`（关卡①通过）+ `-ui-spec.md`（继承 `designs/ui-baseline.md`）+ `-wireframe.pen`（草图 5 画板）+ `-pages.pen`（高保真原型 5 画板） | **已定版，设计链路全部通过，可进开发** |
 
-> 标准链路（2026-08-22 定案，此后所有新模块照此执行）：**PRD草案 → PRD定稿 → 正式PRD文档 → 交互草图/信息架构 → 交互评审 → 高保真交互原型 → UI视觉设计 → 设计文档输出 → 设计验收 → 开发实现**；工程拆解（requirements/specs）在正式 PRD 后并行。定时任务 v1 初版原型跳过了草图/评审两步，2026-08-24 废弃重启并已全链路补齐：草图（ia.md + wireframe.pen）✅、关卡① ✅、UI 基线（`designs/ui-baseline.md`，自 scheduled-task-ui-spec 提炼）✅、高保真原型（pages.pen）✅、关卡② ✅、**可进开发**；ai-chat / chat-conversation 后续补前端时按新链路走并继承 `designs/ui-baseline.md` UI 基线。
+> 标准链路（2026-08-22 定案，此后所有新模块照此执行）：**PRD草案 → PRD定稿 → 正式PRD文档 → 交互草图/信息架构 → 交互评审 → 高保真交互原型 → UI视觉设计 → 设计文档输出 → 设计验收 → 开发实现**；工程拆解（requirements/specs）在正式 PRD 后并行。定时任务 v1 初版原型跳过了草图/评审两步，2026-08-24 废弃重启并已全链路补齐：草图（ia.md + wireframe.pen）✅、关卡① ✅、UI 基线（`designs/ui-baseline.md`，自 scheduled-task-ui-spec 提炼）✅、高保真原型（pages.pen）✅、关卡② ✅、**可进开发**；ai-chat / chat-conversation 前端设计链路已于 2026-08-24 按新链路补齐（草图 ia.md ✅、关卡① ✅、高保真 pages.pen ✅、ui-spec ✅、关卡② ✅，均继承 `designs/ui-baseline.md` UI 基线），**可进开发**——三模块前端全部就绪。

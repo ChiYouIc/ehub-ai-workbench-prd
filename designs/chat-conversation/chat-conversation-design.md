@@ -200,3 +200,31 @@ sequenceDiagram
 - **置顶/搜索**：`ai_conversation` 现有列无置顶位，若后续需要置顶需评估 DDL（本模块硬约束禁 DDL）；搜索可在 service 层加分页过滤方法，接口形态不变
 - **消息编辑/撤回**：`ai_conversation_content` 现无修改接口；如需要，可在 `AiConversationContentService` 追加写方法，不影响本模块只读查询
 - **删除即停流**：若后续要求删除会话组时取消进行中的 SSE 流，需在 `AiChatService` 侧增加取消机制（D8 备选），另行评估
+
+## 9. 设计验收（关卡②）
+
+> 2026-08-24 验收。前端链路产物：交互草图 `chat-conversation-ia.md`（关卡①通过）、高保真原型 `chat-conversation-pages.pen` + 导出 PNG（`page-p1-list-history.png` / `page-p2-rename.png` / `page-p3-delete.png`）、UI 设计文档 `chat-conversation-ui-spec.md`。三轴核对如下：
+
+### 轴一：FR 界面覆盖
+
+| FR | 原型承载 | 结论 |
+|---|---|---|
+| FR-01 列表 | P1 会话列表栏（元信息行 / 选中高亮 / 栏底分页 / 空态引导） | ✅ |
+| FR-02 重命名 | P2 对话框（≤100 行内校验 + PARAM_ERROR 兜底，ui-spec §3.3） | ✅ |
+| FR-03 删除 | P3 确认框（语义后果两条，danger 确认钮） | ✅ |
+| FR-04 历史查询 | P1 主区历史回看（升序气泡 + token 尾注 + 续聊入口，ia.md §3.4） | ✅ |
+| 归属口径 | NOT_FOUND「会话不存在」toast 统一承接（ui-spec §2） | ✅ |
+
+（与关卡①核对表一致，无回退；P4 历史回看与 P1 同画板呈现——同页嵌合是本模块核心决策。）
+
+### 轴二：原型走查
+
+- 三画板均为基线 token 着色（选中项 primary-light、删除确认 danger、token 尾注 secondary），结构校验无 clipping；
+- 列表栏/主区嵌合布局、对话框遮罩呈现与 ia.md §3 一致；
+- `.pen` 为唯一源，PNG 随源重导。
+
+### 轴三：文档齐套
+
+ia.md（关卡①）→ pages.pen + PNG → ui-spec.md（基线实例化 + 侧栏布局适配登记）→ 本节验收，四件齐套；侧栏对基线 §4.1 全页三段式的适配已在 ui-spec §1 显式登记（语义结构等比缩小，非静默偏离）。
+
+**验收结论：通过，可进开发。**

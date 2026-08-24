@@ -154,3 +154,32 @@ sequenceDiagram
 - **记忆组装**（R-01）：落库的完整历史已具备服务端组装 messages 的数据基础，v2 可在 `stream` 内部替换「仅 prompt」为「prompt+历史」，接口不变
 - **多 Agent 分流**：`ChatParam.type` 已收敛为单值枚举，分流可在 `stream` 内部按 type 选 appId，接口不变
 - **异步订阅**（R-02）：`streamCall` 内部从 `blockingForEach` 改为异步订阅 + 回调，线程模型变化不影响外部 seam
+
+## 8. 设计验收（关卡②）
+
+> 2026-08-24 验收。前端链路产物：交互草图 `ai-chat-ia.md`（关卡①通过）、高保真原型 `ai-chat-pages.pen` + 导出 PNG（`page-p1-empty.png` / `page-p2-streaming.png` / `page-p3-error-interrupted.png`）、UI 设计文档 `ai-chat-ui-spec.md`。三轴核对如下：
+
+### 轴一：FR 界面覆盖
+
+| FR | 原型承载 | 结论 |
+|---|---|---|
+| FR-01 流式回复 | P2 增量渲染光标 ▌ + end 后 token 汇总 | ✅ |
+| FR-02 隐式建组 | P1 空态直发无建组步骤 | ✅ |
+| FR-03 续聊归属 | 深链 `?conversationId=` 回填（ia.md §4）+ NOT_FOUND toast（ui-spec §3.3） | ✅ |
+| FR-04~07 落库/记忆/回收 | 非界面可观察（服务端域），中断/错误以终局态呈现于 P3 | ➖ 正确排除 |
+| FR-08 断连/停止 | P2「停止」按钮（主动 abort）；被动断连同终局（P3 已中断标注） | ✅ |
+| FR-09 入参校验 | P1 发送禁用前置 + P3 toast 兜底 | ✅ |
+
+（与关卡①核对表一致，无回退。）
+
+### 轴二：原型走查
+
+- 三画板均为基线 token 着色（用户气泡 primary、错误卡 danger、token 汇总 secondary），结构校验无 clipping；
+- 三态状态机（空态→进行中→终局分支 error/interrupted）与 §3 状态机一一对应；
+- `.pen` 为唯一源，PNG 随源重导。
+
+### 轴三：文档齐套
+
+ia.md（关卡①）→ pages.pen + PNG → ui-spec.md（基线实例化 + 气泡范式登记）→ 本节验收，四件齐套；对话页布局对基线 §4.1 的不适用性已在 ui-spec §1 显式登记（非静默偏离）。
+
+**验收结论：通过，可进开发。**

@@ -5,10 +5,17 @@
 ## 2026-08-24
 
 ### Added
+- **ai-chat / chat-conversation 前端设计链路补齐（两模块同步闭环，均按标准链路正向产出）**：
+  - **交互草图（`ai-chat-ia.md` / `chat-conversation-ia.md`，定稿 r1）**：ai-chat 单页三态（P1 空态/P2 进行中/P3 错误与中断分呈现）+ 流状态展示表 + 续聊深链 `?conversationId=` 消费；chat-conversation 管理面与对话面**同页嵌合**（`/chat` 左侧 280px 会话列表栏 + 主区历史回看，不设独立导航项）；两模块**关卡①（FR 覆盖核对）通过**（ai-chat FR-04~07 服务端域正确排除；chat-conversation FR-01~04 全覆盖）。
+  - **高保真原型（`ai-chat-pages.pen` 3 画板 + `page-p1-empty/p2-streaming/p3-error-interrupted.png`；`chat-conversation-pages.pen` 3 画板 + `page-p1-list-history/p2-rename/p3-delete.png`）**：色彩全量走 ui-baseline §2 变量，结构经 bounds 校验无溢出；`.pen` 为唯一源，修改后须重导同名 PNG。
+  - **UI 设计文档（`ai-chat-ui-spec.md` / `chat-conversation-ui-spec.md`，r1）**：基线模块实例化——状态色映射表（流状态→primary/danger/secondary；选中→primary-light）+ 气泡范式/侧栏布局登记 + toast 文案（NOT_FOUND「会话不存在」统一句式）；对话页对基线 §4.1 三段式的**不适用/适配**均显式登记（非静默偏离）。
+  - **关卡② 设计验收通过（`ai-chat-design.md` §8 / `chat-conversation-design.md` §9）**：三轴验收（FR 界面覆盖无回退 / 原型走查基线 token 着色无 clipping / 文档齐套四件）；**两模块设计链路闭环，可进开发**。
 - **定时任务高保真原型（`scheduled-task-pages.pen` + `page-p1~p5-*.png`）**——五画板：P1 任务列表（六列四行，覆盖状态展示表全部呈现态：启用+成功/停用+失败/执行中+执行禁用/启用+未执行「—」）、P2 新建任务对话框（名称/提示词字数统计/执行时间两段式+下次执行预览+间隔提示/启用开关语义标注）、P3 立即执行确认、P4 删除确认、P5 配额超限 toast（P1 引用+toast 叠加）；色彩全量走 ui-baseline §2 变量，结构经 bounds 校验无溢出。
 - **关卡② 设计验收通过（`scheduled-task-design.md` §9）**——三轴验收：FR/NFR 覆盖（FR-07/08、NFR-01~06 正确排除）、原型走查（任务流四路径 + 状态矩阵全覆盖；空态/校验红态/编辑回填降级等运行时状态有意不入静态画板，交实现按 ui-spec §4 执行）、文档齐套（PRD/requirements 01–05/ia/原型/ui-spec/design 六件）；**定时任务设计链路闭环，可进开发**。
 
 ### Changed
+- **`designs/web/01-应用外壳与导航.md` 导航表/路由表状态同步（对话项）**——「对话」导航项「待设计（PRD Out of Scope，按标准链路后补）」→「设计完成（关卡② 通过，可进开发）」（模块 = ai-chat 前端 + chat-conversation 管理面）；路由表 `/chat` 设计产物补两模块 ia + pages.pen；scheduled-task → 会话组深链预留兑现为 `/chat?conversationId=` 定案。
+- **`README.md` 同步**：目录树 `designs/ai-chat/`、`designs/chat-conversation/` 注记补齐四件产物与关卡状态；文档索引两模块行 Design 列更新、状态改「已定版，设计链路全部通过，可进开发」；标准链路底注补记两模块前端链路 2026-08-24 补齐——三模块前端全部就绪。
 - **`designs/architecture.md` §4 部署视图 mermaid 修复**——圆柱节点 `DB[(MySQL 单库）]` 全角右括号改半角，解析错误消除。
 - **`designs/web/01-应用外壳与导航.md` 导航表/路由表状态同步**——定时任务项「设计中（高保真待绘）」→「设计完成（关卡② 通过，可进开发）」，路由表设计产物补 `-pages.pen`。
 - **`designs/web/02-前端工程规范.md` 移除目录结构章节（原 §6）**——构建与目录约定随 ehub-web 现有工程，由代码工程自管，PRD 工程不自立目录规范；范围声明收窄，原 §7 演进顺延为 §6；README 描述同步。
