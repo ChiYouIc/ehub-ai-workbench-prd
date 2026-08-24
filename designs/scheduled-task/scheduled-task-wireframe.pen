@@ -1,0 +1,1795 @@
+{
+  "version": "2.17",
+  "children": [
+    {
+      "type": "frame",
+      "id": "d7oOiB",
+      "x": 0,
+      "y": 0,
+      "name": "P1 任务列表（低保真）",
+      "clip": true,
+      "width": 1280,
+      "height": 820,
+      "fill": "$bg-page",
+      "children": [
+        {
+          "type": "frame",
+          "id": "Oc0Gb",
+          "name": "主区",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "padding": 20,
+          "children": [
+            {
+              "type": "frame",
+              "id": "WZGPL",
+              "name": "工具条",
+              "width": "fill_container",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ym2Kq",
+                  "name": "搜索框",
+                  "width": 240,
+                  "height": 32,
+                  "fill": "$bg-blank",
+                  "cornerRadius": 4,
+                  "stroke": "$border-color",
+                  "strokeWidth": 1,
+                  "gap": 8,
+                  "padding": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "IJP9g",
+                      "name": "占位",
+                      "fill": "$text-secondary",
+                      "content": "搜索任务名",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "jc5vk",
+                  "name": "状态筛选",
+                  "width": 140,
+                  "height": 32,
+                  "fill": "$bg-blank",
+                  "cornerRadius": 4,
+                  "stroke": "$border-color",
+                  "strokeWidth": 1,
+                  "gap": 8,
+                  "padding": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "N4IJFa",
+                      "name": "占位",
+                      "fill": "$text-regular",
+                      "content": "全部状态  ▾",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "BcYna",
+                  "name": "弹性空位",
+                  "width": "fill_container",
+                  "height": 8
+                },
+                {
+                  "type": "frame",
+                  "id": "eCn83",
+                  "name": "新建按钮",
+                  "height": 32,
+                  "fill": "$el-primary",
+                  "cornerRadius": 4,
+                  "gap": 6,
+                  "padding": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "E71pfu",
+                      "name": "label",
+                      "fill": "#FFFFFF",
+                      "content": "＋ 新建任务",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "xNxJI",
+              "name": "任务表格",
+              "width": "fill_container",
+              "fill": "$bg-blank",
+              "cornerRadius": 4,
+              "stroke": "$border-color",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "KUZW4",
+                  "name": "表头",
+                  "width": "fill_container",
+                  "fill": "#F5F7FA",
+                  "gap": 16,
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "xdHxn",
+                      "name": "表头-名称",
+                      "width": 150,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "uGb65",
+                          "name": "t",
+                          "fill": "$text-regular",
+                          "content": "名称",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "bold"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nwjlA",
+                      "name": "表头-状态",
+                      "width": 64,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "CRAuD",
+                          "name": "t",
+                          "fill": "$text-regular",
+                          "content": "状态",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "bold"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "c9ndM",
+                      "name": "表头-执行计划",
+                      "width": 190,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "bzRPc",
+                          "name": "t",
+                          "fill": "$text-regular",
+                          "content": "执行计划",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "bold"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "NcUYF",
+                      "name": "表头-下次执行",
+                      "width": 150,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "W2hz4",
+                          "name": "t",
+                          "fill": "$text-regular",
+                          "content": "下次执行",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "bold"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "rEN7a",
+                      "name": "表头-最近执行",
+                      "width": 250,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "krhPi",
+                          "name": "t",
+                          "fill": "$text-regular",
+                          "content": "最近执行",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "bold"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "InjQ5",
+                      "name": "表头-操作",
+                      "width": 150,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "n36Cx3",
+                          "name": "t",
+                          "fill": "$text-regular",
+                          "content": "操作",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "bold"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "hkwhT",
+                  "name": "表头分隔线",
+                  "width": "fill_container",
+                  "height": 1,
+                  "fill": "$border-color"
+                },
+                {
+                  "type": "frame",
+                  "id": "sUlcS",
+                  "name": "行-每日晨报",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "padding": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "qGT2W",
+                      "name": "名称",
+                      "width": 150,
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "myT6h",
+                          "name": "任务名",
+                          "fill": "$text-primary",
+                          "content": "每日晨报",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "f0ymW",
+                      "name": "状态",
+                      "width": 64,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "E5FkH6",
+                          "name": "状态tag",
+                          "fill": "#F0F9EB",
+                          "cornerRadius": 4,
+                          "padding": 2,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "o9P79",
+                              "name": "tag-t",
+                              "fill": "$el-success",
+                              "content": "启用",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "pLZsT",
+                      "name": "执行计划",
+                      "width": 190,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "l2Nq7o",
+                          "name": "cron",
+                          "fill": "$text-secondary",
+                          "content": "0 0 9 * * *",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "PGXJi",
+                      "name": "下次执行",
+                      "width": 150,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "dxmAM",
+                          "name": "t",
+                          "fill": "$text-regular",
+                          "content": "2026-08-25 09:00",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "RRyR2",
+                      "name": "最近执行",
+                      "width": 250,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "P0cr0",
+                          "name": "t",
+                          "fill": "$el-success",
+                          "content": "08-24 09:00 成功",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vvrRB",
+                      "name": "操作",
+                      "width": 150,
+                      "gap": 16,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "YmOgg",
+                          "name": "op-执行",
+                          "fill": "$el-primary",
+                          "content": "执行",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "r4UYQ",
+                          "name": "op-编辑",
+                          "fill": "$el-primary",
+                          "content": "编辑",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "EHTxy",
+                          "name": "op-删除",
+                          "fill": "$el-danger",
+                          "content": "删除",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "m9Sa66",
+                  "name": "行-周度数据汇总",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "padding": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "KJcYK",
+                      "name": "名称",
+                      "width": 150,
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "UGsat",
+                          "name": "任务名",
+                          "fill": "$text-primary",
+                          "content": "周度数据汇总",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "DozeT",
+                      "name": "状态",
+                      "width": 64,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "lXDG1",
+                          "name": "状态tag",
+                          "fill": "#F4F4F5",
+                          "cornerRadius": 4,
+                          "padding": 2,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "z7svE",
+                              "name": "tag-t",
+                              "fill": "$el-info",
+                              "content": "停用",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "g8U3U",
+                      "name": "执行计划",
+                      "width": 190,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "GDmhz",
+                          "name": "cron",
+                          "fill": "$text-secondary",
+                          "content": "0 0 10 ? * MON",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "gDfFR",
+                      "name": "下次执行",
+                      "width": 150,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "XpXwS",
+                          "name": "t",
+                          "fill": "$text-secondary",
+                          "content": "—",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "dPgHU",
+                      "name": "最近执行",
+                      "width": 250,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "GZYR7",
+                          "name": "t",
+                          "fill": "$el-danger",
+                          "content": "08-18 10:00 失败",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "yqmoe",
+                      "name": "操作",
+                      "width": 150,
+                      "gap": 16,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "e7DZN",
+                          "name": "op-执行",
+                          "fill": "$el-primary",
+                          "content": "执行",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "m66kj",
+                          "name": "op-编辑",
+                          "fill": "$el-primary",
+                          "content": "编辑",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "BQvrx",
+                          "name": "op-删除",
+                          "fill": "$el-danger",
+                          "content": "删除",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "kuA0E",
+                  "name": "行-月度经营分析",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "padding": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "hoz8g",
+                      "name": "名称",
+                      "width": 150,
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "G3HEwA",
+                          "name": "任务名",
+                          "fill": "$text-primary",
+                          "content": "月度经营分析",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Z2QQv",
+                      "name": "状态",
+                      "width": 64,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "XjbZY",
+                          "name": "状态tag",
+                          "fill": "#ECF5FF",
+                          "cornerRadius": 4,
+                          "padding": 2,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "M55bvE",
+                              "name": "tag-t",
+                              "fill": "$el-primary",
+                              "content": "执行中",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "iU70F",
+                      "name": "执行计划",
+                      "width": 190,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "v8tE1X",
+                          "name": "cron",
+                          "fill": "$text-secondary",
+                          "content": "0 0 8 1 * *",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "gHuYe",
+                      "name": "下次执行",
+                      "width": 150,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Jn11q",
+                          "name": "t",
+                          "fill": "$text-regular",
+                          "content": "09-01 08:00",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "t6LKZU",
+                      "name": "最近执行",
+                      "width": 250,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "P90yuA",
+                          "name": "t",
+                          "fill": "$text-secondary",
+                          "content": "—",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ZfdZf",
+                      "name": "操作",
+                      "width": 150,
+                      "gap": 16,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "n7LsK6",
+                          "name": "op-编辑",
+                          "fill": "$el-primary",
+                          "content": "编辑",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "iDQ3D",
+                          "name": "op-删除",
+                          "fill": "$el-danger",
+                          "content": "删除",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "k9B8yB",
+              "name": "分页",
+              "width": "fill_container",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "pc73D",
+                  "name": "total",
+                  "fill": "$text-regular",
+                  "content": "共 3 条",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "P6cz4",
+                  "name": "空位",
+                  "width": "fill_container",
+                  "height": 8
+                },
+                {
+                  "type": "text",
+                  "id": "MeMsm",
+                  "name": "btn-prev",
+                  "fill": "$text-regular",
+                  "content": "‹",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "Q2RJK",
+                  "name": "btn-1",
+                  "width": 28,
+                  "height": 28,
+                  "fill": "$el-primary",
+                  "cornerRadius": 4,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "o7ujYK",
+                      "name": "t",
+                      "fill": "#FFFFFF",
+                      "content": "1",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "laNr9",
+                  "name": "btn-next-disabled",
+                  "fill": "$border-color",
+                  "content": "›",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "d67EPJ",
+      "x": 1400,
+      "y": 0,
+      "name": "P2 新建/编辑任务对话框（低保真）",
+      "clip": true,
+      "width": 1280,
+      "height": 820,
+      "fill": "#00000066",
+      "layout": "vertical",
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "k1DEn5",
+          "name": "对话框",
+          "width": 560,
+          "fill": "$bg-blank",
+          "cornerRadius": 8,
+          "layout": "vertical",
+          "gap": 20,
+          "padding": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "p7PIr",
+              "name": "标题行",
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "GUzh8",
+                  "name": "标题",
+                  "fill": "$text-primary",
+                  "content": "新建任务",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "bold"
+                },
+                {
+                  "type": "frame",
+                  "id": "tOonM",
+                  "name": "空位",
+                  "width": "fill_container",
+                  "height": 8
+                },
+                {
+                  "type": "text",
+                  "id": "m2gCH",
+                  "name": "关闭×",
+                  "fill": "$text-secondary",
+                  "content": "×",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "kktkX",
+              "name": "字段-任务名称",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "k7hVbo",
+                  "name": "label",
+                  "fill": "$text-regular",
+                  "content": "任务名称",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "eKOBJ",
+                  "name": "输入框",
+                  "width": "fill_container",
+                  "height": 32,
+                  "cornerRadius": 4,
+                  "stroke": "$border-color",
+                  "strokeWidth": 1,
+                  "padding": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "KykDg",
+                      "name": "占位",
+                      "fill": "$text-secondary",
+                      "content": "每日晨报（≤100 字符）",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "N61S0",
+              "name": "字段-提示词",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "PuG8q",
+                  "name": "label",
+                  "fill": "$text-regular",
+                  "content": "提示词",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "EvoXv",
+                  "name": "textarea",
+                  "width": "fill_container",
+                  "height": 96,
+                  "cornerRadius": 4,
+                  "stroke": "$border-color",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "padding": 10,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "BQYAy",
+                      "name": "占位",
+                      "fill": "$text-secondary",
+                      "content": "汇总昨日订单异常并给出处理建议…",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "o6Ysv",
+                  "name": "字数行",
+                  "width": "fill_container",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "NQ2Co",
+                      "name": "空位",
+                      "width": "fill_container",
+                      "height": 6
+                    },
+                    {
+                      "type": "text",
+                      "id": "XBUie",
+                      "name": "计数",
+                      "fill": "$text-secondary",
+                      "content": "18 / 8000",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "HU8bu",
+              "name": "字段-执行时间",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "BYBQR",
+                  "name": "label",
+                  "fill": "$text-regular",
+                  "content": "执行时间",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "UCves",
+                  "name": "cron预设",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "KOYsr",
+                      "name": "preset-每天",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "EacBN",
+                          "name": "radio",
+                          "width": 14,
+                          "height": 14,
+                          "fill": "$el-primary",
+                          "cornerRadius": 7,
+                          "stroke": "$el-primary",
+                          "strokeWidth": 1
+                        },
+                        {
+                          "type": "text",
+                          "id": "n2pa6",
+                          "name": "t",
+                          "fill": "$el-primary",
+                          "content": "每天",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "fuCDw",
+                      "name": "preset-每周",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "WEoS2",
+                          "name": "radio",
+                          "width": 14,
+                          "height": 14,
+                          "fill": "$bg-blank",
+                          "cornerRadius": 7,
+                          "stroke": "$border-color",
+                          "strokeWidth": 1
+                        },
+                        {
+                          "type": "text",
+                          "id": "ew9Ay",
+                          "name": "t",
+                          "fill": "$text-regular",
+                          "content": "每周",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "WEtJp",
+                      "name": "preset-每月",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "XPYPj",
+                          "name": "radio",
+                          "width": 14,
+                          "height": 14,
+                          "fill": "$bg-blank",
+                          "cornerRadius": 7,
+                          "stroke": "$border-color",
+                          "strokeWidth": 1
+                        },
+                        {
+                          "type": "text",
+                          "id": "rDD2y",
+                          "name": "t",
+                          "fill": "$text-regular",
+                          "content": "每月",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Ls2kW",
+                  "name": "执行时间选择行",
+                  "width": 512,
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "txmgK",
+                      "name": "时间-每天",
+                      "width": 512,
+                      "layout": "vertical",
+                      "gap": 6,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Q8WXc",
+                          "name": "lbl",
+                          "fill": "$text-secondary",
+                          "content": "每天 · 执行时刻（选中「每天」时显示）",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "xhxY3",
+                          "name": "hh",
+                          "width": 400,
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ZV5TA",
+                              "name": "hh-t",
+                              "fill": "$text-primary",
+                              "content": "09 : 00",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "Ldtqv",
+                              "name": "hh-u",
+                              "fill": "$text-secondary",
+                              "content": "时 : 分（0-23 / 0-59）",
+                              "fontFamily": "Inter",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "YkBkS",
+                      "name": "时间-每周",
+                      "width": 512,
+                      "layout": "vertical",
+                      "gap": 6,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "aqCMP",
+                          "name": "lbl",
+                          "fill": "$text-secondary",
+                          "content": "每周 · 星期 + 时刻（选中「每周」时显示）",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "I3Qjf",
+                          "name": "ww",
+                          "width": 400,
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "KWhAr",
+                              "name": "ww-t",
+                              "fill": "$text-primary",
+                              "content": "星期五 01 : 00",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "u19SZN",
+                      "name": "时间-每月",
+                      "width": 512,
+                      "layout": "vertical",
+                      "gap": 6,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "R3eEQF",
+                          "name": "lbl",
+                          "fill": "$text-secondary",
+                          "content": "每月 · 日期 + 时刻（选中「每月」时显示）",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "eX4oo",
+                          "name": "dd",
+                          "width": 400,
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "vvDAL",
+                              "name": "dd-t",
+                              "fill": "$text-primary",
+                              "content": "1号 03 : 00",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "fjTbc",
+                  "name": "下次执行预览",
+                  "width": "fill_container",
+                  "fill": "#F5F7FA",
+                  "cornerRadius": 4,
+                  "gap": 6,
+                  "padding": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "tiVGj",
+                      "name": "t",
+                      "fill": "$text-secondary",
+                      "content": "ⓘ 下次执行：2026-08-25 09:00　·　相邻触发间隔须 ≥5 分钟",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "aCk6g",
+              "name": "字段-启停",
+              "width": "fill_container",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ow4hp",
+                  "name": "开关",
+                  "width": 40,
+                  "height": 20,
+                  "fill": "$el-primary",
+                  "cornerRadius": 10,
+                  "padding": 2,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "d9FglD",
+                      "name": "knob",
+                      "width": 16,
+                      "height": 16,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 8
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "L4Vi5A",
+                  "name": "说明",
+                  "fill": "$text-regular",
+                  "content": "启用（停用后不再按计划执行）",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "xBVcq",
+              "name": "编辑态提示",
+              "width": "fill_container",
+              "fill": "#FDF6EC",
+              "cornerRadius": 4,
+              "padding": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "XeWvL",
+                  "name": "t",
+                  "fill": "#E6A23C",
+                  "content": "ⓘ 执行中修改不影响当前轮，下一轮生效（仅编辑态显示）",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "U9cKL",
+              "name": "按钮行",
+              "width": "fill_container",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "tV2JF",
+                  "name": "空位",
+                  "width": "fill_container",
+                  "height": 8
+                },
+                {
+                  "type": "frame",
+                  "id": "M8q4Y",
+                  "name": "取消",
+                  "height": 32,
+                  "cornerRadius": 4,
+                  "stroke": "$border-color",
+                  "strokeWidth": 1,
+                  "padding": 14,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "O3fhE",
+                      "name": "t",
+                      "fill": "$text-regular",
+                      "content": "取消",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "oDZL8",
+                  "name": "保存",
+                  "height": 32,
+                  "fill": "$el-primary",
+                  "cornerRadius": 4,
+                  "padding": 14,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ikGtv",
+                      "name": "t",
+                      "fill": "#FFFFFF",
+                      "content": "保存",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "G3wMH",
+      "x": 1400,
+      "y": 940,
+      "name": "P3 立即执行确认（低保真）",
+      "clip": true,
+      "width": 640,
+      "height": 360,
+      "fill": "#00000066",
+      "layout": "vertical",
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "swYVN",
+          "name": "对话框",
+          "width": 440,
+          "fill": "$bg-blank",
+          "cornerRadius": 8,
+          "layout": "vertical",
+          "gap": 16,
+          "padding": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "FUUA1",
+              "name": "标题行",
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "h6PMi1",
+                  "name": "标题",
+                  "fill": "$text-primary",
+                  "content": "立即执行",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "bold"
+                },
+                {
+                  "type": "frame",
+                  "id": "PORyo",
+                  "name": "空位",
+                  "width": "fill_container",
+                  "height": 8
+                },
+                {
+                  "type": "text",
+                  "id": "DFd8u",
+                  "name": "关闭×",
+                  "fill": "$text-secondary",
+                  "content": "×",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "TRYU4",
+              "name": "语义列表",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "edJuS",
+                  "name": "line",
+                  "fill": "$text-regular",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "· 确认立即执行「每日晨报」？",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "MTB1L",
+                  "name": "line",
+                  "fill": "$text-regular",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "· 不影响原计划排程（下次执行时间不变）",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "E0WQN",
+                  "name": "line",
+                  "fill": "$text-regular",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "· 本次产出将标记为「手动触发」",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "inzWO",
+                  "name": "line",
+                  "fill": "$text-regular",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "· 执行异步进行，可在列表查看执行状态",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "B6tSo",
+              "name": "按钮行",
+              "width": "fill_container",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "fKxXp",
+                  "name": "空位",
+                  "width": "fill_container",
+                  "height": 8
+                },
+                {
+                  "type": "frame",
+                  "id": "J2xhER",
+                  "name": "取消",
+                  "height": 32,
+                  "cornerRadius": 4,
+                  "stroke": "$border-color",
+                  "strokeWidth": 1,
+                  "padding": 14,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ZO8YN",
+                      "name": "t",
+                      "fill": "$text-regular",
+                      "content": "取消",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "tkzGP",
+                  "name": "确认",
+                  "height": 32,
+                  "fill": "$el-primary",
+                  "cornerRadius": 4,
+                  "padding": 14,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "noEjm",
+                      "name": "t",
+                      "fill": "#FFFFFF",
+                      "content": "执行",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "G03v8h",
+      "x": 2120,
+      "y": 940,
+      "name": "P4 删除确认（低保真）",
+      "clip": true,
+      "width": 640,
+      "height": 360,
+      "fill": "#00000066",
+      "layout": "vertical",
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "cOQsD",
+          "name": "对话框",
+          "width": 440,
+          "fill": "$bg-blank",
+          "cornerRadius": 8,
+          "layout": "vertical",
+          "gap": 16,
+          "padding": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "os4RN",
+              "name": "标题行",
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "kv5Qh",
+                  "name": "标题",
+                  "fill": "$text-primary",
+                  "content": "删除任务",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "bold"
+                },
+                {
+                  "type": "frame",
+                  "id": "xsedg",
+                  "name": "空位",
+                  "width": "fill_container",
+                  "height": 8
+                },
+                {
+                  "type": "text",
+                  "id": "DHnqs",
+                  "name": "关闭×",
+                  "fill": "$text-secondary",
+                  "content": "×",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "bI76X",
+              "name": "语义列表",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cjePs",
+                  "name": "line",
+                  "fill": "$text-regular",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "· 确认删除「每日晨报」？",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "XlGpb",
+                  "name": "line",
+                  "fill": "$text-regular",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "· 绑定的会话组及其历史内容将保留，仍可在会话历史中查看",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "hWULp",
+                  "name": "line",
+                  "fill": "$text-regular",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "· 若正在执行，本轮将继续完成",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "GdLJS",
+              "name": "按钮行",
+              "width": "fill_container",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "r6ujk5",
+                  "name": "空位",
+                  "width": "fill_container",
+                  "height": 8
+                },
+                {
+                  "type": "frame",
+                  "id": "fg49g",
+                  "name": "取消",
+                  "height": 32,
+                  "cornerRadius": 4,
+                  "stroke": "$border-color",
+                  "strokeWidth": 1,
+                  "padding": 14,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "F6DQU",
+                      "name": "t",
+                      "fill": "$text-regular",
+                      "content": "取消",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "eKCjS",
+                  "name": "确认",
+                  "height": 32,
+                  "fill": "$el-danger",
+                  "cornerRadius": 4,
+                  "padding": 14,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ZBZmI",
+                      "name": "t",
+                      "fill": "#FFFFFF",
+                      "content": "删除",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "CjZbm",
+      "x": 1400,
+      "y": 1360,
+      "name": "配额超限 toast（低保真）",
+      "width": 420,
+      "height": 48,
+      "fill": "#FDEDEE",
+      "cornerRadius": 6,
+      "gap": 10,
+      "padding": 14,
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "D0W4k",
+          "name": "icon",
+          "fill": "$el-danger",
+          "content": "⚠",
+          "fontFamily": "Inter",
+          "fontSize": 16,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "s2zQw7",
+          "name": "msg",
+          "fill": "$el-danger",
+          "content": "任务数量已达上限（20 个），请先删除不再需要的任务",
+          "fontFamily": "Inter",
+          "fontSize": 13,
+          "fontWeight": "normal"
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "el-primary": {
+      "type": "color",
+      "value": "#409EFF"
+    },
+    "el-success": {
+      "type": "color",
+      "value": "#67C23A"
+    },
+    "el-warning": {
+      "type": "color",
+      "value": "#E6A23C"
+    },
+    "el-danger": {
+      "type": "color",
+      "value": "#F56C6C"
+    },
+    "el-info": {
+      "type": "color",
+      "value": "#909399"
+    },
+    "text-primary": {
+      "type": "color",
+      "value": "#303133"
+    },
+    "text-regular": {
+      "type": "color",
+      "value": "#606266"
+    },
+    "text-secondary": {
+      "type": "color",
+      "value": "#909399"
+    },
+    "border-color": {
+      "type": "color",
+      "value": "#DCDFE6"
+    },
+    "bg-page": {
+      "type": "color",
+      "value": "#F2F3F5"
+    },
+    "bg-blank": {
+      "type": "color",
+      "value": "#FFFFFF"
+    }
+  },
+  "fileToken": "77f7b434-3b75-4f0f-a026-11e4e8172382"
+}

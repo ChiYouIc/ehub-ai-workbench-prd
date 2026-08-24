@@ -2,6 +2,49 @@
 
 本文件记录文档工程的全部重要变更，按日期倒序。格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
 
+## 2026-08-24
+
+### Changed
+- **`designs/web/02-前端工程规范.md` 移除目录结构章节（原 §6）**——构建与目录约定随 ehub-web 现有工程，由代码工程自管，PRD 工程不自立目录规范；范围声明收窄，原 §7 演进顺延为 §6；README 描述同步。
+- **外壳侧边导航重设计（`01-应用外壳与导航.md` §1 + `app-shell-wireframe.pen`）**——宽度 220→**250px**；内部改**上/中/下三段式**：上=品牌区 h64（logo+应用名）、中=导航菜单+弹性空位、下=**用户条 h64**（左：头像+头衔/名称两行 ↔ 右：设置按钮，space-between；头衔/名称来自登录态，设置 v1 占位）；主区随之 1060→1030（卡片 990）；`app-shell-wireframe.png` 重新导出。
+
+### Added
+- **基座草图 `designs/web/app-shell-wireframe.pen`（单画板 1280×820）+ PNG 导出**——按 `01-应用外壳与导航.md` §1 规格绘制：侧边导航 220（品牌区 h64 + 导航菜单「对话（选中态 primary）/定时任务」）+ 主区 router-view（padding 20 + 内容卡片占位，卡片内工具条/表格行/分页仅为示意）；色彩 token 遵循 ui-baseline §2，结构经 bounds 校验无溢出；PNG 内嵌 `01-应用外壳与导航.md` §1.1，`.pen` 为唯一源再导出约定同 ia.md。
+
+### Changed
+- **外壳布局规格补齐（`designs/web/01-应用外壳与导航.md` §1）**——§1 拆为 1.1 线框 + 1.2 规格表：侧边导航 220px 固定不可折叠（el-menu 默认浅色）、主区 padding 20、背景/卡片底 token 引用 ui-baseline、滚动行为（导航固定/主区独立滚动）、最小宽度 1280 桌面优先不做响应式、弹层 z-index 随 EP 默认——web 基座布局从「只有结构关系」补为可实现规格。
+- **草图定稿 + ui-spec.md 同步定稿**——`ia.md` 状态草案 r1 → **定稿 r1**（含两处评审后修订注记：cron 独立成列、P2 执行时间两段式）；`ui-spec.md` 状态草案 r1 → **r1 定稿**，并补齐 §4.2 落地细节：执行时间复合控件的 Element Plus 组件映射（el-radio-group + el-time-picker 分钟粒度 + el-select 星期/日期）、频率 ↔ cronExpression 组装对照表、每月 31 号未命中月行为声明（有意接受）、编辑回填解析降级策略（降级「每天 00:00」+ 高亮提示，禁静默保存）。
+
+### Added
+- **草图图片内嵌 ia.md**——`wireframe.pen` 五画板导出为 PNG（scale 2，`wireframe-p1-list` / `wireframe-p2-form` / `wireframe-p3-run` / `wireframe-p4-delete` / `wireframe-p5-quota-toast`），在各线框小节（§3.1~§3.4）紧邻 ASCII 线框嵌入；头部登记再导出约定：`.pen` 为唯一源，草图修改后须重新导出同名 PNG。
+
+### Changed
+- **P2 执行时间配置改为「频率单选 + 时刻选择」两段式**——去除 cron 自定义输入：频率单选（每天/每周/每月）+ 随频率联动的时刻选择（每天→时刻；每周→星期+时刻；每月→日期+时刻），时刻精确到**分钟**，不暴露 cron 表达式（前端组装 cronExpression 提交，后端仍按 cron 语义校验间隔 ≥5 分钟）；`wireframe.pen` P2 更新（预设组去自定义 + 三个时刻选择区块）、`ia.md` §3.2 线框与要点、`ui-spec.md` §4.2 复合输入控件范式同步。
+- **列表列结构修正：cron 独立成列（执行计划）**——cron 是可扫读的结构化配置，不再作为名称列次行压缩呈现；`wireframe.pen` P1 表头与 3 行数据改为六列（名称/状态/执行计划/下次执行/最近执行/操作，bounds 校验无溢出）；`ia.md` §3.1 线框改名称单行 + 执行计划独立列；`ui-spec.md` §4.1 范式由「首列双行」改为「**结构化配置独立成列**（列宽充足时优先独立列，紧张时才双行压缩）」，§2 secondary 文本注例同步。
+- **草图范围修正：侧边导航移出模块草图**——应用外壳（全局导航）属前端框架层，不入模块草图/原型；`wireframe.pen` P1 删除侧边导航画板并重分配列宽（bounds 校验无溢出）；`ia.md` §3.1 线框与 §4 信息架构图改为「应用外壳 → P1」外壳注记；`ui-spec.md` §4.1 列表页范式由四段式改为**三段式（工具条+表格+分页，外壳内主体区）**。
+
+### Added
+- **定时任务设计链路正向重启（草图书面 + pen 画板双轨）**：废弃初版原型后按标准链路重走——
+  - **`scheduled-task-ia.md` 正向改写（草案 r1）**：交互草图/信息架构正向产出——页面清单（P1 列表/P2 新建编辑/P3 执行确认/P4 删除确认 + 配额 toast）、ASCII 低保真线框 ×4、信息架构 mermaid 图、状态展示表（status × run_state × last_run_status → tag 色彩语义）、页面策略决策（单页三对话框、FR-06 详情以编辑回填呈现）；**关卡①（FR 覆盖核对）通过**：FR-01~06 全覆盖、FR-07/08 正确排除，5 条随图设计决策登记（RUNNING 守卫前置、确认框=语义后果声明等）。
+  - **`scheduled-task-wireframe.pen`（pencil 低保真草图，5 画板）**：P1 任务列表（侧边导航/工具条/表格 3 行状态样例/分页）、P2 新建编辑对话框（名称/prompt 字数统计/cron 预设单选+下次执行预览/启停开关/编辑态提示）、P3 立即执行确认（三语义）、P4 删除确认（会话组保留/在途跑完）、配额超限 toast；色彩变量遵循 ui-spec §2（Element Plus token），结构经 bounds 校验无溢出。
+- **`scheduled-task-ui-spec.md` 转为工程 UI 基线（草案 r1）**：不再逆向依附任何原型——v1 视觉规范 = Element Plus 默认 token；工程级约定：状态色彩语义映射（禁硬编码 hex）、布局模式（列表页四段式/首列双行/表单对话框/确认框语义文案）、继承与治理规则（后续模块必须继承、偏离显式登记、文档优先于原型）。
+
+### Removed
+- **初版高保真原型废弃**：`scheduled-task-pages.pen` + 4 张 PNG 导出预览删除——该原型跳过草图/评审两步直接产出，无 ia 基准与关卡①记录，继续保留会以「事实规范」身份误导后续模块复用。
+
+### Changed
+- **`scheduled-task-design.md`**：头部关联改指 ia/ui-spec（原型待产出）；§9 设计验收重开为「待执行」——前置产物未齐（高保真原型待绘），原型完成走查后方可补齐三轴验收并进入开发。
+- **`README.md` 同步**：目录树 scheduled-task 注记改为「草图 ✅ → 关卡① ✅ → 高保真原型待绘」；索引表 Design 列更新；标准链路注记改写为重启状态。
+
+### Added
+- **定时任务设计链路补齐（历史缺口清偿）**：`designs/scheduled-task/` 补两件产物并补跑双关卡，模块设计链路闭环——
+  - **`scheduled-task-ia.md`（信息架构，逆向补录）**：由 2026-08-22 定稿的原型反推——页面清单（P1 列表/P2 新建编辑对话框/P3 立即执行确认/P4 删除确认+配额）、信息架构图、五条任务流（创建/编辑/立即执行/删除/状态展示）、状态组合呈现表（status × run_state × last_run_status）；**关卡①（FR 覆盖核对）补跑通过**：FR-01~06 全覆盖（FR-06 以编辑对话框回填呈现详情）、FR-07/08 正确排除在交互域外；两项留白登记（会话组跳转入口待 chat-conversation 前端、执行中更新提示以 ia 为准），不阻断。
+  - **`scheduled-task-ui-spec.md`（UI 设计文档，逆向提取）**：将原型「事实规范」转正为显式规范——v1 视觉规范 = Element Plus 默认 token 转正（不自定义）；工程级约定两块：状态色彩语义映射（启用 success/停用 info/执行中 primary/失败 danger，禁硬编码 hex）与布局模式（列表页四段式骨架、首列双行、表单对话框含字数统计+cron 预设复合输入、确认框=语义后果声明文案规范）；继承与治理规则（后续模块必须继承、偏离须显式登记、文档与原型冲突以文档为准）。**本文档是全工程 UI 基线 founding 文档**。
+- **`scheduled-task-design.md` 新增 §9 设计验收小节（关卡②补跑通过）**：三轴验收——FR/NFR 覆盖（FR-07 由模块设计 §2.2/§3/§4 承载、NFR-01~06 全为后端性质无交互侧义务）、原型走查（4 画板对五条任务流、状态组合、守卫拦截、语义文案落位）、文档齐套（PRD/requirements 01~05/ia/原型/ui-spec/design 六件齐，spec 不单立——决策内嵌 D1~D10）；结论：通过，进入开发实现，两处留白转交 chat-conversation 前端。
+
+### Changed
+- **`README.md` 同步**：目录树 `designs/scheduled-task/` 注记补齐产物与逆向补录背景（含 UI 基线 founding 声明）；文档索引定时任务行 Design 列更新为四件产物齐套、状态改「设计链路已补齐（2026-08-24），待开发」；标准链路注记改写——定时任务原型先行跳过 ia/评审的历史缺口已清偿，ai-chat / chat-conversation 后续补前端须继承 `scheduled-task-ui-spec.md` UI 基线。
+
 ## 2026-08-23
 
 ### Changed
@@ -26,8 +69,9 @@
 
 ## 2026-08-21
 
-### Added
-- **定时任务 v1 PRD 草案**（`plans/scheduled-task-prd.md`，r2）：write-a-prd 流程两轮访谈共 21 问（Q1–Q21）全部采纳推荐；用户终审提出部署形态更正为**多实例共库**（推翻 Q1 单实例前提），r2 修订——
+### Added- **工程 UI 基线独立 founding 文档 `designs/ui-baseline.md`（r1）**——工程级条款自 `scheduled-task-ui-spec.md` 提炼去模块化：色彩 token（§2）、状态色映射**规则**（§3：语义色禁裸值/持续态绿 vs 瞬时态蓝分色/空值「—」/危险固定 danger/错误统一 toast+danger/warning 预留）、布局范式（§4：列表页三段式+外壳不入模块草图+结构化配置独立成列、表单对话框「预设选择+联动细化」复合输入、确认框=语义后果声明、反馈=toast+行状态自流转）、治理（§5：模块必须继承/偏离显式登记/文档优先于原型）。`scheduled-task-ui-spec.md` 同步降级重构为**模块实例化文档**（基线继承声明 + 模块状态映射表 + 布局实例化 + 模块文案/组件映射/cron 组装表），删除与基线重复条款；`ia.md`/`design.md`/`README.md` 交叉引用改指 `ui-baseline.md`。
+
+### Changed- **定时任务 v1 PRD 草案**（`plans/scheduled-task-prd.md`，r2）：write-a-prd 流程两轮访谈共 21 问（Q1–Q21）全部采纳推荐；用户终审提出部署形态更正为**多实例共库**（推翻 Q1 单实例前提），r2 修订——
   - 调度：各实例 `@Scheduled` 轮询 + **DB 行级原子抢占**（单语句 `UPDATE ... WHERE run_state='IDLE'`，即 `SELECT FOR UPDATE` 折叠形式），多实例同一任务至多一个执行，不引入 Quartz/xxl-job
   - 到期比较用 DB `NOW()` 消除实例时钟偏差；僵死复位带 RUNNING 守卫（多实例至多一个成功）
   - 执行：非流式 `Application.call`（超时 120s 可配）；失败不重试记 `last_run_status`；任务严格串行
@@ -39,8 +83,11 @@
 
 ## 2026-08-20
 
-### Added
-- **会话内容管理（只读查询）v1 PRD 定版**（`plans/chat-conversation-content-prd.md` v1.0）：访谈 5 问（Q1–Q5）全部确认，用户终审通过。范围极小——会话内容**只读查询**；创建在 chat 接口、删除随会话组。核心决策：
+### Added- **前端全局设计与后端总体架构补位（结构性缺口清偿）**——盘点确认：后端模块级齐但缺全局收拢，前端外壳与工程约定无落点（缺口分析见当日对话）。
+  - **`designs/web/01-应用外壳与导航.md`（r1）**：外壳唯一事实源（补 ui-baseline §4.1「外包给框架层」后无人认领的缺口）——两区式外壳（侧边导航+主区 router-view）、导航表（对话/定时任务，新模块=加一行）、路由表（/chat /task；对话框为页内模态不占路由）、外壳层横切职责（认证跳转/全局错误/背景色）；会话历史跳转预留 `?conversationId=` 形态。
+  - **`designs/web/02-前端工程规范.md`（r1）**：前端工程单一事实源——axios 统一解包拦截器（`code!==0` 分支而非 HTTP status，分页 `{total,data}` 透传）、错误码段→前端行为映射（1000 跳登录/2000~2003 toast 后端 message/5000 通用文案不暴露原始 message）、SSE 消费（POST 不可用 EventSource → fetch+ReadableStream 封装 sseClient，三事件分支）、状态管理（v1 列表不建 store，组件内请求）、目录结构（api/shell/router/views 按模块平行，公共件不预建）。
+  - **`designs/architecture.md`（r1）**：后端总体架构一页纸——系统上下文（单服务+百炼+MySQL）、模块组装图（平台基础设施→三业务模块→两共享枢纽 `AiConversationService`/`AiConversationContentService`，不建平行服务）、百炼双形态调用（流式/非流式 SDK 直连）、部署视图（多实例默认、行级原子抢占无中央协调、僵死复位、asyncThreadPool）、新模块接入清单。收拢不改变模块设计，冲突以模块设计为准。
+  - **`README.md` 同步**：目录树补 `architecture.md` + `designs/web/` 两篇。- **会话内容管理（只读查询）v1 PRD 定版**（`plans/chat-conversation-content-prd.md` v1.0）：访谈 5 问（Q1–Q5）全部确认，用户终审通过。范围极小——会话内容**只读查询**；创建在 chat 接口、删除随会话组。核心决策：
   - 仅一个查询接口 `GET /chat/conversation/{conversationId}/contents?page=&size=`（与 chat-conversation PRD FR-04 为同一接口，合并开发）
   - `page` 默认 1、`size` 上限 50（非法 → `PARAM_ERROR`）、`id` 升序
   - 返回 `id/role/content/crtTime/models/inputToken/outputToken`，不含内部列

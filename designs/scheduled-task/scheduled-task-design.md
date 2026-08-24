@@ -1,6 +1,6 @@
 # Design — 定时任务 v1（/task 六接口 + 调度执行）
 
-> 关联：PRD 母本 `plans/scheduled-task-prd.md` (v1.0) ｜ 需求 `requirements/scheduled-task/04-数据模型.md`（01~03/05 拆解中） ｜ 页面交互 `designs/scheduled-task/scheduled-task-pages.pen`（4 画板 + PNG） ｜ 状态：**v1.0（2026-08-22，随 PRD 定版）**
+> 关联：PRD 母本 `plans/scheduled-task-prd.md` (v1.0) ｜ 需求 `requirements/scheduled-task/04-数据模型.md`（01~03/05 拆解中） ｜ 交互设计 `designs/scheduled-task/scheduled-task-ia.md`（草图+关卡①）+ `-ui-spec.md`（UI 设计文档，继承 `designs/ui-baseline.md` 工程 UI 基线）——高保真原型待产出 ｜ 状态：**v1.0（2026-08-22，随 PRD 定版；设计验收关卡②待原型完成后执行）**
 >
 > 本文使用深模块（deep module）/接口/seam 词汇。决策可溯源至母本访谈问题号（Qxx）与 Implementation Decisions 编号（决策 N）。
 >
@@ -186,3 +186,9 @@ sequenceDiagram
 - **失败重试**：`execute` 的失败分支为唯一挂载点，策略（退避/次数）可整体插入
 - **任务级记忆隔离**：`execute` ① 步组装 ApplicationParam 处按任务开关切换 sessionId 策略，接口不变（D7）
 - **负载均匀分布**：抢占语句为唯一互斥点，替换为随机相位/容量感知变体不影响其余模块（r3：视看板数据决定）
+
+## 9. 设计验收（关卡② — 待执行）
+
+> **状态：未通过，前置产物未齐。** 2026-08-24 设计链路重启（初版原型因跳过草图/评审两步废弃删除），当前进度：草图 + 关卡① ✅（`scheduled-task-ia.md` §6）、工程 UI 基线 ✅（`designs/ui-baseline.md`，模块实例化 `scheduled-task-ui-spec.md`）、**高保真原型待绘制**（按 ia.md §3 草图 + ui-baseline/ui-spec 规范产出 `-pages.pen` + PNG）。
+>
+> 原型完成并走查后，按三轴补齐本节：①FR/NFR 覆盖检查（FR-07 由本文档 §2.2/§3/§4 承载、NFR-01~06 全为后端性质无交互侧义务）；②原型走查（对照 ia.md §4 任务流与 §5 状态展示表）；③文档齐套（PRD / requirements 01~05 / ia / 原型 / ui-spec / design 六件）。齐套前不得进入开发实现。

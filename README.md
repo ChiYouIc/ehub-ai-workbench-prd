@@ -46,6 +46,11 @@ ehub-ai-workbench-prd/
 │   ├── ai-chat-spec.md      #   实现决策、测试决策、现状差距清单
 │   └── chat-conversation-spec.md # 管理接口实现决策、测试决策、差距清单
 ├── designs/                 # 设计产物（交互 + UI + 模块设计，见「文档流程」，按模块分目录）
+│   ├── architecture.md      #   后端总体架构一页纸：模块组装/共享枢纽/部署视图/新模块接入清单
+│   ├── ui-baseline.md       #   工程 UI 基线（founding）：token/状态色规则/布局范式/治理，各模块 ui-spec 必须继承
+│   ├── web/                 #   前端全局设计（与 requirements/web/ 后端横切约定呼应）
+│   │   ├── 01-应用外壳与导航.md # 外壳结构/导航表/路由表/布局规格（外壳唯一事实源，内嵌 app-shell-wireframe.pen+PNG 草图）
+│   │   └── 02-前端工程规范.md # API client 解包/错误码段处理/SSE 消费/状态管理（构建与目录随 ehub-web 现有工程）
 │   ├── <feature>/           #   模块设计目录（与 requirements/<feature> 对应）
 │   │   ├── <feature>-ia.md  #     交互草图/信息架构 + 交互评审结论
 │   │   ├── <feature>-pages.pen #  高保真交互原型（Element Plus 风格，附 PNG 预览）
@@ -53,8 +58,12 @@ ehub-ai-workbench-prd/
 │   │   └── <feature>-design.md #  模块设计文档（模块/seam/状态机/线程模型，D-xx + 设计验收小节）
 │   ├── ai-chat/             #   AI 对话模块设计（-design.md：轮次状态机、线程模型）
 │   ├── chat-conversation/   #   管理模块设计（-design.md：HTTP 接口定义独立章节、归属校验状态机）
-│   └── scheduled-task/      #   任务模块设计（-design.md：调度状态机、抢占时序、线程模型、D-xx；
-│                             #   -pages.pen 高保真原型 + 4 张 PNG；prototype-*.html 状态机验证原型）
+│   └── scheduled-task/      #   任务模块设计（-design.md：调度状态机、抢占时序、线程模型、D-xx、设计验收小节；
+                             #   -ia.md 信息架构+关卡①结论；-ui-spec.md UI 设计文档（继承工程 UI 基线）；
+                             #   -wireframe.pen 低保真草图 5 画板（P1~P4+toast）+ 同名导出 PNG（ia.md 内嵌引用）；高保真原型待产出；
+                             #   prototype-*.html 状态机验证原型）
+                             #   ⚠ 2026-08-24 设计链路重启：初版原型（跳过草图/评审）已废弃，
+                             #   现按标准链路推进（草图✅ → 关卡①✅ → 高保真原型待绘）
 ```
 
 ## 文档流程（标准链路，2026-08-22 定案）
@@ -164,6 +173,6 @@ flowchart LR
 | AI 对话 v1 | `plans/ai-chat-sse-prd.md` (v1.0) | `requirements/ai-chat/01~05` | `specs/ai-chat-spec.md` | `designs/ai-chat/ai-chat-design.md` | 已定版，待开发 |
 | 会话组与对话内容管理 v1 | `plans/chat-conversation-management-prd.md` (v1.0) | `requirements/chat-conversation/01~05` | `specs/chat-conversation-spec.md` | `designs/chat-conversation/chat-conversation-design.md` | 已定版，待开发 |
 | 会话内容管理（只读查询）v1 | `plans/chat-conversation-content-prd.md` (v1.0) | —（与上 FR-04 同一接口） | — | `designs/chat-conversation/chat-conversation-design.md` §7.1（承接） | 已定版，待开发（并入上实现） |
-| 定时任务 v1 | `plans/scheduled-task-prd.md` (v1.0) | `requirements/scheduled-task/`（01–05 全量） | — | `designs/scheduled-task/scheduled-task-design.md`（设计文档）+ `scheduled-task/scheduled-task-pages.pen`（产品交互设计） | 已定版，待开发 |
+| 定时任务 v1 | `plans/scheduled-task-prd.md` (v1.0) | `requirements/scheduled-task/`（01–05 全量） | —（决策内嵌 design D1–D10） | `designs/scheduled-task/`：`-design.md` + `-ia.md`（关卡①通过）+ `-ui-spec.md`（继承 `designs/ui-baseline.md`）+ `-wireframe.pen`（草图 5 画板）；高保真原型待产出 | 已定版，草图/评审完成，高保真原型待绘 |
 
-> 标准链路（2026-08-22 定案，此后所有新模块照此执行）：**PRD草案 → PRD定稿 → 正式PRD文档 → 交互草图/信息架构 → 交互评审 → 高保真交互原型 → UI视觉设计 → 设计文档输出 → 设计验收 → 开发实现**；工程拆解（requirements/specs）在正式 PRD 后并行。定时任务 v1 已走通主干（缺 ia/ui-spec/两道关卡，属历史缺口按现状索引）；ai-chat / chat-conversation 仅有模块设计文档，后续如需前端页面再按新链路补齐。
+> 标准链路（2026-08-22 定案，此后所有新模块照此执行）：**PRD草案 → PRD定稿 → 正式PRD文档 → 交互草图/信息架构 → 交互评审 → 高保真交互原型 → UI视觉设计 → 设计文档输出 → 设计验收 → 开发实现**；工程拆解（requirements/specs）在正式 PRD 后并行。定时任务 v1 初版原型跳过了草图/评审两步，2026-08-24 废弃重启：草图（ia.md + wireframe.pen）✅、关卡① ✅、UI 基线（`designs/ui-baseline.md`，自 scheduled-task-ui-spec 提炼）✅、**高保真原型待绘**；ai-chat / chat-conversation 后续补前端时按新链路走并继承 `designs/ui-baseline.md` UI 基线。
