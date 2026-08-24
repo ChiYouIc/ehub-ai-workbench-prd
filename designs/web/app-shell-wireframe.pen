@@ -309,7 +309,7 @@
                   "name": "menu-聊天",
                   "width": "fill_container",
                   "height": 36,
-                  "fill": "#000000",
+                  "fill": "$el_active_bg",
                   "cornerRadius": 4,
                   "gap": 8,
                   "padding": [
@@ -379,36 +379,67 @@
                       "id": "nrggh",
                       "name": "会话-本周销售数据汇总",
                       "width": "fill_container",
-                      "fill": "#000000",
+                      "fill": "$el_active_bg",
                       "cornerRadius": 4,
-                      "layout": "vertical",
-                      "gap": 2,
+                      "gap": 8,
                       "padding": [
                         6,
                         12
                       ],
+                      "alignItems": "center",
                       "children": [
                         {
-                          "type": "text",
-                          "id": "Nfpb9",
-                          "name": "会话名-本周销售数据汇总",
-                          "fill": "$el_primary",
-                          "textGrowth": "fixed-width",
-                          "width": 210,
-                          "content": "本周销售数据汇总",
-                          "fontFamily": "Inter",
-                          "fontSize": 13,
-                          "fontWeight": "600"
+                          "type": "frame",
+                          "id": "YzUnz",
+                          "name": "会话文本",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 2,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Nfpb9",
+                              "name": "会话名-本周销售数据汇总",
+                              "fill": "$el_primary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "本周销售数据汇总",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "A9EL7",
+                              "name": "会话时间-本周销售数据汇总",
+                              "fill": "$text_secondary",
+                              "content": "08-24",
+                              "fontFamily": "Inter",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
                         },
                         {
-                          "type": "text",
-                          "id": "A9EL7",
-                          "name": "会话时间-本周销售数据汇总",
-                          "fill": "$text_secondary",
-                          "content": "08-24",
-                          "fontFamily": "Inter",
-                          "fontSize": 11,
-                          "fontWeight": "normal"
+                          "type": "frame",
+                          "id": "s3Jz2B",
+                          "name": "删除按钮",
+                          "width": 22,
+                          "height": 22,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "b36sXW",
+                              "name": "删除icon",
+                              "width": 13,
+                              "height": 13,
+                              "icon": "trash-2",
+                              "library": "lucide",
+                              "fill": "$text_secondary"
+                            }
+                          ]
                         }
                       ]
                     },
@@ -544,126 +575,21 @@
               "id": "GTUSd",
               "name": "内容卡片（模块页面主体）",
               "width": 990,
+              "height": "fill_container",
               "fill": "$bg_blank",
               "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
               "children": [
                 {
-                  "type": "frame",
-                  "id": "MuTWI",
-                  "name": "工具条示意 h56",
-                  "width": 990,
-                  "height": 56,
-                  "gap": 12,
-                  "padding": [
-                    0,
-                    16
-                  ],
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "nq642",
-                      "name": "占位-搜索",
-                      "fill": "$text_secondary",
-                      "content": "🔍 搜索…（模块工具条示例）",
-                      "fontFamily": "Inter",
-                      "fontSize": 13,
-                      "fontWeight": "normal"
-                    },
-                    {
-                      "type": "frame",
-                      "id": "T12YPc",
-                      "name": "spacer",
-                      "width": 600,
-                      "height": 16
-                    },
-                    {
-                      "type": "frame",
-                      "id": "rdvrL",
-                      "name": "btn-主操作示意",
-                      "width": 96,
-                      "height": 32,
-                      "fill": "$el_primary",
-                      "cornerRadius": 4,
-                      "justifyContent": "center",
-                      "alignItems": "center"
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "nHCmi",
-                  "name": "表格主体示意",
-                  "width": 990,
-                  "height": 520,
-                  "layout": "vertical",
-                  "gap": 12,
-                  "padding": 16,
-                  "children": [
-                    {
-                      "type": "frame",
-                      "id": "JEW5o",
-                      "name": "行示意",
-                      "width": 958,
-                      "height": 44,
-                      "cornerRadius": 4,
-                      "gap": 16
-                    },
-                    {
-                      "type": "frame",
-                      "id": "BEv6C",
-                      "name": "行示意",
-                      "width": 958,
-                      "height": 44,
-                      "cornerRadius": 4,
-                      "gap": 16
-                    },
-                    {
-                      "type": "frame",
-                      "id": "kEiDJ",
-                      "name": "行示意",
-                      "width": 958,
-                      "height": 44,
-                      "cornerRadius": 4,
-                      "gap": 16
-                    },
-                    {
-                      "type": "text",
-                      "id": "TEWGb",
-                      "name": "占位说明",
-                      "fill": "$text_secondary",
-                      "content": "（模块页面主体——由各模块 -ia.md 定义，本画板只画外壳）",
-                      "fontFamily": "Inter",
-                      "fontSize": 12,
-                      "fontWeight": "normal"
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "W2HF0",
-                  "name": "分页器示意 h48",
-                  "width": 990,
-                  "height": 48,
-                  "padding": [
-                    0,
-                    16,
-                    0,
-                    0
-                  ],
-                  "justifyContent": "end",
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "YHomm",
-                      "name": "t",
-                      "fill": "$text_regular",
-                      "content": "共 n 条    ‹ 1 ›",
-                      "fontFamily": "Inter",
-                      "fontSize": 13,
-                      "fontWeight": "normal"
-                    }
-                  ]
+                  "type": "text",
+                  "id": "vwiB6",
+                  "name": "占位说明",
+                  "fill": "$text_secondary",
+                  "content": "（模块页面主体——由各模块 -ia.md 定义，本画板只画外壳）",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
                 }
               ]
             }
@@ -764,7 +690,7 @@
                   "name": "cmenu-＋",
                   "width": 44,
                   "height": 36,
-                  "fill": "#000000",
+                  "fill": "$el_active_bg",
                   "cornerRadius": 4,
                   "justifyContent": "center",
                   "alignItems": "center",
@@ -979,6 +905,10 @@
     "border_light": {
       "type": "color",
       "value": "#E4E7ED"
+    },
+    "el_active_bg": {
+      "type": "color",
+      "value": "#ECF5FF"
     }
   },
   "fileToken": "10ca34b3-7f4d-496f-a822-e03e9e163156"
