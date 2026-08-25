@@ -2,6 +2,15 @@
 
 本文件记录文档工程的全部重要变更，按日期倒序。格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
 
+## 2026-08-25
+
+### Added
+- **模型配置管理模块（model-config）v1.0 定版**：`plans/model-config-prd.md` 决策母本（Q1–Q34，决策记录 `requirements/model-config/grilling-decisions.md`）+ `requirements/model-config/01~05` 工程拆解——admin 同服务分包，新建 `ai_model_provider` + `ai_model` 两表，Provider/Model CRUD × 12 接口，API Key AES 加密，与百炼路径完全解耦（百炼硬编码不变，`GET /chat/models` 标记迁移 v2）。
+- **自研 Agent 对话（agent-chat）确立为独立模块并规划 v2**：第三方模型对话接口、Provider 适配器归该模块交付（不并入 model-config / ai-chat）；依赖 model-config v1 基础设施；README 文档索引与目录树登记。
+
+### Changed
+- **ai-chat v1.1 定版**：FR-10~14（模型选择 / 消息评价 / 重新生成 / @提及成员 / 文件上传）及配套接口（GET /chat/models、POST /chat/feedback、GET /chat/members、POST /chat/upload）、数据模型 params 扩展、NFR-07~09、R-06~07。
+
 ## 2026-08-24
 
 ### Added
