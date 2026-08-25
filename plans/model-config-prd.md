@@ -1,7 +1,7 @@
 # PRD: 模型配置管理 v1（Admin 模块）
 
 > 状态：**v1.0（已定版）** — 2026-08-25
-> 决策记录：Q1–Q34 已于 2026-08-25 Grilling 确认，详见 `requirements/model-config/grilling-decisions.md`。
+> 决策记录：Q1–Q34 已于 2026-08-25 Grilling 确认，详见 `plans/model-config-interview.md`。
 > 内容已拆解至 `requirements/model-config/01~05`。
 
 ## Problem Statement

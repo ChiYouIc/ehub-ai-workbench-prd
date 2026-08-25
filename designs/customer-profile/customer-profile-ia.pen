@@ -1,0 +1,1211 @@
+{
+  "version": "2.17",
+  "children": [
+    {
+      "type": "frame",
+      "id": "evvB3",
+      "x": 860,
+      "y": -1280,
+      "name": "Customer Profile",
+      "clip": true,
+      "width": 800,
+      "fill": "$ei-bg-page",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "fhErj",
+          "name": "Card",
+          "width": "fill_container",
+          "fill": "$ei-bg-white",
+          "layout": "vertical",
+          "padding": [
+            20,
+            24
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "AfkwS",
+              "name": "Header Row",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "OTWdy",
+                  "name": "Email Area",
+                  "gap": 8,
+                  "alignItems": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "si2vt",
+                      "name": "Email",
+                      "fill": "$ei-text-primary",
+                      "content": "mid@shop.com",
+                      "fontFamily": "$ei-font",
+                      "fontSize": 18,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "ViIXD",
+                      "name": "ID",
+                      "fill": "$ei-text-secondary",
+                      "content": "(510100)",
+                      "fontFamily": "$ei-font",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "iERcT",
+                  "name": "Status Badge",
+                  "fill": "#F0F9EB",
+                  "cornerRadius": 4,
+                  "stroke": "#E1F3D8",
+                  "strokeWidth": 1,
+                  "padding": [
+                    4,
+                    12
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "zJ0gD",
+                      "name": "Badge Text",
+                      "fill": "$ei-success",
+                      "content": "已激活",
+                      "fontFamily": "$ei-font",
+                      "fontSize": 12,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "twwjW",
+              "name": "Meta Wrap",
+              "width": "fill_container",
+              "padding": [
+                4,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "E9Wap",
+                  "name": "Meta",
+                  "fill": "$ei-text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "国家 DE · 注册 25 天前 · 渠道 推荐 · 等级 L1 · 已绑 无",
+                  "fontFamily": "$ei-font",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "l7SJy",
+              "name": "Sep",
+              "width": "fill_container",
+              "padding": [
+                12,
+                0
+              ],
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "o3Fp6N",
+                  "name": "Line",
+                  "fill": "$ei-border",
+                  "width": "fill_container",
+                  "height": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "BzBP3",
+              "name": "Scoring Panel",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "C20ti",
+                  "name": "Title",
+                  "fill": "#303133",
+                  "content": "评分面板",
+                  "fontFamily": "$ei-font",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "MM2vn",
+                  "name": "Metrics Row",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "JiWmw",
+                      "name": "线索质量",
+                      "width": "fill_container",
+                      "fill": "#FEF9F0",
+                      "cornerRadius": 4,
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        12,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "jbPVN",
+                          "name": "Label",
+                          "fill": "$ei-text-secondary",
+                          "content": "线索质量",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Y3GjM",
+                          "name": "Value",
+                          "fill": "$ei-warning",
+                          "content": "中",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 18,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "zAMwI",
+                      "name": "意向热度",
+                      "width": "fill_container",
+                      "fill": "#FEF9F0",
+                      "cornerRadius": 4,
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        12,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "tmmix",
+                          "name": "Label",
+                          "fill": "$ei-text-secondary",
+                          "content": "意向热度",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "FLlVp",
+                          "name": "Value",
+                          "fill": "$ei-warning",
+                          "content": "温",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 18,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "mQTbx",
+                      "name": "跟进优先级",
+                      "width": "fill_container",
+                      "fill": "#FEF9F0",
+                      "cornerRadius": 4,
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        12,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Udtbb",
+                          "name": "Label",
+                          "fill": "$ei-text-secondary",
+                          "content": "跟进优先级",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "s84av",
+                          "name": "Value",
+                          "fill": "$ei-warning",
+                          "content": "P1",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 18,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "E0ah5",
+                      "name": "信息完整度",
+                      "width": "fill_container",
+                      "fill": "#FEF9F0",
+                      "cornerRadius": 4,
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        12,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ky8xb",
+                          "name": "Label",
+                          "fill": "$ei-text-secondary",
+                          "content": "信息完整度",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "KSLwW",
+                          "name": "Value",
+                          "fill": "$ei-warning",
+                          "content": "50%",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 18,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Q3vN0e",
+              "name": "Sep",
+              "width": "fill_container",
+              "padding": [
+                12,
+                0
+              ],
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "uTbEA",
+                  "name": "Line",
+                  "fill": "$ei-border",
+                  "width": "fill_container",
+                  "height": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "CwGIE",
+              "name": "Lead Reading",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "QrBIM",
+                  "name": "Title",
+                  "fill": "#303133",
+                  "content": "线索速读",
+                  "fontFamily": "$ei-font",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "S2BfgB",
+                  "name": "Alert",
+                  "width": "fill_container",
+                  "fill": "#FDF6EC",
+                  "cornerRadius": 4,
+                  "gap": 10,
+                  "padding": [
+                    10,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "I1kSA",
+                      "name": "AI Tag",
+                      "fill": "#FDEBD0",
+                      "cornerRadius": 3,
+                      "padding": [
+                        2,
+                        8
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "fBl11",
+                          "name": "Tag Text",
+                          "fill": "$ei-warning",
+                          "content": "AI 暂不可用",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "TjdES",
+                      "name": "Msg",
+                      "fill": "$ei-warning",
+                      "content": "基础画像见上方评分。",
+                      "fontFamily": "$ei-font",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "GsHGr",
+              "name": "Sep",
+              "width": "fill_container",
+              "padding": [
+                12,
+                0
+              ],
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "cYOz9",
+                  "name": "Line",
+                  "fill": "$ei-border",
+                  "width": "fill_container",
+                  "height": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "UBmYO",
+              "name": "经验与预算画像",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "eE0qj",
+                  "name": "Title",
+                  "fill": "#303133",
+                  "content": "经验与预算画像",
+                  "fontFamily": "$ei-font",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "hPQWf",
+                  "name": "KV Row",
+                  "width": "fill_container",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "XcDhd",
+                      "name": "Cell",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "PJGXS",
+                          "name": "Key",
+                          "fill": "$ei-text-secondary",
+                          "content": "Dropshipping 经验",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "T5JnG",
+                          "name": "Value",
+                          "fill": "$ei-text-primary",
+                          "content": "6 个月",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "p8BJy",
+                      "name": "Cell",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "o1uMB1",
+                          "name": "Key",
+                          "fill": "$ei-text-secondary",
+                          "content": "周广告预算",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "U07GO1",
+                          "name": "Value",
+                          "fill": "$ei-text-primary",
+                          "content": "未提供",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "OE957",
+              "name": "Sep",
+              "width": "fill_container",
+              "padding": [
+                12,
+                0
+              ],
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "Xtyit",
+                  "name": "Line",
+                  "fill": "$ei-border",
+                  "width": "fill_container",
+                  "height": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Gjpig",
+              "name": "目标市场与品类",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "RziBC",
+                  "name": "Title",
+                  "fill": "#303133",
+                  "content": "目标市场与品类",
+                  "fontFamily": "$ei-font",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "U7RoNb",
+                  "name": "KV Row",
+                  "width": "fill_container",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "S9yeYA",
+                      "name": "Cell",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "D7xwn9",
+                          "name": "Key",
+                          "fill": "$ei-text-secondary",
+                          "content": "细分市场",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "aMakB",
+                          "name": "Value",
+                          "fill": "$ei-text-primary",
+                          "content": "Electronics",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "KqurK",
+                      "name": "Cell",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "tbxOO",
+                          "name": "Key",
+                          "fill": "$ei-text-secondary",
+                          "content": "主营品类",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "hKgc3",
+                          "name": "Value",
+                          "fill": "$ei-text-primary",
+                          "content": "未提供",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "iLtI6",
+              "name": "Sep",
+              "width": "fill_container",
+              "padding": [
+                12,
+                0
+              ],
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "GH4jz",
+                  "name": "Line",
+                  "fill": "$ei-border",
+                  "width": "fill_container",
+                  "height": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "QLuPc",
+              "name": "活跃轨迹",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "LWN9X",
+                  "name": "Title",
+                  "fill": "#303133",
+                  "content": "活跃轨迹",
+                  "fontFamily": "$ei-font",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "WeAEc",
+                  "name": "KV Row",
+                  "width": "fill_container",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "xKPdO",
+                      "name": "Cell",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Wbx0c",
+                          "name": "Key",
+                          "fill": "$ei-text-secondary",
+                          "content": "累计登录",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "q2x3o9",
+                          "name": "Value",
+                          "fill": "$ei-text-primary",
+                          "content": "2 次",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "AvE10",
+                      "name": "Cell",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "F9j6w",
+                          "name": "Key",
+                          "fill": "$ei-text-secondary",
+                          "content": "最近登录",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "GJfNh",
+                          "name": "Value",
+                          "fill": "$ei-text-primary",
+                          "content": "9 天前",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "u9wEsc",
+                  "name": "KV Row",
+                  "width": "fill_container",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "AOjQ1",
+                      "name": "Cell",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "dmEje",
+                          "name": "Key",
+                          "fill": "$ei-text-secondary",
+                          "content": "激活状态",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Yyutt",
+                          "name": "Value",
+                          "fill": "$ei-success",
+                          "content": "已激活",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "cPIpl",
+              "name": "Sep",
+              "width": "fill_container",
+              "padding": [
+                12,
+                0
+              ],
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "BCV8k",
+                  "name": "Line",
+                  "fill": "$ei-border",
+                  "width": "fill_container",
+                  "height": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "TrMHm",
+              "name": "Strategy",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "vQv6n",
+                  "name": "Title",
+                  "fill": "#303133",
+                  "content": "转化策略建议",
+                  "fontFamily": "$ei-font",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "a60Xr",
+                  "name": "Alert",
+                  "width": "fill_container",
+                  "fill": "#FDF6EC",
+                  "cornerRadius": 4,
+                  "gap": 10,
+                  "padding": [
+                    10,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "jqYS3",
+                      "name": "AI Tag",
+                      "fill": "#FDEBD0",
+                      "cornerRadius": 3,
+                      "padding": [
+                        2,
+                        8
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "J7O1TU",
+                          "name": "Tag Text",
+                          "fill": "$ei-warning",
+                          "content": "AI 暂不可用",
+                          "fontFamily": "$ei-font",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "CJ5nV",
+                      "name": "Msg",
+                      "fill": "$ei-warning",
+                      "content": "请按优先级 P 与完整度人工判断下一步。",
+                      "fontFamily": "$ei-font",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "jsHTi",
+              "name": "Sep",
+              "width": "fill_container",
+              "padding": [
+                12,
+                0
+              ],
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "WtlpW",
+                  "name": "Line",
+                  "fill": "$ei-border",
+                  "width": "fill_container",
+                  "height": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Ok8F4",
+              "name": "Script",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "G7goY",
+                  "name": "Title",
+                  "fill": "#303133",
+                  "content": "销售话术（可复制）",
+                  "fontFamily": "$ei-font",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "aHCES",
+                  "name": "Text",
+                  "fill": "$ei-text-secondary",
+                  "content": "AI 暂不可用，话术生成失败，请稍后刷新。",
+                  "fontFamily": "$ei-font",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "EfrhM",
+              "name": "Sep",
+              "width": "fill_container",
+              "padding": [
+                12,
+                0
+              ],
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "SXE9V",
+                  "name": "Line",
+                  "fill": "$ei-border",
+                  "width": "fill_container",
+                  "height": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "VKAqS",
+              "name": "Footer",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "C0GhCu",
+                  "name": "Footer L",
+                  "fill": "#C0C4CC",
+                  "content": "生成于 2026/8/24 23:00:00 · aiStatus=FALLBACK",
+                  "fontFamily": "$ei-font",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "OJTrz",
+                  "name": "Footer R",
+                  "fill": "#C0C4CC",
+                  "content": "同一版式·按字段条件显隐模块",
+                  "fontFamily": "$ei-font",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "el-primary": {
+      "type": "color",
+      "value": "#409EFF"
+    },
+    "el-success": {
+      "type": "color",
+      "value": "#67C23A"
+    },
+    "el-warning": {
+      "type": "color",
+      "value": "#E6A23C"
+    },
+    "el-danger": {
+      "type": "color",
+      "value": "#F56C6C"
+    },
+    "el-info": {
+      "type": "color",
+      "value": "#909399"
+    },
+    "el-text-primary": {
+      "type": "color",
+      "value": "#303133"
+    },
+    "el-text-regular": {
+      "type": "color",
+      "value": "#606266"
+    },
+    "el-text-secondary": {
+      "type": "color",
+      "value": "#909399"
+    },
+    "el-border": {
+      "type": "color",
+      "value": "#DCDFE6"
+    },
+    "el-border-light": {
+      "type": "color",
+      "value": "#E4E7ED"
+    },
+    "el-bg-page": {
+      "type": "color",
+      "value": "#F5F7FA"
+    },
+    "el-bg-white": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "el-bg": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "el-font": {
+      "type": "string",
+      "value": "Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif"
+    },
+    "el-font-size-base": {
+      "type": "number",
+      "value": 14
+    },
+    "el-font-size-small": {
+      "type": "number",
+      "value": 13
+    },
+    "el-font-size-extra-small": {
+      "type": "number",
+      "value": 12
+    },
+    "el-font-size-medium": {
+      "type": "number",
+      "value": 14
+    },
+    "ei-primary": {
+      "type": "color",
+      "value": "#409EFF"
+    },
+    "ei-success": {
+      "type": "color",
+      "value": "#67C23A"
+    },
+    "ei-warning": {
+      "type": "color",
+      "value": "#E6A23C"
+    },
+    "ei-danger": {
+      "type": "color",
+      "value": "#F56C6C"
+    },
+    "ei-info": {
+      "type": "color",
+      "value": "#909399"
+    },
+    "ei-text-primary": {
+      "type": "color",
+      "value": "#303133"
+    },
+    "ei-text-regular": {
+      "type": "color",
+      "value": "#606266"
+    },
+    "ei-text-secondary": {
+      "type": "color",
+      "value": "#909399"
+    },
+    "ei-bg-page": {
+      "type": "color",
+      "value": "#F5F7FA"
+    },
+    "ei-bg-white": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "ei-bg-card": {
+      "type": "color",
+      "value": "#FAFAFA"
+    },
+    "ei-border": {
+      "type": "color",
+      "value": "#EBEEF5"
+    },
+    "ei-border-light": {
+      "type": "color",
+      "value": "#E4E7ED"
+    },
+    "ei-font": {
+      "type": "string",
+      "value": "Noto Sans SC"
+    },
+    "bg-page": {
+      "type": "color",
+      "value": "#F5F7FA"
+    },
+    "bg-card": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "bg-alert": {
+      "type": "color",
+      "value": "#FDF6EC"
+    },
+    "border-card": {
+      "type": "color",
+      "value": "#EBEEF5"
+    },
+    "text-title": {
+      "type": "color",
+      "value": "#303133"
+    },
+    "text-primary": {
+      "type": "color",
+      "value": "#303133"
+    },
+    "text-secondary": {
+      "type": "color",
+      "value": "#909399"
+    },
+    "text-section": {
+      "type": "color",
+      "value": "#303133"
+    },
+    "color-primary": {
+      "type": "color",
+      "value": "#409EFF"
+    },
+    "color-warning": {
+      "type": "color",
+      "value": "#E6A23C"
+    },
+    "color-success": {
+      "type": "color",
+      "value": "#67C23A"
+    },
+    "color-danger": {
+      "type": "color",
+      "value": "#F56C6C"
+    },
+    "border-warning": {
+      "type": "color",
+      "value": "#FAECD8"
+    },
+    "text-warning": {
+      "type": "color",
+      "value": "#E6A23C"
+    },
+    "font-ui": {
+      "type": "string",
+      "value": "Noto Sans SC"
+    },
+    "bg": {
+      "type": "color",
+      "value": "#F5F7FA"
+    },
+    "card": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "border": {
+      "type": "color",
+      "value": "#EBEEF5"
+    },
+    "border-light": {
+      "type": "color",
+      "value": "#DCDFE6"
+    },
+    "primary": {
+      "type": "color",
+      "value": "#409EFF"
+    },
+    "success": {
+      "type": "color",
+      "value": "#67C23A"
+    },
+    "warning": {
+      "type": "color",
+      "value": "#E6A23C"
+    },
+    "danger": {
+      "type": "color",
+      "value": "#F56C6C"
+    },
+    "text-regular": {
+      "type": "color",
+      "value": "#606266"
+    },
+    "text-placeholder": {
+      "type": "color",
+      "value": "#C0C4CC"
+    },
+    "tag-success-bg": {
+      "type": "color",
+      "value": "#F0F9EB"
+    },
+    "tag-success-border": {
+      "type": "color",
+      "value": "#E1F3D8"
+    },
+    "alert-warning-bg": {
+      "type": "color",
+      "value": "#FDF6EC"
+    },
+    "alert-warning-border": {
+      "type": "color",
+      "value": "#FAECD8"
+    },
+    "score-bg": {
+      "type": "color",
+      "value": "#F5F7FA"
+    },
+    "font": {
+      "type": "string",
+      "value": "Noto Sans SC"
+    }
+  },
+  "fileToken": "1e85118a-cbab-40d1-88a3-a54763ab98f0"
+}

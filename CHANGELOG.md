@@ -5,7 +5,8 @@
 ## 2026-08-25
 
 ### Added
-- **模型配置管理模块（model-config）v1.0 定版**：`plans/model-config-prd.md` 决策母本（Q1–Q34，决策记录 `requirements/model-config/grilling-decisions.md`）+ `requirements/model-config/01~05` 工程拆解——admin 同服务分包，新建 `ai_model_provider` + `ai_model` 两表，Provider/Model CRUD × 12 接口，API Key AES 加密，与百炼路径完全解耦（百炼硬编码不变，`GET /chat/models` 标记迁移 v2）。
+- **访谈记录归位 plans/（流程修正）**：model-config / customer-profile 两模块的访谈决策记录原落 `requirements/<feature>/grilling-decisions.md`，与 2026-08-22「访谈记录落盘约定」（`plans/<feature>-interview.md` 为 Qn 溯源单一事实源）相悖——已迁移改名：`requirements/model-config/grilling-decisions.md` → `plans/model-config-interview.md`、`requirements/customer-profile/grilling-decisions.md` → `plans/customer-profile-interview.md`；PRD 溯源链接、README 目录树（补 model-config / customer-profile 两 PRD 条目）与文档索引同步更新。
+- **模型配置管理模块（model-config）v1.0 定版**：`plans/model-config-prd.md` 决策母本（Q1–Q34，决策记录 `plans/model-config-interview.md`）+ `requirements/model-config/01~05` 工程拆解——admin 同服务分包，新建 `ai_model_provider` + `ai_model` 两表，Provider/Model CRUD × 12 接口，API Key AES 加密，与百炼路径完全解耦（百炼硬编码不变，`GET /chat/models` 标记迁移 v2）。
 - **自研 Agent 对话（agent-chat）确立为独立模块并规划 v2**：第三方模型对话接口、Provider 适配器归该模块交付（不并入 model-config / ai-chat）；依赖 model-config v1 基础设施；README 文档索引与目录树登记。
 
 ### Changed

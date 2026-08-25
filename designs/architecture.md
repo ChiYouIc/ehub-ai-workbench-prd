@@ -32,6 +32,7 @@ flowchart TD
         AICHAT["ai-chat<br/>POST /chat/sse"]
         CONV["chat-conversation<br/>/chat 管理接口"]
         TASK["scheduled-task<br/>/task 六接口 + 调度"]
+        CPROFILE["customer-profile<br/>/profile 画像接口 + 扫描"]
     end
     subgraph shared["共享领域服务（跨模块复用，归属 ai-chat 侧）"]
         CONVS["AiConversationService<br/>会话组持久化"]
@@ -47,6 +48,8 @@ flowchart TD
     TASK -->|"产出归档 saveChatResult"| CONTS
     TASK -->|"Application.call 非流式"| BL2["百炼 Agent"]
     AICHAT -->|"streamCall 流式"| BL2
+    CPROFILE -->|"扫描预筛/取数"| MCPS["下游 MCP 统计服务<br/>（外部，另行立项）"]
+    CPROFILE -->|"Application.call 非流式<br/>Agent 侧挂 MCP 数据工具+画像技能"| BL2
 ```
 
 要点：
@@ -62,6 +65,7 @@ flowchart TD
 | `ai_conversation` | 共享（ai-chat 建） | 会话组；定时任务创建时插入专属组 |
 | `ai_conversation_content` | 共享（ai-chat 建） | 对话内容；任务产出经 `saveChatResult` 归档 |
 | `ai_scheduled_task` | scheduled-task | 任务 + 执行状态 + 最近结局摘要 |
+| `ai_customer_profile` | customer-profile | 客户画像（覆盖式）+ 分析状态 + token 成本；**不落会话体系，不复用共享枢纽** |
 
 - 单库 MySQL，无跨库事务；内容归档的事务边界收敛在 `AiConversationContentService`。
 - 逻辑删除语义统一（is_del），见 `CONTEXT.md` 与各 04-数据模型。

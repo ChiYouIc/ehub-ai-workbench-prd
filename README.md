@@ -16,7 +16,9 @@ ehub-ai-workbench-prd/
 │   ├── ai-chat-sse-prd.md   #   AI Chat v1 PRD（已定版 v1.0）
 │   ├── chat-conversation-management-prd.md # 会话组与对话内容管理 PRD（已定版 v1.0）
 │   ├── chat-conversation-content-prd.md # 会话内容管理（只读查询）PRD（已定版 v1.0）
-│   └── scheduled-task-prd.md #  定时任务 PRD（已定版 v1.0；负载不均匀边界 + v2 看板计划见 r3）
+│   ├── scheduled-task-prd.md #  定时任务 PRD（已定版 v1.0；负载不均匀边界 + v2 看板计划见 r3）
+│   ├── model-config-prd.md #    模型配置管理 PRD（已定版 v1.0）
+│   └── customer-profile-prd.md # 客户画像 AI 分析 PRD（已定版 v1.0）
 │   （每个 feature 另有 <feature>-interview.md 访谈记录：Qn 问题原文/选项/推荐/用户答案，Qn 溯源的单一事实源）
 ├── requirements/            # 需求文档集（按功能模块组织）
 │   ├── auth/                #   全工程通用约定（单一事实源）
@@ -67,8 +69,7 @@ ehub-ai-workbench-prd/
                              #   -wireframe.pen 低保真草图 5 画板 + 同名导出 PNG（ia.md 内嵌引用）；
                              #   -pages.pen 高保真原型 5 画板 + page-p*.png；关卡②已过，可进开发；
                              #   prototype-*.html 状态机验证原型）
-│   └── model-config/       #   模型配置管理（纯后端 admin 模块，无前端设计链路；
-                             #   grilling-decisions.md 为 Q1–Q34 决策记录）
+│   └── model-config/       #   模型配置管理（纯后端 admin 模块，无前端设计链路）
 │   └── agent-chat/         #   自研 Agent 对话（v2 规划，未启动；目录待 write-a-prd 创建）
 ```
 
@@ -180,7 +181,7 @@ flowchart LR
 | 会话组与对话内容管理 v1 | `plans/chat-conversation-management-prd.md` (v1.0) | `requirements/chat-conversation/01~05` | `specs/chat-conversation-spec.md` | `designs/chat-conversation/`：`-design.md`（关卡②通过）+ `-ia.md`（关卡①通过）+ `-pages.pen`（高保真 3 画板）+ `-ui-spec.md`（继承 `designs/ui-baseline.md`） | **已定版，设计链路全部通过，可进开发** |
 | 会话内容管理（只读查询）v1 | `plans/chat-conversation-content-prd.md` (v1.0) | —（与上 FR-04 同一接口） | — | `designs/chat-conversation/chat-conversation-design.md` §7.1（承接） | 已定版，待开发（并入上实现） |
 | 定时任务 v1 | `plans/scheduled-task-prd.md` (v1.0) | `requirements/scheduled-task/`（01–05 全量） | —（决策内嵌 design D1–D10） | `designs/scheduled-task/`：`-design.md`（关卡②通过）+ `-ia.md`（关卡①通过）+ `-ui-spec.md`（继承 `designs/ui-baseline.md`）+ `-wireframe.pen`（草图 5 画板）+ `-pages.pen`（高保真原型 5 画板） | **已定版，设计链路全部通过，可进开发** |
-| 模型配置管理 v1 | `plans/model-config-prd.md` (v1.0) | `requirements/model-config/`（01–05 + grilling-decisions） | — | —（纯后端 CRUD，无前端设计链路） | **已定版，可进开发**（仅后端接口与表结构） |
+| 模型配置管理 v1 | `plans/model-config-prd.md` (v1.0) + `plans/model-config-interview.md`（Q1–Q34） | `requirements/model-config/`（01–05） | — | —（纯后端 CRUD，无前端设计链路） | **已定版，可进开发**（仅后端接口与表结构） |
 | 自研 Agent 对话（agent-chat） | —（v2 启动时经 write-a-prd + grilling 起草） | — | — | — | **v2 规划**（独立模块：第三方模型对话接口、Provider 适配器；依赖 model-config v1 基础设施；`GET /chat/models` 届时迁移并入） |
 
 > 标准链路（2026-08-22 定案，此后所有新模块照此执行）：**PRD草案 → PRD定稿 → 正式PRD文档 → 交互草图/信息架构 → 交互评审 → 高保真交互原型 → UI视觉设计 → 设计文档输出 → 设计验收 → 开发实现**；工程拆解（requirements/specs）在正式 PRD 后并行。定时任务 v1 初版原型跳过了草图/评审两步，2026-08-24 废弃重启并已全链路补齐：草图（ia.md + wireframe.pen）✅、关卡① ✅、UI 基线（`designs/ui-baseline.md`，自 scheduled-task-ui-spec 提炼）✅、高保真原型（pages.pen）✅、关卡② ✅、**可进开发**；ai-chat / chat-conversation 前端设计链路已于 2026-08-24 按新链路补齐（草图 ia.md ✅、关卡① ✅、高保真 pages.pen ✅、ui-spec ✅、关卡② ✅，均继承 `designs/ui-baseline.md` UI 基线），**可进开发**——三模块前端全部就绪。
