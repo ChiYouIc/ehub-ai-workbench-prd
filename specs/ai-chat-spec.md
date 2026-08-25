@@ -1,6 +1,6 @@
 # Spec — AI 对话 v1（POST /chat/sse）
 
-> 关联 PRD 母本：`plans/ai-chat-sse-prd.md` (v1.0) ｜ 关联需求：`requirements/ai-chat/01~05` ｜ 关联设计：`designs/ai-chat/ai-chat-design.md` ｜ 状态：已定版
+> 关联 PRD 母本：`plans/ai-chat-sse-prd.md` (v1.1) ｜ 关联需求：`requirements/ai-chat/01~05` ｜ 关联设计：`designs/ai-chat/ai-chat-design.md` ｜ 状态：v1.1（2026-08-25）
 >
 > 本文约束**实现**：技术决策、测试 seam、与现状代码的差距。决策可溯源至母本访谈问题号（Qxx）。
 
@@ -20,6 +20,11 @@
 8. **参数校验**（Q15=B/Q16=A）：`prompt` 空白或 >8000 字符、`type` 非 CHAT → `PARAM_ERROR`，流式开始前拦截，走统一异常包装
 9. **断连回收**（Q9）：`onCompletion/onTimeout/onError` → dispose 百炼流订阅
 10. **线程池**：沿用 `asyncThreadPool`(50,100)
+11. **模型选择（Q17）**：`ChatParam` 新增 `modelId`；服务端维护 `modelId → appId` 映射配置（yaml）；校验 modelId 有效性
+12. **消息评价（Q18）**：`POST /chat/feedback`，update `params` JSON 的 `feedback` 字段
+13. **重新生成（Q19）**：`ChatParam` 新增 `regenerateContentId`；服务端查上一条 user 消息作 prompt，旧 assistant 逻辑删除，新消息正常落库
+14. **@提及（Q20）**：`GET /chat/members` 接口，钉钉通讯录缓存 5min；prompt 中 `@xxx` 原样传百炼
+15. **文件上传（Q21）**：`POST /chat/upload` + `ChatParam.fileIds`；文件内容拼 prompt 前部；临时存储不持久化
 
 ## 3. 测试决策
 
@@ -40,6 +45,11 @@
 | 3 | 协议：`message` 按序、`end` 带累计汇总、SDK 抛错/空回复 → `error` + 关流 | FR-01/07 |
 | 4 | 落库：user+assistant 两条、token 统计、sessionId 首次回写、中断/错误 `params` 标记 | FR-04~07 |
 | 5 | 断连回收：emitter 回调后订阅被取消（dispose 标志置位） | FR-08 |
+| 6 | 模型选择：有效 modelId 映射正确 AppId；无效 → `PARAM_ERROR` | FR-10 |
+| 7 | 消息评价：写入 params.feedback，覆盖，非本人 → `NOT_FOUND` | FR-11 |
+| 8 | 重新生成：取上一条 user 消息重调，旧 assistant 逻辑删除 | FR-12 |
+| 9 | 成员搜索：keyword 模糊匹配，缓存命中/未命中 | FR-13 |
+| 10 | 文件上传：文本类放行，非文本拒绝，fileIds 拼入 prompt | FR-14 |
 
 ### 3.3 好测试的标准
 
@@ -55,6 +65,11 @@
 | 3 | 断连回收：注册 emitter 回调 → dispose 订阅 | Q9 |
 | 4 | 中断/错误轮次补落库（`params` 标记） | Q12/Q13 |
 | 5 | `prompt`/`type` 参数校验 | Q15/Q16 |
+| 6 | 模型选择：`modelId` 参数 + yaml 映射配置 | Q17 |
+| 7 | 消息评价：`POST /chat/feedback` 接口 | Q18 |
+| 8 | 重新生成：`regenerateContentId` 参数 + 旧消息逻辑删除 | Q19 |
+| 9 | @提及：`GET /chat/members` 接口 + 钉钉通讯录缓存 | Q20 |
+| 10 | 文件上传：`POST /chat/upload` + prompt 拼接 | Q21 |
 
 ## 5. Out of Scope
 
