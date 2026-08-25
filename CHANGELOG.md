@@ -2,9 +2,22 @@
 
 本文件记录文档工程的全部重要变更，按日期倒序。格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
 
+## 2026-08-25（下午）
+
+### Added
+- **弃用 DS 经验/周广告预算/细分市场三填报字段（r3，全链路同步）**：随设计终稿基础画像表不再展示——**02 FR-08** 完整度基准字段重排（腾出的 45 权重由消费统计三字段[最近订单数量/消费金额/工单数量]承接，待 03 §3 契约定稿；不可得则回收至 CRM 基础信息，定稿时冻结）；**03 §3** 工具 1 出参移除三字段（~~删除线~~留痕）；**03 §4** basic 出参移除 dsExperience/weeklyAdBudget/nicheMarket；**PRD 决策 2a** 扩展为「新增消费统计 + 弃用三填报」双向口径；**ia.md** 升 v1.3（线框③加弃用注记、④速读示例改用非弃用字段）。
+- **销售转化画像 PRD r3 修订（v1.1 → v1.2，设计终稿回写）**：设计草图定稿驱动三决策同步——决策 2 信息架构重制（十模块 → **七区块**：Header 合并 Meta 并增设操作区[刷新/重新生成]，经验预算+市场品类+活跃轨迹归并入基础画像 2×3 描述表，话术多条独立卡片；内容全集不变仅归并呈现）；新增**决策 2a 基础画像字段扩展**（最近订单数量/消费金额/工单数量超出 03 §4 basic 现有范围，待 03 §3 契约定稿纳入下游工具 1 出参）；决策 6 注记话术多条（v1 `script` 维持单字符串，数组化留 v2）；决策 16 补草图已交付与「重新生成」入口语义；Further Notes 增风险 6（字段扩展返工风险）与开发顺序勾销更新。
+- **销售转化画像卡片信息架构定稿（`designs/customer-profile/sales/sales-profile-ia.md` v1.0）**：三页面锁定——P1 客户列表页（三段式：四筛选键工具条 = 接口四查询参数口径（验收 3）+ 8 列表格 = `SalesProfileListItemVO` 全字段 + 分页；默认排序优先级升序/生成时间降序 Q24）/ P2 画像卡片详情页（PRD 决策 2 十模块卡片流 A~J + 字段映射表逐项挂 `SalesProfileDetailVO`（03 §4），E/F 填报模块与 C 规则计算项显式标注来源）/ P2-Empty 空态（`data.profile=null` → 空态非错误，basic 实时数据照常渲染，「生成画像」→ analyze 接口 MANUAL 触发，Q14-①/Q12）。**设计原则**：数据来源可视（(AI)/（规则计算）/（填报）三类标注，防误读 R-05）；承载方声明——视觉样式归宿主设计体系，本文锁定信息架构与交互语义为交付规范（r2/Q28）；token 审计字段不展示。
+- **销售转化画像 wireframe 绘制（`designs/customer-profile/sales/customer-profile-ia.pen`）**：初稿（v1.1）旧草案画板改造 + 新绘 P1/P2-Empty；同日随**用户修订草图重制终稿（v1.2，高保真）**——P2 十模块改**七区块**（Header 左标识右操作区[刷新/重新生成]、评分面板 2×2、基础画像 2×3 描述表合并经验预算/市场品类/活跃轨迹、速读/策略浅蓝 AI 底框、话术多条独立卡片各带复制、Footer 单行）；P1 加搜索框（邮箱/ID）+评分 tag 语义色档位；P2-Empty 加 Alert 语义注释条；变量收敛为 el-* 一套（Element Plus 默认色 + light/lighter 系列，对齐 ui-baseline §2）。导出 PNG ×3（scale 3）。
+
 ## 2026-08-25
 
 ### Added
+- **销售转化画像（customer-profile-sales）PRD v1.1 定版**：
+- **模块更名与目录归位（Q8）**：customer-profile-ia → customer-profile-sales（消与 `<feature>-ia.md` 信息架构文档惯例的撞名）；plans/customer-profile/ 下 ops/（运营画像）与 sales/（销售画像）子目录分设，PRD/访谈记录各归其位。
+- **销售转化画像工程拆解（requirements/customer-profile/sales/ 01–05）落盘**：01 概述（含与 ops 差异速览表）/ 02 功能需求（FR-01~08：无冷启动门槛、完整度规则计算并入整包、无扫描规则引擎）/ 03 接口规范（三接口 `/profile/sales/*` + 下游 3 工具契约初稿；邮箱 PII 不入链路归宿主 CRM）/ 04 数据模型（`ai_customer_profile_sales` 单表：四投影列、无 trigger_rules、无 INIT；r2/Q29 删 trigger_user/trigger_name，操作人由 upd 通用审计字段承载）/ 05 NFR×6 + 风险 R-01~08（R-03 下游工具进度耦合为高风险，R-04 宿主联调依赖）；验收 3 口径调整为接口四筛选能力（页面验收归宿主方）。
+- **客户画像域目录重组（customer-profile 双模块归组）**：销售转化画像 PRD 草案（原 `plans/customer-profile-ia-prd.md`）与运营画像 PRD 归组同域，进一步拆子目录区分模块——`plans/customer-profile/`（`customer-profile-prd.md` 运营画像 + `customer-profile-interview.md` + `customer-profile-ia-prd.md` 销售转化画像）；`requirements/customer-profile/ops/`（运营画像工程拆解 01–05，销售转化画像待 PRD 定稿后另设子目录）；`designs/customer-profile/` 下 `ops/`（画像技能镜像位）与 `sales/`（销售转化画像信息架构草图）分设。同步更新：ia-prd 头部声明运营画像 PRD 为前置母本（复用调度模式/存储形态/审计纪律）；全部交叉引用路径（PRD 互引、requirements 溯源链接、skill 镜像路径）；README 目录树与文档索引拆为两模块条目。
+
 - **访谈记录归位 plans/（流程修正）**：model-config / customer-profile 两模块的访谈决策记录原落 `requirements/<feature>/grilling-decisions.md`，与 2026-08-22「访谈记录落盘约定」（`plans/<feature>-interview.md` 为 Qn 溯源单一事实源）相悖——已迁移改名：`requirements/model-config/grilling-decisions.md` → `plans/model-config-interview.md`、`requirements/customer-profile/grilling-decisions.md` → `plans/customer-profile-interview.md`；PRD 溯源链接、README 目录树（补 model-config / customer-profile 两 PRD 条目）与文档索引同步更新。
 - **模型配置管理模块（model-config）v1.0 定版**：`plans/model-config-prd.md` 决策母本（Q1–Q34，决策记录 `plans/model-config-interview.md`）+ `requirements/model-config/01~05` 工程拆解——admin 同服务分包，新建 `ai_model_provider` + `ai_model` 两表，Provider/Model CRUD × 12 接口，API Key AES 加密，与百炼路径完全解耦（百炼硬编码不变，`GET /chat/models` 标记迁移 v2）。
 - **自研 Agent 对话（agent-chat）确立为独立模块并规划 v2**：第三方模型对话接口、Provider 适配器归该模块交付（不并入 model-config / ai-chat）；依赖 model-config v1 基础设施；README 文档索引与目录树登记。

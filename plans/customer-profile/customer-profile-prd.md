@@ -1,7 +1,8 @@
 # PRD: 客户画像 AI 分析 v1（customer-profile 模块）
 
 > 状态：**v1.3（已定版）** — 2026-08-25
-> 决策记录：Q1–Q27 已于 2026-08-25 四轮 Grilling 确认；r2 修订（Q28–Q35）：数据获取改为原子化数据工具 + 画像技能编排；r3 修订（Q36–Q38）：GMV 分位数 v1 不可用，valueTier 改绝对值档位表、初始化改绝对阈值筛选；**r4 修订（Q39）：画像存储改整包 `profile_json` + 检索投影列（指标新增/变更零 DDL）**。详见 `plans/customer-profile-interview.md`。
+> 决策记录：Q1–Q27 已于 2026-08-25 四轮 Grilling 确认；r2 修订（Q28–Q35）：数据获取改为原子化数据工具 + 画像技能编排；r3 修订（Q36–Q38）：GMV 分位数 v1 不可用，valueTier 改绝对值档位表、初始化改绝对阈值筛选；**r4 修订（Q39）：画像存储改整包 `profile_json` + 检索投影列（指标新增/变更零 DDL）**。详见 [customer-profile-interview.md](customer-profile-interview.md)。
+> 模块目录：本 PRD 及访谈记录、姊妹 PRD（销售转化画像 `customer-profile-ia-prd.md`）统一归组 `plans/customer-profile/`；工程拆解见 `requirements/customer-profile/ops/`。
 > 前置依赖：独立下游 MCP 统计服务（外部依赖，另行立项）；百炼 Agent（MCP 工具 + skill 配置）。
 > 前置母本：`plans/scheduled-task-prd.md`（调度模式来源：@Scheduled 轮询 + DB 行级原子抢占）。
 
@@ -44,7 +45,7 @@
 1. **模块归属（Q20）**：新独立模块 `customer-profile`，不与 scheduled-task 共表（语义完全不同）；复用其已验证的**模式**——`@Scheduled` 固定延迟轮询 + DB 行级原子抢占（多实例安全，见 architecture §4）
 2. **两段式数据架构（Q4 结论/Q6/Q13，r2 修订 Q28）**：统计口径归下游 MCP 统计服务（数据属主）；工具粒度为**按业务问题切分的原子化数据工具**（约 7~8 个，带时间窗口参数，上限 365 天）——既服务画像的固定序列取数，也为 v2 对话式分析的按需取数铺路（Q30）；指标包降级为逻辑概念（多工具结果拼装）
 3. **Agent 宿主（Q14）**：继续百炼，非流式 `Application.call`；数据工具经 MCP 接入，画像技能配置于百炼 Agent 侧
-4. **画像技能内容与版本管理（Q29/Q33）**：技能规定——固定必调序列（工具 1→…→6，工具 7 供扫描路径）、valueTier 判定标准、输出 schema、失败指引（单工具连续失败 2 次跳过并在 summary 声明数据缺失）；skill 全文镜像于本仓库（`designs/customer-profile/profiling-skill.md`）为**单一事实源**，变更走 PR review，手动同步百炼
+4. **画像技能内容与版本管理（Q29/Q33）**：技能规定——固定必调序列（工具 1→…→6，工具 7 供扫描路径）、valueTier 判定标准、输出 schema、失败指引（单工具连续失败 2 次跳过并在 summary 声明数据缺失）；skill 全文镜像于本仓库（`designs/customer-profile/ops/profiling-skill.md`）为**单一事实源**，变更走 PR review，手动同步百炼
 5. **轮次护栏（Q31）**：百炼不暴露工具轮次计数，服务层不做硬限；超时兜底对齐 scheduled-task 120s 模式；轮次约束写入 skill（软约束，Agent 是否遵守不做强要求），token 记录观测实际消耗
 6. **工具失败语义（Q32）**：三层分工——工具层结构化错误返回 Agent（可补救跳过）；Agent 层整体异常；服务层只管最终 schema 校验（沿用 Q23 重试 1 次策略）
 
@@ -92,7 +93,7 @@
 ## Out of Scope
 
 - **MCP 统计服务本身**（独立下游服务，另行立项；本 PRD 定义其对上契约：7~8 个数据工具清单与时间窗口约束）
-- **画像技能正式文本**（随 requirements/03 契约定稿后，在本仓库镜像 `designs/customer-profile/profiling-skill.md`，PR review 维护）
+- **画像技能正式文本**（随 requirements/03 契约定稿后，在本仓库镜像 `designs/customer-profile/ops/profiling-skill.md`，PR review 维护）
 - 画像历史版本保留 + 指标快照（v2，Q21）
 - 重复分析冷却期（v2，Q24）
 - 高风险客户主动推送（v2，Q11）
@@ -116,5 +117,5 @@
 
 1. ~~扫描数据来源~~ **已解决（Q28）**：数据工具 7（规则筛选客户列表）返回命中客户；契约细节（参数形态、分页）在 requirements/03 与 MCP 服务定稿
 2. ~~平台基线值来源~~ **已解决（Q28）**：数据工具 6（平台基线）提供
-3. ~~百炼 skill 编写与版本管理~~ **已解决（Q33）**：本仓库镜像为单一事实源（`designs/customer-profile/profiling-skill.md`），PR review + 手动同步百炼
+3. ~~百炼 skill 编写与版本管理~~ **已解决（Q33）**：本仓库镜像为单一事实源（`designs/customer-profile/ops/profiling-skill.md`），PR review + 手动同步百炼
 4. **新增待对齐**：7~8 个数据工具的输入输出契约（参数命名、时间窗口参数格式、错误码结构）——requirements/03 阶段与 MCP 服务逐工具定稿，此为 03 的首要交付物
