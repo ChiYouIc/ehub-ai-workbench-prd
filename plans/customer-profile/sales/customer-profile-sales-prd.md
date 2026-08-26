@@ -1,5 +1,5 @@
 # PRD: 销售转化画像（customer-profile-sales 模块）
-
+> ⛔ **本模块已废弃（2026-08-26）**：业务方向重整——客户画像域重做为「用户画像（customer-profile）」，分析对象改为**已注册且未消费的新用户**，取代本模块与 customer-profile-ops。新模块决策见 [../customer-profile-interview.md](../customer-profile-interview.md)（Q1–Q28）。本文件仅作历史决策留痕，不再维护；其下游 3 工具、`ai_customer_profile` 表基名归属、卡片设计均已被新模块决策取代（新模块复用表基名 `ai_customer_profile`，见新访谈 Q28）。
 > 状态：**v1.3（已定版）** — 2026-08-26；排期：**客户画像一期基础版本**（roadmap 修订）
 > 决策记录：Q1–Q27 已于 2026-08-25 三轮 Grilling 确认；**r2 修订（Q28）：前端不挂钩 ehub-web，页面由宿主业务系统承载**；**r3 修订：设计草图定稿（`designs/customer-profile/sales/sales-profile-ia.md` v1.2）回写信息架构决策（决策 2/2a/6/16）**；**r4 修订（2026-08-26 roadmap）：确立为客户画像一期基础版本，前置母本改指 scheduled-task，运营画像后移二期**；**r5 修订（2026-08-26）：回撤 r3 对 DS 经验/周广告预算/细分市场三填报字段的弃用——恢复入工具 1 出参、basic 接口、卡片与完整度基准（决策 2a / FR-08 / 03 §3§4 / ia.md v1.5 同步）**；**r6 修订（2026-08-26）：基础画像瘦身——移除工单数量（消费统计缩编为订单数量/消费金额），主营品类/细分市场 v1 下游填报无法提供、移出 v1（v2 视下游能力回补）；FR-08 权重重排（决策 2a / FR-04.2 / 03 §3§4 / ia.md v1.6 同步）**。详见 [customer-profile-sales-interview.md](customer-profile-sales-interview.md) 与 [roadmap 访谈](../customer-profile-roadmap-interview.md)。
 > 前置依赖：下游 MCP 服务（已有服务，CRM/行为数据工具随本需求同步开发——一期仅此 3 工具）；百炼 Agent（MCP 工具 + skill 配置）。

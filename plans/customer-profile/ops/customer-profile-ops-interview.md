@@ -1,5 +1,7 @@
 # Grilling 决策记录 — 客户画像 AI 分析
 
+> ⛔ **本模块已废弃（2026-08-26）**：被「用户画像（customer-profile，新用户转化）」取代，新模块决策见 [../customer-profile-interview.md](../customer-profile-interview.md)。本文件仅作历史决策留痕。
+
 > 日期：2026-08-25（r2 修订同日）
 > 模块：customer-profile-ops（原 customer-profile，2026-08-26 roadmap 更名）
 > 状态：已确认（四轮主访谈 27 个决策点 + r2 修订轮 8 个决策点 + r3 修订轮 3 个决策点）

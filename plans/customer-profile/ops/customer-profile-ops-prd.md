@@ -1,5 +1,7 @@
 # PRD: 客户画像 AI 分析（customer-profile-ops 模块）
 
+> ⛔ **本模块已废弃（2026-08-26）**：业务方向重整——客户画像域重做为「用户画像（customer-profile）」，分析对象改为**已注册且未消费的新用户**，取代本模块与 customer-profile-sales。新模块决策见 [../customer-profile-interview.md](../customer-profile-interview.md)（Q1–Q28）。本文件仅作历史决策留痕，不再维护。
+
 > 状态：**v1.3（已定版）— 2026-08-25；排期：二期**（2026-08-26 roadmap 修订：销售转化画像先行，本模块后移）
 > 决策记录：Q1–Q27 已于 2026-08-25 四轮 Grilling 确认；r2 修订（Q28–Q35）：数据获取改为原子化数据工具 + 画像技能编排；r3 修订（Q36–Q38）：GMV 分位数 v1 不可用，valueTier 改绝对值档位表、初始化改绝对阈值筛选；**r4 修订（Q39）：画像存储改整包 `profile_json` + 检索投影列（指标新增/变更零 DDL）**；**r5 修订（2026-08-26 roadmap）：模块改名 `customer-profile` → `customer-profile-ops`（表 `ai_customer_profile` → `ai_customer_profile_ops`），排期后移二期**。详见 [customer-profile-ops-interview.md](customer-profile-ops-interview.md) 与 [roadmap 访谈](../customer-profile-roadmap-interview.md)。
 > 模块目录：本 PRD 及访谈记录归组 `plans/customer-profile/ops/`；姊妹 PRD（销售转化画像，客户画像**一期**）见 [sales/customer-profile-sales-prd.md](../sales/customer-profile-sales-prd.md)；工程拆解见 `requirements/customer-profile/ops/`（二期冻结基线）。

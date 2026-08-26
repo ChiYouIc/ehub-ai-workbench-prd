@@ -4,6 +4,10 @@
 
 ## 2026-08-26
 
+### Added
+- **用户画像（customer-profile，新用户转化）PRD v1.0 草案落盘（`plans/customer-profile/customer-profile-prd.md`，Q1–Q28 溯源）**：Problem/Solution/User Stories ×8/Implementation Decisions ×26（入出池口径、1 MCP 工具含消费状态、纯手动触发+池资格校验、skill 转化阶段硬分流、七字段基础画像、双列表架构、`ai_customer_profile` 五投影列、画像域质量基线全沿用）/ Testing（校验器+完整度+触发语义优先，验收 5 条）/ Out of Scope（v2 八项+下游实现）/ 风险 6 条（意向证据薄、下游耦合、老系统检索接口能力待确认、出池口径一致性）。待用户审阅后定版。
+- **客户画像域重整：废弃 sales/ops 两模块，确立「用户画像（customer-profile，新用户转化）」（Q1–Q28 溯源 `plans/customer-profile/customer-profile-interview.md`）**：业务方向重做——分析对象改为**已注册且未消费的新用户**，转化定义 = 绑店 + 首单支付成功（支付成功即出池，下单未付仍在池内属催单场景）。四轮 Grilling 核心决策：v1 **纯手动触发**（老系统检索列表行内生成 + 详情页重新生成，无定时扫描/周期重扫/自动回填，均 →v2）；数据源仅 `customer`+`customer_extend` 两表，下游 MCP 工具收敛为 **1 个**（新用户信息，出参含消费状态字段，原清单工具作废）；**双列表架构**（老系统检索列表找客户 + 本服务画像列表五筛选排序）；卡片沿用七区块线框（基础画像七字段：DS经验/周广告预算/月订单量预期/细分市场/意向服务/最近登录/绑定店铺，无订单数/成交额；skill 按转化阶段硬分流）；表基名 `ai_customer_profile` 直接继承（五投影列）；画像域质量基线全部沿用（强校验失败即弃/token 审计/完整度规则计算四层基准）。**同日废弃处置**：sales/ops 两模块全部文档加「已废弃」标头保留（plans 5 文件含 roadmap 访谈 + requirements 两目录 01 概述 + designs sales 2 文件），sales-skill.md 标注「不得同步百炼」。待办：新 PRD（write-a-prd）→ requirements/customer-profile/ 根 01–05 → 卡片 ia 设计 → CONTEXT/GLOSSARY/README 重写同步。
+
 ### Changed
 - **基础画像瘦身：移除工单数量，主营品类/细分市场移出 v1（r6，全链路同步）**：下游确认 v1 填报数据无法提供主营品类/细分市场，消费统计缩编弃用工单数量——**02 FR-08** 基准六字段重排（DS 经验/周广告预算各 20，CRM 基础四字段各 15；填报 40 + CRM 60；v2 回补时重排走 PR）；**02 FR-04.2** 实时区块表述改七区块口径；**03 §3** 工具 1 出参移除三字段；**03 §4** basic 移除 `mainCategory`/`nicheMarket`（删除线留痕）；**PRD 决策 2a/16/风险 6** 同步（r6 修订入头部决策记录）；**ia.md** 升 v1.5 → v1.6（线框③ 3×3→2×3）；**.pen/PNG** 同步重导。
 - **回撤 DS 经验/周广告预算/细分市场三填报字段弃用（r5，全链路同步）**：r3「弃用三填报」决策回撤，三字段恢复为正式用户填报字段——**02 FR-08** 完整度基准恢复原表（三字段各 15，消费统计三字段退出基准、保留为展示字段，回补与否随 03 §3 契约定稿冻结时议定）；**03 §3** 工具 1 出参恢复三字段（r3 新增消费统计保留）；**03 §4** basic 出参恢复 `dsExperience`/`weeklyAdBudget`/`nicheMarket`；**PRD 决策 2a** 改「新增消费统计 + 回撤弃用」口径（r5 修订入头部决策记录）；**ia.md** 升 v1.4 → v1.5（线框③ 2×3→3×3 恢复三字段展示，字段映射同步）；**.pen/PNG** 同步重导。

@@ -1,5 +1,7 @@
 # Grilling 决策记录 — 销售转化画像（customer-profile-sales）
 
+> ⛔ **本模块已废弃（2026-08-26）**：被「用户画像（customer-profile，新用户转化）」取代，新模块决策见 [../customer-profile-interview.md](../customer-profile-interview.md)。本文件仅作历史决策留痕。
+
 > 日期：2026-08-25
 > 模块：customer-profile-sales（原草案 customer-profile-ia，Q8 更名）
 > 状态：已确认（三轮 27 个决策点 + r2 修订轮 1 个决策点）

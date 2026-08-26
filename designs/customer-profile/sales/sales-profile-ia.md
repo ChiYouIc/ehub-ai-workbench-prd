@@ -1,5 +1,7 @@
 # 销售转化画像 — 交互草图 / 信息架构
 
+> ⛔ **本模块设计已废弃（2026-08-26）**：customer-profile-sales 模块整体废弃，被「用户画像（customer-profile，新用户转化）」取代——新模块卡片骨架沿用本七区块线框（业务方指定），但基础画像字段、评分语义、列表架构已重新决策（见 `plans/customer-profile/customer-profile-interview.md` Q13/Q19/Q26）。本文件与 `.pen`/PNG 仅作历史留痕；新模块设计产物另落位。
+
 > 模块：customer-profile-sales（客户画像一期基础版本） ｜ 关联：PRD 母本 `plans/customer-profile/sales/customer-profile-sales-prd.md`（v1.3）｜ 需求 `requirements/customer-profile/sales/01~05` ｜ 状态：**v1.6（2026-08-26，r6 基础画像瘦身：③ 3×3→2×3——移除工单数量，主营品类/细分市场 v1 下游无法提供移出；v1.5 = r5 回撤弃用、3×3 恢复三填报；v1.4 = 关卡①复核 F-1~F-4；v1.3 = 弃用三填报字段）；关卡①经复核维持通过**
 >
 > 🖊 **草图文件**：`customer-profile-ia.pen`（同目录，唯一源）——三画板 P1 客户列表 / P2 卡片详情 / P2-Empty 空态，与本文 §3 一一对应；导出 PNG（`page-p1-list.png` / `page-p2-detail.png` / `page-p2-empty.png`，scale 2）。「`.pen` 为唯一源，修改后须重导同名 PNG」。

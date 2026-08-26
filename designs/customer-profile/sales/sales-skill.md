@@ -1,5 +1,7 @@
 # 销售转化画像技能（sales-skill）
 
+> ⛔ **本技能已废弃（2026-08-26）**：customer-profile-sales 模块整体废弃，被「用户画像（customer-profile，新用户转化）」取代，新模块技能将随新 PRD/契约另行起草（见 `plans/customer-profile/customer-profile-interview.md`）。本文件仅作历史留痕，不得同步百炼。
+
 > 模块：customer-profile-sales（客户画像一期基础版本） ｜ 状态：**初稿 Draft v0.1（2026-08-26）——待 `requirements/customer-profile/sales/03-接口规范.md` §3 契约与 MCP 团队定稿后冻结**（PRD Out of Scope「skill 正式文本随契约定稿」约束维持；本稿供契约定稿评审与百炼侧预配） ｜ 溯源：PRD 决策 4/5/6/19/21、02 FR-01/06/07/08
 >
 > 本文件是销售画像技能的**单一事实源**（FR-07）：任何文本变更走 PR review；同步到百炼为手动操作，PR 描述注明「已同步/待同步」。本服务不加载、不解析此文件（运行时百炼侧生效）。
