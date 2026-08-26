@@ -18,11 +18,12 @@ ehub-ai-workbench-prd/
 │   ├── chat-conversation-content-prd.md # 会话内容管理（只读查询）PRD（已定版 v1.0）
 │   ├── scheduled-task-prd.md #  定时任务 PRD（已定版 v1.0；负载不均匀边界 + v2 看板计划见 r3）
 │   ├── model-config-prd.md #    模型配置管理 PRD（已定版 v1.0）
-│   └── customer-profile/  #   客户画像域（同一批客户两套画像，独立 PRD 并行演进）
-│       ├── ops/           #     运营画像（定版 v1.3）
-│       │   ├── customer-profile-prd.md
-│       │   └── customer-profile-interview.md # Q1–Q39 溯源
-│       └── sales/         #     销售转化画像（定版 v1.1）
+│   └── customer-profile/  #   客户画像域（roadmap：sales 一期基础版本 / ops 二期，见 customer-profile-roadmap-interview.md）
+│       ├── customer-profile-roadmap-interview.md # 排期决策 Q1–Q18 溯源（2026-08-26）
+│       ├── ops/           #     运营画像 customer-profile-ops（定版 v1.3，二期排期）
+│       │   ├── customer-profile-ops-prd.md
+│       │   └── customer-profile-ops-interview.md # Q1–Q39 溯源
+│       └── sales/         #     销售转化画像（定版 v1.3，客户画像一期基础版本）
 │           ├── customer-profile-sales-prd.md
 │           └── customer-profile-sales-interview.md # Q1–Q29 溯源（含 r2 修订）
 │   （每个 feature 另有 <feature>-interview.md 访谈记录：Qn 问题原文/选项/推荐/用户答案，Qn 溯源的单一事实源）
@@ -188,8 +189,8 @@ flowchart LR
 | 会话内容管理（只读查询）v1 | `plans/chat-conversation-content-prd.md` (v1.0) | —（与上 FR-04 同一接口） | — | `designs/chat-conversation/chat-conversation-design.md` §7.1（承接） | 已定版，待开发（并入上实现） |
 | 定时任务 v1 | `plans/scheduled-task-prd.md` (v1.0) | `requirements/scheduled-task/`（01–05 全量） | —（决策内嵌 design D1–D10） | `designs/scheduled-task/`：`-design.md`（关卡②通过）+ `-ia.md`（关卡①通过）+ `-ui-spec.md`（继承 `designs/ui-baseline.md`）+ `-wireframe.pen`（草图 5 画板）+ `-pages.pen`（高保真原型 5 画板） | **已定版，设计链路全部通过，可进开发** |
 | 模型配置管理 v1 | `plans/model-config-prd.md` (v1.0) + `plans/model-config-interview.md`（Q1–Q34） | `requirements/model-config/`（01–05） | — | —（纯后端 CRUD，无前端设计链路） | **已定版，可进开发**（仅后端接口与表结构） |
-| 客户画像（运营画像）v1 | `plans/customer-profile/ops/customer-profile-prd.md` (v1.3) + `customer-profile-interview.md`（Q1–Q39） | `requirements/customer-profile/ops/`（01–05） | — | `designs/customer-profile/ops/`（画像技能镜像 `profiling-skill.md` 待契约定稿后落盘） | **PRD 已定版，工程拆解已落盘**；前置外部依赖：MCP 统计服务（另行立项） |
-| 客户画像（销售转化画像）v1 | `plans/customer-profile/customer-profile-sales-prd.md` (v1.2，含 r3 设计回写：字段弃用+新增) + `customer-profile-sales-interview.md`（Q1–Q29） | `requirements/customer-profile/sales/`（01–05） | — | `designs/customer-profile/sales/sales-profile-ia.md`（v1.3）+ `customer-profile-ia.pen`（高保真三画板 + PNG ×3，交付宿主方）+ skill 镜像位 | **PRD 已定版，工程拆解与高保真草图已落盘**；下一步：契约定稿（03 §3 与 MCP 团队，含字段弃用/新增对齐）；前端不挂钩 ehub-web，由宿主业务系统承载；下游 3 数据工具随本需求同步开发 |
+| 客户画像（销售转化画像）**一期基础版本** | `plans/customer-profile/sales/customer-profile-sales-prd.md` (v1.3，含 r4 排期修订) + `customer-profile-sales-interview.md`（Q1–Q29）+ [roadmap 访谈](plans/customer-profile/customer-profile-roadmap-interview.md) | `requirements/customer-profile/sales/`（01–05） | — | `designs/customer-profile/sales/sales-profile-ia.md`（v1.3）+ `customer-profile-ia.pen`（高保真三画板 + PNG ×3，交付宿主方）+ skill 镜像位 | **PRD 已定版（客户画像一期）**；下一步：契约定稿（03 §3 与 MCP 团队，含字段弃用/新增对齐）；前端不挂钩 ehub-web，由宿主业务系统承载；一期 MCP 仅交付 3 数据工具 |
+| 客户画像（运营画像）**二期** | `plans/customer-profile/ops/customer-profile-ops-prd.md` (v1.3，r5 改名+二期排期) + `customer-profile-ops-interview.md`（Q1–Q39） | `requirements/customer-profile/ops/`（01–05，**二期冻结基线**） | — | `designs/customer-profile/ops/`（画像技能镜像 `profiling-skill.md` 待二期重启后落盘） | **二期排期（2026-08-26 roadmap）**；启动双条件：运营侧认领 + MCP 统计服务立项；重启时按 PRD 复核清单逐项复核（T2 档位/规则阈值/窗口） |
 | 自研 Agent 对话（agent-chat） | —（v2 启动时经 write-a-prd + grilling 起草） | — | — | — | **v2 规划**（独立模块：第三方模型对话接口、Provider 适配器；依赖 model-config v1 基础设施；`GET /chat/models` 届时迁移并入） |
 
 > 标准链路（2026-08-22 定案，此后所有新模块照此执行）：**PRD草案 → PRD定稿 → 正式PRD文档 → 交互草图/信息架构 → 交互评审 → 高保真交互原型 → UI视觉设计 → 设计文档输出 → 设计验收 → 开发实现**；工程拆解（requirements/specs）在正式 PRD 后并行。定时任务 v1 初版原型跳过了草图/评审两步，2026-08-24 废弃重启并已全链路补齐：草图（ia.md + wireframe.pen）✅、关卡① ✅、UI 基线（`designs/ui-baseline.md`，自 scheduled-task-ui-spec 提炼）✅、高保真原型（pages.pen）✅、关卡② ✅、**可进开发**；ai-chat / chat-conversation 前端设计链路已于 2026-08-24 按新链路补齐（草图 ia.md ✅、关卡① ✅、高保真 pages.pen ✅、ui-spec ✅、关卡② ✅，均继承 `designs/ui-baseline.md` UI 基线），**可进开发**——三模块前端全部就绪。

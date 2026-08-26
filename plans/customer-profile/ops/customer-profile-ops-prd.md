@@ -1,9 +1,9 @@
-# PRD: 客户画像 AI 分析 v1（customer-profile 模块）
+# PRD: 客户画像 AI 分析（customer-profile-ops 模块）
 
-> 状态：**v1.3（已定版）** — 2026-08-25
-> 决策记录：Q1–Q27 已于 2026-08-25 四轮 Grilling 确认；r2 修订（Q28–Q35）：数据获取改为原子化数据工具 + 画像技能编排；r3 修订（Q36–Q38）：GMV 分位数 v1 不可用，valueTier 改绝对值档位表、初始化改绝对阈值筛选；**r4 修订（Q39）：画像存储改整包 `profile_json` + 检索投影列（指标新增/变更零 DDL）**。详见 [customer-profile-interview.md](customer-profile-interview.md)。
-> 模块目录：本 PRD 及访谈记录、姊妹 PRD（销售转化画像 `customer-profile-ia-prd.md`）统一归组 `plans/customer-profile/`；工程拆解见 `requirements/customer-profile/ops/`。
-> 前置依赖：独立下游 MCP 统计服务（外部依赖，另行立项）；百炼 Agent（MCP 工具 + skill 配置）。
+> 状态：**v1.3（已定版）— 2026-08-25；排期：二期**（2026-08-26 roadmap 修订：销售转化画像先行，本模块后移）
+> 决策记录：Q1–Q27 已于 2026-08-25 四轮 Grilling 确认；r2 修订（Q28–Q35）：数据获取改为原子化数据工具 + 画像技能编排；r3 修订（Q36–Q38）：GMV 分位数 v1 不可用，valueTier 改绝对值档位表、初始化改绝对阈值筛选；**r4 修订（Q39）：画像存储改整包 `profile_json` + 检索投影列（指标新增/变更零 DDL）**；**r5 修订（2026-08-26 roadmap）：模块改名 `customer-profile` → `customer-profile-ops`（表 `ai_customer_profile` → `ai_customer_profile_ops`），排期后移二期**。详见 [customer-profile-ops-interview.md](customer-profile-ops-interview.md) 与 [roadmap 访谈](../customer-profile-roadmap-interview.md)。
+> 模块目录：本 PRD 及访谈记录归组 `plans/customer-profile/ops/`；姊妹 PRD（销售转化画像，客户画像**一期**）见 [sales/customer-profile-sales-prd.md](../sales/customer-profile-sales-prd.md)；工程拆解见 `requirements/customer-profile/ops/`（二期冻结基线）。
+> 前置依赖：独立下游 MCP 统计服务（**二期立项**，见 roadmap Q4：一期仅交付销售画像 3 工具，本模块 7~8 工具契约冻结为二期输入）；百炼 Agent（MCP 工具 + skill 配置）。
 > 前置母本：`plans/scheduled-task-prd.md`（调度模式来源：@Scheduled 轮询 + DB 行级原子抢占）。
 
 ## Problem Statement
@@ -16,7 +16,7 @@
 
 ## Solution
 
-在 `ehub-ai-workbench` 服务中新增**独立模块 `customer-profile`**，构建自动化客户画像流水线：
+在 `ehub-ai-workbench` 服务中新增**独立模块 `customer-profile-ops`**（二期），构建自动化客户画像流水线：
 
 - **原子化数据获取（Q28，r2 修订）**：独立下游 MCP 统计服务提供约 7~8 个**按业务问题切分的数据工具**（客户基础信息/订单规模与趋势/品类分布/履约售后/资金状况/平台基线/规则筛选客户列表），带时间窗口参数，回溯上限 365 天（Q34）
 - **画像技能编排（Q29/Q33）**：百炼 Agent 侧配置画像技能（profiling skill）——规定固定必调序列（取数策略）、分析规则、输出结构；skill 全文以本仓库镜像为单一事实源，PR review 后手动同步百炼
@@ -42,7 +42,7 @@
 
 ### 架构与模块
 
-1. **模块归属（Q20）**：新独立模块 `customer-profile`，不与 scheduled-task 共表（语义完全不同）；复用其已验证的**模式**——`@Scheduled` 固定延迟轮询 + DB 行级原子抢占（多实例安全，见 architecture §4）
+1. **模块归属（Q20；r5 改名 customer-profile-ops）**：新独立模块，不与 scheduled-task 共表（语义完全不同）；复用其已验证的**模式**——`@Scheduled` 固定延迟轮询 + DB 行级原子抢占（多实例安全，见 architecture §4）
 2. **两段式数据架构（Q4 结论/Q6/Q13，r2 修订 Q28）**：统计口径归下游 MCP 统计服务（数据属主）；工具粒度为**按业务问题切分的原子化数据工具**（约 7~8 个，带时间窗口参数，上限 365 天）——既服务画像的固定序列取数，也为 v2 对话式分析的按需取数铺路（Q30）；指标包降级为逻辑概念（多工具结果拼装）
 3. **Agent 宿主（Q14）**：继续百炼，非流式 `Application.call`；数据工具经 MCP 接入，画像技能配置于百炼 Agent 侧
 4. **画像技能内容与版本管理（Q29/Q33）**：技能规定——固定必调序列（工具 1→…→6，工具 7 供扫描路径）、valueTier 判定标准、输出 schema、失败指引（单工具连续失败 2 次跳过并在 summary 声明数据缺失）；skill 全文镜像于本仓库（`designs/customer-profile/ops/profiling-skill.md`）为**单一事实源**，变更走 PR review，手动同步百炼
@@ -112,6 +112,12 @@
 4. 多轮工具调用 → 单次画像成本/延迟高于单工具方案，且轮次仅 skill 软约束（百炼不暴露轮次计数，Q31）——超时兜底 + token 观测
 5. 串行调用失败率乘法效应（每工具 99% 可用 → 7 工具链 ≈93%）——靠工具层结构化错误 + Agent 跳过降级对冲（Q32）
 6. 绝对档位漂移（r3）：平台增长/季节波动使 T1~T5 边界失真——档位表随 skill 版本化管理、定期 review；v2 分位数切回相对分层（Q36/Q37）
+
+**二期启动条件与重启复核（roadmap Q8/Q18，2026-08-26）**：
+
+1. **启动双条件**：运营侧正式认领分层/流失干预诉求 **且** MCP 统计服务立项并承诺 7~8 工具交付——缺一不启动
+2. **范围基线**：二期 = 本 PRD v1.3 现状范围；模块内部 v2 项（分位数切回/历史版本/冷却期/主动推送）保持后置，不随二期膨胀
+3. **重启复核清单**（重启时须逐项复核，不得直接沿用 2026-08 时点假设）：T2 档位表绝对值边界（风险 6 档位漂移）、5 条扫描规则阈值（30%/50%/2 倍基线/月均 50 单）、365 天回溯窗口上限、平台基线工具口径
 
 **开放问题状态（r2 更新）**：
 

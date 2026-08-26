@@ -1,10 +1,10 @@
 # PRD: 销售转化画像（customer-profile-sales 模块）
 
-> 状态：**v1.2（已定版）** — 2026-08-25
-> 决策记录：Q1–Q27 已于 2026-08-25 三轮 Grilling 确认；**r2 修订（Q28）：前端不挂钩 ehub-web，页面由宿主业务系统承载**；**r3 修订：设计草图定稿（`designs/customer-profile/sales/sales-profile-ia.md` v1.2）回写信息架构决策（决策 2/2a/6/16）**。详见 [customer-profile-sales-interview.md](customer-profile-sales-interview.md)。
-> 前置依赖：下游 MCP 服务（已有服务，CRM/行为数据工具随本需求同步开发）；百炼 Agent（MCP 工具 + skill 配置）。
-> 前置母本：`plans/customer-profile/ops/customer-profile-prd.md`（运营画像，复用其已验证模式：`@Scheduled` + 行级抢占、`profile_json` 整包存储 + 投影列、强校验/重试/token 审计纪律）。
-> 关联模块：customer-profile（ops 运营画像）——同一批客户两套画像，独立生成、独立存储、独立演进；客户集合为包含关系（销售画像对象 ⊂ 运营画像对象），见 Q23。
+> 状态：**v1.3（已定版）** — 2026-08-26；排期：**客户画像一期基础版本**（roadmap 修订）
+> 决策记录：Q1–Q27 已于 2026-08-25 三轮 Grilling 确认；**r2 修订（Q28）：前端不挂钩 ehub-web，页面由宿主业务系统承载**；**r3 修订：设计草图定稿（`designs/customer-profile/sales/sales-profile-ia.md` v1.2）回写信息架构决策（决策 2/2a/6/16）**；**r4 修订（2026-08-26 roadmap）：确立为客户画像一期基础版本，前置母本改指 scheduled-task，运营画像后移二期**；**r5 修订（2026-08-26）：回撤 r3 对 DS 经验/周广告预算/细分市场三填报字段的弃用——恢复入工具 1 出参、basic 接口、卡片与完整度基准（决策 2a / FR-08 / 03 §3§4 / ia.md v1.5 同步）**；**r6 修订（2026-08-26）：基础画像瘦身——移除工单数量（消费统计缩编为订单数量/消费金额），主营品类/细分市场 v1 下游填报无法提供、移出 v1（v2 视下游能力回补）；FR-08 权重重排（决策 2a / FR-04.2 / 03 §3§4 / ia.md v1.6 同步）**。详见 [customer-profile-sales-interview.md](customer-profile-sales-interview.md) 与 [roadmap 访谈](../customer-profile-roadmap-interview.md)。
+> 前置依赖：下游 MCP 服务（已有服务，CRM/行为数据工具随本需求同步开发——一期仅此 3 工具）；百炼 Agent（MCP 工具 + skill 配置）。
+> 前置母本：`plans/scheduled-task-prd.md`（模式真正来源：`@Scheduled` + 行级抢占、token 审计纪律，见 architecture §4；`profile_json` 整包 + 投影列为画像域共同模式）。
+> 关联模块：customer-profile-ops（运营画像，**二期**，见 [ops/customer-profile-ops-prd.md](../ops/customer-profile-ops-prd.md)）——同一批客户两套画像，独立生成、独立存储、独立演进；客户集合为包含关系（销售画像对象 ⊂ 运营画像对象），见 Q23；二期启动双条件见 roadmap 访谈 Q8。
 
 ## Problem Statement
 
@@ -14,7 +14,7 @@
 
 **分析对象（Q1/Q5）**：平台注册、**已绑定店铺、近 7 天存在消费记录**的客户——即平台画像客户的**活跃子集**。注意：不是"注册线索"，绑定与消费是入池硬条件。
 
-**与运营画像的分工**：customer-profile-sales 面向**销售转化**（质量/意向/优先级/话术），customer-profile（ops）面向**运营分层**（价值/生命周期/流失风险）。两套画像独立生成、独立存储、独立演进（Q23）。
+**与运营画像的分工**：customer-profile-sales（**一期**）面向**销售转化**（质量/意向/优先级/话术），customer-profile-ops（**二期**）面向**运营分层**（价值/生命周期/流失风险）。两套画像独立生成、独立存储、独立演进（Q23）。
 
 ## Solution
 
@@ -25,7 +25,7 @@
 - **评分面板**：`leadQuality`（高/中/低）、`intentHeat`（热/温/冷）、`followPriority`（P0~P3）AI 综合判断；`infoCompleteness`（0~100%）规则计算（字段非空加权，清单 requirements 阶段定）
 - **双触发（Q5/Q12）**：定时扫描（每 7 天，扫近 7 天有消费客户）+ 手动触发（任意绑定客户，不限于活跃集）
 - **失败语义（Q4）**：强校验失败即弃，**严禁宽松落库**——无 FALLBACK 降级落库；无画像时前端展示旧画像或"暂无 AI 分析"+ 触发入口（Q14）
-- **存储**：独立表 `ai_customer_profile_sales`（`profile_json` 整包 + 四筛选投影列，Q7/Q24）；覆盖式只留最新（Q21）
+- **存储**：独立表 `ai_customer_profile`（基名归一期基础版本，ops 二期用 `ai_customer_profile_ops`；`profile_json` 整包 + 四筛选投影列，Q7/Q24）；覆盖式只留最新（Q21）
 - **前端（Q10，r2 修订 Q28）**：v1 含前端页面（客户列表四筛选键 + 画像卡片详情），**不挂钩 ehub-web**——页面由宿主业务系统（CRM 前端）承载；本仓库交付物 = 接口契约 + 画像卡片信息架构 + 设计草图规范（落 `designs/customer-profile/sales/`），供宿主方实现
 
 ## User Stories
@@ -35,19 +35,19 @@
 3. 作为销售人员，我想在客户列表按评分筛选/排序客户（质量/热度/优先级/完整度），以便批量定位跟进对象
 4. 作为销售人员，我想手动刷新某个客户的画像（含休眠客户），以便获取最新分析或盘活旧客户
 5. 作为系统管理者，我想让活跃客户画像定时批量预生成，以便销售打开详情页时无需等待
-6. 作为系统管理者，我想让每次分析记录模型与 token 消耗（对齐运营画像审计纪律），以便成本可归因
+6. 作为系统管理者，我想让每次分析记录模型与 token 消耗（对齐 scheduled-task 既有审计纪律），以便成本可归因
 
 ## Implementation Decisions
 
-**总体策略**：对齐运营画像已验证模式（前置母本），差异点仅在与销售场景的输入输出定义。
+**总体策略**：对齐已验证模式（前置母本 scheduled-task：`@Scheduled` + 行级抢占、token 审计；画像域共同存储形态：`profile_json` 整包 + 投影列），差异点仅在与销售场景的输入输出定义。
 
 ### 架构与模块
 
-1. **模块归属（Q8）**：独立模块 `customer-profile-sales`，目录 `plans/customer-profile/sales/`；表 `ai_customer_profile_sales`；与运营画像不共表不共接口
+1. **模块归属（Q8）**：独立模块 `customer-profile-sales`，目录 `plans/customer-profile/sales/`；表 `ai_customer_profile`（基名归一期，2026-08-26 roadmap 补充）；与运营画像（customer-profile-ops，二期）不共表不共接口
 2. **信息架构（Q8；r3 随设计定稿重制：卡片七区块）**：画像卡片自上而下七区块——① Header（邮箱+激活徽章+Meta tag 行[ID/国家·注册天数/渠道/等级/绑定]，右侧操作区[刷新实时数据 / 重新生成触发分析]）② 评分面板（AI×3 + 规则×1，卡片含「AI 评估/规则计算」来源小字）③ 基础画像（订单与活跃，2×3 描述表，实时数据）④ 线索速读（AI）⑤ 转化策略（AI）⑥ 销售话术（AI，多条独立卡片各带复制）⑦ Footer（生成时间等）；AI 区块外均为实时数据展示（Q14-②A）。原十模块内容全集不变，仅归并呈现（Header 合并 Meta；经验与预算+目标市场与品类+活跃轨迹合并入基础画像表）
-2a. **基础画像字段调整（r3 设计驱动，随 03 §3 契约定稿）**：设计稿基础画像表**新增**「最近订单数量（近 90 天）/ 消费金额 / 工单数量」（纳入下游工具 1 `get_customer_sales_info` 出参或行为工具聚合口径）；同时**弃用** DS 经验/周广告预算/细分市场三填报字段（设计终稿不再展示，不入工具 1 出参与 basic 接口；完整度基准字段同步调整，见 FR-08——45 权重由消费统计三字段承接）；定稿前接口以 03 §4 现有字段为准
+2a. **基础画像字段调整（r3 设计驱动 + r5 回撤弃用 + r6 瘦身，随 03 §3 契约定稿）**：设计稿基础画像表**新增**「最近订单数量（近 90 天）/ 消费金额」（纳入下游工具 1 `get_customer_sales_info` 出参或行为工具聚合口径；~~工单数量~~ r6 移除）；DS 经验/周广告预算维持 r5 恢复口径；~~主营品类/细分市场~~（**r6 移出**，2026-08-26：v1 下游填报数据无法提供——不入工具 1 出参、basic 接口、卡片与 FR-08 基准，v2 视下游能力回补）；卡片基础画像表 3×3 → 2×3（六字段）；定稿前接口以 03 §4 现有字段为准
 3. **数据工具契约（Q2/Q17）**：MCP 服务新增 3 工具（CRM 基础信息+填报 / 行为日志 / 活跃消费客户清单）；正式契约随 requirements/03 与 MCP 团队逐工具定稿
-4. **Agent 宿主**：百炼非流式 `Application.call`；skill 配置于百炼侧，全文镜像本仓库 `designs/customer-profile/sales/sales-skill.md` 为单一事实源（Q16，照搬运营画像模式）
+4. **Agent 宿主**：百炼非流式 `Application.call`；skill 配置于百炼侧，全文镜像本仓库 `designs/customer-profile/sales/sales-skill.md` 为单一事实源（Q16，仓库镜像 + PR review + 手动同步百炼的画像域共同模式）
 5. **评分分工（Q13）**：`infoCompleteness` 规则计算（恒定可解释），其余三项 AI 综合判断——AI 不得计算完整度，完整度不入 skill 输出 schema
 6. **输出 schema（Q18；r3 注记：话术多条展示）**：固定枚举强校验——`leadQuality` 高/中/低、`intentHeat` 热/温/冷、`followPriority` P0/P1/P2/P3、`reading` ≤300 字、`strategy` ≤300 字、`script` ≤500 字；skill 硬约束：**禁止虚构客户未表现出的意向信号**；禁止承诺具体价格/收益数字/时效（Q11）。**v1 `script` 维持单字符串**（≤500 字）；卡片端多条话术展示 v1 由宿主切分或单条呈现，数组化扩展（`scripts[]`）留 v2 随契约定稿
 
@@ -61,26 +61,26 @@
 ### 输出与存储
 
 11. **画像存储（Q21）**：覆盖式 upsert 只留最新，历史版本留 v2；`profile_json` 整包存储（唯一事实源）
-12. **检索投影列（Q7/Q24 后条）**：`lead_quality` / `intent_heat` / `follow_priority`（三枚举）+ `info_completeness`（数值）四键；列表默认排序 `follow_priority` 升序（P0 在前），次序 `generated_at` 降序
+12. **检索投影列（Q7/Q24 后条）**：`lead_quality` / `intent_heat` / `follow_priority`（三枚举）+ `info_completeness`（数值）四键；列表默认排序 `follow_priority` 升序（P0 在前），次序 `generated_at` 降序。注：完整度列表筛选 v1 即区间参数 `infoCompletenessMin/Max`（2026-08-26 关卡①复核修订，原「范围筛选 v2」口径作废）
 13. **校验与重试（Q22 前条）**：固定 schema 强校验；失败自动重试 1 次（附错误提示），再失败即弃并记失败状态——**严禁宽松落库**
 14. **冷启动/数据稀少（Q22 后条）**：AI 照常分析，`reading` 中声明"数据有限，结论仅供参考"——不设门槛、不输出降级画像
-15. **审计（Q26 沿用，Q29 修订）**：记录 `model`、`input_token`、`output_token`、`skill_version`（应用配置注入）；手动触发操作人**不设专用字段**，由通用审计字段 `upd_user`/`upd_name` 承载（异步落库以 UserContext 快照回填）
+15. **审计（Q26 沿用，Q29 修订；2026-08-26 实现期修订）**：记录 `model`、`input_token`、`output_token`（~~`skill_version`~~ 已作废移除，FR-07.4 同步作废）；手动触发操作人**不设专用字段**，由通用审计字段 `upd_user`/`upd_name` 承载（异步落库以 UserContext 快照回填）
 
 ### 前端与权限
 
-16. **前端宿主（Q10，r2 修订 Q28 推翻 Q15；r3 草图已定稿）**：**不挂钩 ehub-web**，页面由宿主业务系统（CRM 前端）承载；本 PRD 保留画像卡片信息架构作为接口输出结构依据与宿主侧设计输入；设计产物已落盘 `designs/customer-profile/sales/`（`sales-profile-ia.md` v1.2 + `customer-profile-ia.pen` 三画板 + PNG ×3）作为交付规范；详情页 Header 显式「重新生成」入口 = 手动触发（Q12，覆盖式 upsert 无冷却）、「刷新」= 重取实时数据；外壳「分析」菜单不动（维持占位）
-17. **权限（Q9）**：v1 平台级可见（对齐运营画像；不区分销售/运营角色，v2 视 CRM 诉求再议归属隔离）
+16. **前端宿主（Q10，r2 修订 Q28 推翻 Q15；r3 草图已定稿）**：**不挂钩 ehub-web**，页面由宿主业务系统（CRM 前端）承载；本 PRD 保留画像卡片信息架构作为接口输出结构依据与宿主侧设计输入；设计产物已落盘 `designs/customer-profile/sales/`（`sales-profile-ia.md` v1.6 + `customer-profile-ia.pen` 三画板 + PNG ×3）作为交付规范；详情页 Header 显式「重新生成」入口 = 手动触发（Q12，覆盖式 upsert 无冷却）、「刷新」= 重取实时数据；外壳「分析」菜单不动（维持占位）
+17. **权限（Q9）**：v1 平台级可见（对齐画像域平台数据定位；不区分销售/运营角色，v2 视 CRM 诉求再议归属隔离）
 18. **无画像呈现（Q14-①）**：有旧画像展示旧画像 + 生成时间；无旧画像展示"暂无 AI 分析" + 手动触发入口——**无 FALLBACK 降级落库形态**（与 Q4 一致）
 
 ### 边界
 
 19. **数据合规（Q5 沿用）**：终端用户 PII 不进 AI；MCP 数据工具出入参只含平台 ID 与统计形态
-20. **两套画像关系（Q23）**：客户集合包含关系（销售 ⊂ 运营），画像独立生成存储；v1 不并排展示（运营画像无前端），v2 视运营画像前端化再议
+20. **两套画像关系（Q23）**：客户集合包含关系（销售 ⊂ 运营），画像独立生成存储；v1 不并排展示（运营画像无前端且后移二期），v2 视运营画像前端化再议
 21. **话术合规（Q11）**：skill 硬约束禁承诺；v1 无人工审核流（信任 skill + 抽检），出问题再议
 
 ## Testing Decisions
 
-**策略**：对齐运营画像——测外部行为不测实现细节；核心是 **schema 校验器**（纯逻辑）与**扫描/触发语义**。
+**策略**：测外部行为不测实现细节；核心是 **schema 校验器**（纯逻辑）与**扫描/触发语义**。
 
 优先覆盖：
 
@@ -106,7 +106,7 @@
 - 销售/运营角色区分与线索归属隔离（v2，Q9）
 - 两套画像并排展示（v2，Q23；运营画像前端化后再议）
 - 话术人工审核流（v2，Q11）
-- 运营画像（customer-profile ops）前端化
+- 运营画像（customer-profile-ops，二期）前端化
 - skill 正式文本（随 requirements/03 契约定稿后镜像 `designs/customer-profile/sales/sales-skill.md`，PR review 维护）
 - MCP 服务实现（下游团队交付；本 PRD 定义对上契约：3 数据工具清单）
 
@@ -119,6 +119,6 @@
 3. 下游 3 工具随本需求同步开发（Q2）——进度耦合风险，requirements/03 契约定稿需尽早启动
 4. 话术合规依赖 skill 约束（Q11）——验收 5 抽检兜底；出问题升级为审核流
 5. 前端宿主在业务系统侧（r2/Q28）——接口联调与上线节奏依赖宿主团队，建议接口契约先定稿并提供 mock，宿主侧并行开发；设计规范（ia.md v1.2 + 三画板）已交付，宿主方可启动页面开发
-6. 设计新增基础画像 3 字段（r3，决策 2a）——依赖下游工具出参扩展，契约定稿（03 §3）需尽早启动，否则宿主按现契约实现后需返工补字段
+6. 设计新增基础画像 2 字段（r3/r6，决策 2a：最近订单数量/消费金额）——依赖下游工具出参扩展，契约定稿（03 §3）需尽早启动，否则宿主按现契约实现后需返工补字段；主营品类/细分市场 v2 回补时需同步工具出参、basic、卡片与 FR-08 权重（重排走 PR）
 
 **开发顺序建议**：requirements 01–05 拆解 ✅ → 卡片设计草图（ia.md + wireframe，交付宿主方）✅（v1.2）→ 契约对齐（03 §3 与 MCP 团队，含决策 2a 字段扩展）→ 开发（接口 mock 先行，宿主侧并行）。
