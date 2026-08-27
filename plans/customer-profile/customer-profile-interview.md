@@ -93,7 +93,7 @@
 - **Q19 六字段 → 七字段**：Q27 niche 最终定进（卡片③ + 完整度问卷五项）
 - **Q10 推荐被推翻**：推荐高频定时扫描，用户定 v1 纯手动——连带 Q9（不自动回填）、Q11（不周期重扫）收敛为纯手动口径
 
-## 执行摘要（2026-08-26 文档变更）
-1. sales/ops 两模块全部文档加「已废弃」标头保留（plans 5 + requirements 10 + designs 2，.pen/PNG 随宿主 md 标注）
+## 执行摘要（2026-08-26 文档变更；2026-08-27 处置更新）
+1. sales/ops 两模块全部文档：2026-08-26 加「已废弃」标头保留 → **2026-08-27 物理删除**（plans 5 文件含 roadmap 访谈 + requirements 两目录 01–05 + designs 2 文件及 .pen/PNG；git 历史 `9e66f39` 及之前可溯）
 2. 本访谈记录落盘（Q1–Q28 溯源单一事实源）
-3. 待办（Q23）：新 PRD（write-a-prd 流程）→ `requirements/customer-profile/` 01–05 → 卡片 ia 设计 → CONTEXT.md / GLOSSARY / README 重写同步
+3. 待办（Q23）：新 PRD（write-a-prd 流程）→ `requirements/customer-profile/` 01–05 → 卡片 ia 设计 → CONTEXT.md / GLOSSARY / README 重写同步（README/CONTEXT/GLOSSARY 已于 2026-08-27 随删除同步）

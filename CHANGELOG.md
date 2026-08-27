@@ -2,6 +2,20 @@
 
 本文件记录文档工程的全部重要变更，按日期倒序。格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
 
+## 2026-08-27
+
+### Changed
+- **完整度基准纳入渠道归因（PRD v1.2 → v1.3 + skill 红线同步）**：四层改五层——新增渠道归因层（渠道来源非 `--` 即记已归因，二级来源/Medium/Campaign 等细分字段不作填写要求）；问卷五项原已在基准内（约 60% 权重，非本次变更）；PRD 决策 17 / Solution 评分面板 / 测试项 2、skill 红线 6 同步。
+- **客户画像 skill v1.0.0 → v1.1.0：销售话术改 2–3 条输出（`designs/customer-profile/skill.md`）**：每条独立可用、角度互补（价值切入/信号破冰/行动催促），单条 ≤200 字、合计 ≤500 字；条数下限 2（信息极少时写通用角度，不虚构信号）；输出契约与红线同步。**PRD 决策 14** 联动：script 从「单字符串」改为「skill 层 2–3 条，落库形态（拼接/数组）随 requirements/03 定，数组化正式化 → v2」；Out of Scope 话术数组化条目同步。
+- **用户画像 PRD v1.1 → v1.2：下游数据面复核，改复用既有 `customer detail` 脱敏接口（`plans/customer-profile/customer-profile-prd.md`）**：ehub skill 出参参考确认字段覆盖（是否有已支付订单、绑定店铺、是否有联系方式/是否有姓名布尔信号、问卷五项、渠道归因 6 字段、客户标签/等级，新增国家英文名码 + 注册区域中文描述），v1.1 脱敏契约全部命中，下游无需新增工具。**决策 6** 升级为复用口径并锁**文案形态**出参约定（枚举命中映射显文案、空值 `-`/`--`、布尔「是/否」）；**决策 7** 字段名同步（`country_id`→`country`，补注册区域）；**决策 13** 补完整度计算消费文案出参的解析口径；**决策 17** 基础档案层改 `country` 口径（注册区域可作 AI 输入特征不入基准）；**测试项 2** 同步；**风险 3** 解除下游进度耦合、转为文案解析口径锁定；**Out of Scope** MCP 行同步。requirements/03 契约定稿时按文案解析口径锁定字段映射。
+- **用户画像 PRD v1.0 → v1.1：数据契约 PII 脱敏（`plans/customer-profile/customer-profile-prd.md`）**：依据 `customer` / `customer_extend` 两表表结构核对 MCP 数据工具出参——**决策 7** 扩为脱敏清单（`username` / `nickname` / `first_name` / `chat_account` / `chat_account_type` / `reply_to_email` 等 PII 原值不出参；客户标识仅传 `customerId`；完整度信号 `hasContactWay` / `hasFirstName` 布尔回传；`company` / `country_id` 保留）；**决策 17** 完整度联系方式/基础档案层改布尔信号判定口径（规则计算仍在本服务）；**决策 22** 补 Header 客户标识宿主渲染、PII 不落 `profile_json`；**决策 26** 指向决策 7；**测试项 2** 同步。requirements/03 契约定稿时按此口径锁字段。
+
+### Removed
+- **清除已废弃的 customer-profile-sales / customer-profile-ops 全部文档（22 文件）**：两模块已于 2026-08-26 标废（Q1/Q7/Q23，见 `plans/customer-profile/customer-profile-interview.md`），本次将「标废留痕」升级为物理删除——`plans/customer-profile/`（sales/ops 两子目录 4 文件 + roadmap 访谈）、`requirements/customer-profile/`（sales/ops 两子目录 01–05 共 10 文件）、`designs/customer-profile/sales/`（sales-profile-ia.md、sales-skill.md、2 个 .pen、3 张 PNG）。git 历史 `9e66f39` 及之前可溯。
+
+### Changed
+- **删除后全链路引用同步**：README 目录树/索引表改为「用户画像 v1（草案待审）」行；CONTEXT.md 客户画像领域改写为「用户画像领域（原客户画像域）」（ER 移除 SALES_PROFILE 实体、不变量合并为 5 条清单）；GLOSSARY.md 对应小节改写（新增「转化阶段」「双列表架构」术语，移除「活跃画像客户」「销售画像」「运营画像」独立词条）；新 PRD 与访谈的溯源口径改为「已删除，git 历史可溯」。
+
 ## 2026-08-26
 
 ### Added
