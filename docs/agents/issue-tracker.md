@@ -28,7 +28,3 @@ Used by `/wayfinder`. The **map** is a file with one **child** file per ticket.
 - **Frontier**: scan `.scratch/<effort>/issues/` for files that are open, unblocked, and unclaimed; first by number wins.
 - **Claim**: set `Status: claimed` and save before any work.
 - **Resolve**: append the answer under an `## Answer` heading, set `Status: resolved`, then append a context pointer (gist + link) to the map's Decisions-so-far in `map.md`.
-
-## Archive（本仓库补充）
-
-`.scratch/archive/` 存放 2026-09-02 流程重定前归档的旧文档体系（`requirements/`、`specs/`、`designs/` 三目录原样迁入），**只读基线，不新增、不修改**；新 feature 一律走 `.scratch/<feature>/` 约定，禁止在归档目录下续写。

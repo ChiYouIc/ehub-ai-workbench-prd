@@ -24,10 +24,6 @@ ehub-ai-workbench-prd/
 │   ├── agents/              # skill 配置（issue tracker / triage 标签 / 域文档 / work items）
 │   └── adr/                 # ADR（跨模块持久技术决策，按需懒创建；当前尚无）
 └── .scratch/                # 本地 markdown issue tracker（见 docs/agents/issue-tracker.md）
-    └── archive/             #   2026-09-02 流程重定前的归档基线（只读）
-        ├── requirements/    #     旧 requirements/（各模块 01–05 + auth/web 通用约定）
-        ├── specs/           #     旧 specs/（ai-chat / chat-conversation spec）
-        └── designs/         #     旧 designs/（architecture / ui-baseline / 各模块设计链与原型）
 ```
 
 ## 文档流程（skill 原生链路）
@@ -50,11 +46,7 @@ flowchart LR
 5. **工单**：`/to-tickets` 拆垂直切片工单，`.scratch/<feature>/issues/NN-<slug>.md`，阻塞关系 `Blocked by: NN`
 6. **实现**：`/handoff` 压缩上下文交接到代码工程 `ehub-dev`，`/implement`（内含 `/tdd` + `/code-review`）；**实现类 skill 在代码工程目录下运行，本文档工程只承载需求**
 
-> 前端 UI：无 skill 链路。视觉/交互决策进 PRD/ADR；细节在代码工程实现期处理。旧 UI/UX 链（ia → pages.pen → ui-spec → 双关卡）已归档停用，产物在 `.scratch/archive/designs/`。
-
-### 归档基线（2026-09-02 之前）
-
-旧体系产物（`requirements/` 01–05 拆解 + FR/NFR/R 编号、`specs/`、`designs/` 含 UI/UX 设计链与 `-design.md` D-xx）整体迁入 `.scratch/archive/`，**只读**：解读历史需求、核对已实现模块行为时引用，引用处标注「归档基线」；与 skill 原生产物冲突时以 skill 原生产物为准。新增产物一律走上文 skill 原生链路。
+> 前端 UI：无 skill 链路。视觉/交互决策进 PRD/ADR；细节在代码工程实现期处理。
 
 ## Skills 使用指南
 
@@ -97,20 +89,16 @@ flowchart LR
 | 文件名 | PRD `plans/<feature>-prd.md`；访谈 `<feature>-interview.md`；ADR `docs/adr/NNNN-*.md`；spec `.scratch/<feature>/spec.md`；工单 `.scratch/<feature>/issues/NN-<slug>.md` |
 | 决策可追溯 | 关键决策标注访谈问题号（如 Q5），问题原文见 `plans/<feature>-interview.md` |
 | Tracker | 本地 markdown：`.scratch/<feature>/`（`docs/agents/issue-tracker.md` 为单一事实源） |
-| 归档 | `.scratch/archive/` 只读；旧 FR-xx/NFR-xx/R-xx/D-xx 编号仅用于解读归档基线，新产物不使用 |
 | 需求变更 | 先改 PRD / spec 再开发（母本在 `plans/`，spec 与工单在 `.scratch/`） |
 
 ## 当前文档索引
 
 | 模块 | PRD 母本 | 状态 |
 |---|---|---|
-| AI 对话 v1 | `plans/ai-chat-sse-prd.md`（v1.2） | 已定版；旧拆解/设计在归档 `.scratch/archive/{requirements/ai-chat, specs/ai-chat-spec.md, designs/ai-chat}` |
-| 会话组与对话内容管理 v1 | `plans/chat-conversation-management-prd.md`（v1.0） | 已定版；同上归档 |
+| AI 对话 v1 | `plans/ai-chat-sse-prd.md`（v1.2） | 已定版 |
+| 会话组与对话内容管理 v1 | `plans/chat-conversation-management-prd.md`（v1.0） | 已定版 |
 | 会话内容管理（只读查询）v1 | `plans/chat-conversation-content-prd.md`（v1.0） | 已定版，并入上模块实现 |
-| 定时任务 v1 | `plans/scheduled-task-prd.md`（v1.0） | 已定版；同上归档 |
+| 定时任务 v1 | `plans/scheduled-task-prd.md`（v1.0） | 已定版 |
 | 模型配置管理 v1 | `plans/model-config-prd.md`（v1.0）+ `model-config-interview.md`（Q1–Q34） | 已定版 |
 | 用户画像（新用户转化）v1 | `plans/customer-profile/customer-profile-prd.md`（v1.3 草案待审）+ `customer-profile-interview.md`（Q1–Q28） | PRD 草案待审 |
-| 接口认证 / Web 层通用约定 | `plans/` 无母本——约定本体在归档 `.scratch/archive/requirements/{auth,web}`，仍为全工程有效基线 | 归档基线（仍有效，被各 PRD 引用） |
 | 自研 Agent 对话（agent-chat） | —（启动时经 grill-with-docs + write-a-prd 起草） | v2 规划 |
-
-> 流程定案（2026-09-02，第二次重定）：随 skill 原生约束执行——PRD（`plans/`）→ spec/工单（`.scratch/`）→ 代码工程实现；requirements 01–05 / specs / designs 超集体系停用归档。同日早前的「拆解 + 按需 UI/UX 链」方案作废。
