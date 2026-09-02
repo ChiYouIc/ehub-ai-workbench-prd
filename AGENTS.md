@@ -1,6 +1,6 @@
 # AGENTS.md — 流程纪律（agent 在本仓库工作前必读）
 
-本仓库按 **skill 原生约束**运行（2026-09-02 定案）：write-a-prd / to-spec / to-tickets / grill-with-docs / domain-modeling 等技能按其原生模板与产物约定工作，**本仓库不另建平行文档体系**。
+本仓库按 **skill 原生约束**运行：write-a-prd / to-spec / to-tickets / grill-with-docs / domain-modeling 等技能按其原生模板与产物约定工作，**本仓库不另建平行文档体系**。
 
 ## Agent skills
 

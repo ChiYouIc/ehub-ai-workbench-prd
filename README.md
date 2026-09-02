@@ -2,7 +2,7 @@
 
 本工程是 [`ehub-ai-workbench`](../ehub-dev/ehub-ai-workbench) 服务（AI 工作台，对百炼大模型平台做二次封装）的**产品需求文档库**，与代码工程分离维护。
 
-核心约定：**变更先改 PRD 再开发**；文档流程**严格按 skill 原生约束执行**（2026-09-02 定案）。
+核心约定：**变更先改 PRD 再开发**；文档流程**严格按 skill 原生约束执行**。
 
 ## 目录结构
 
@@ -78,7 +78,7 @@ flowchart LR
 | 术语混乱 / 要记重大决策 | `/domain-modeling` | 挑战模糊术语、记 ADR、维护 CONTEXT.md |
 | 写给 agent 看的文档 | `/writing-for-agents` | skill/AGENTS.md 写作规范 |
 | 处理别人提的 issue/PR | `/triage` | 分类 + 状态机 + agent-ready 工单 |
-| 首次使用前配置 tracker | `/setup-matt-pocock-skills` | 已于 2026-09-02 配置完成（本地 markdown tracker），通常无需重跑 |
+| 首次使用前配置 tracker | `/setup-matt-pocock-skills` | 已配置完成（本地 markdown tracker），通常无需重跑 |
 
 ## 约定
 
