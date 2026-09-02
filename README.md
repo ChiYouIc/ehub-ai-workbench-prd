@@ -10,7 +10,6 @@
 ehub-ai-workbench-prd/
 ├── README.md                # 本文件：项目说明、目录导航、文档约定
 ├── AGENTS.md                # 流程纪律（agent 必读：skill 原生链路 / tracker 配置 / 硬规则）
-├── CHANGELOG.md             # 文档变更日志（按日期倒序）
 ├── CONTEXT.md               # 领域模型（核心概念、关系、生命周期、不变量）
 ├── GLOSSARY.md              # 领域术语表（全工程统一用语）
 ├── plans/                   # PRD 母本 + 访谈记录（write-a-prd 原生产出）
@@ -93,7 +92,7 @@ flowchart LR
 
 | 约定项 | 规则 |
 |---|---|
-| PRD 版本 | `v主.次`（定版后小改动升次版本）；文档集演进记 `CHANGELOG.md` |
+| PRD 版本 | `v主.次`（定版后小改动升次版本） |
 | 用语 | 以 `GLOSSARY.md` 为准，文档间术语保持一致 |
 | 文件名 | PRD `plans/<feature>-prd.md`；访谈 `<feature>-interview.md`；ADR `docs/adr/NNNN-*.md`；spec `.scratch/<feature>/spec.md`；工单 `.scratch/<feature>/issues/NN-<slug>.md` |
 | 决策可追溯 | 关键决策标注访谈问题号（如 Q5），问题原文见 `plans/<feature>-interview.md` |
@@ -114,4 +113,4 @@ flowchart LR
 | 接口认证 / Web 层通用约定 | `plans/` 无母本——约定本体在归档 `.scratch/archive/requirements/{auth,web}`，仍为全工程有效基线 | 归档基线（仍有效，被各 PRD 引用） |
 | 自研 Agent 对话（agent-chat） | —（启动时经 grill-with-docs + write-a-prd 起草） | v2 规划 |
 
-> 流程定案（2026-09-02，第二次重定）：随 skill 原生约束执行——PRD（`plans/`）→ spec/工单（`.scratch/`）→ 代码工程实现；requirements 01–05 / specs / designs 超集体系停用归档。同日早前的「拆解 + 按需 UI/UX 链」方案作废，变更记录见 `CHANGELOG.md`。
+> 流程定案（2026-09-02，第二次重定）：随 skill 原生约束执行——PRD（`plans/`）→ spec/工单（`.scratch/`）→ 代码工程实现；requirements 01–05 / specs / designs 超集体系停用归档。同日早前的「拆解 + 按需 UI/UX 链」方案作废。

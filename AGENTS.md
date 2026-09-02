@@ -45,8 +45,8 @@ flowchart LR
 ## 硬规则
 
 1. **不再新建** `requirements/` 01–05、`specs/`、`designs/` 任何产物（含 FR-xx/NFR-xx 拆解、`-design.md`、`-ia.md`/`-pages.pen`/`-ui-spec.md` UI/UX 链）——该体系已停用归档。接口契约、数据模型等技术决策写入 PRD 的 **Implementation Decisions** 节或 **ADR**；前端无 skill 链路，视觉/交互决策同样入 PRD/ADR，细节在代码工程实现期处理。
-2. 引用旧基线时读 `.scratch/archive/...`，引用处标注「归档基线」；旧基线与 skill 原生产物冲突时**以 skill 原生产物为准**，冲突处置记 `CHANGELOG.md`。
-3. PRD 版本用 `v主.次`（定版后小改动升次版本）；文档集演进记 `CHANGELOG.md`。
+2. 引用旧基线时读 `.scratch/archive/...`，引用处标注「归档基线」；旧基线与 skill 原生产物冲突时**以 skill 原生产物为准**。
+3. PRD 版本用 `v主.次`（定版后小改动升次版本）。
 4. 用语以 `GLOSSARY.md` 为准，文档间术语保持一致。
 5. 需求变更：**先改 PRD / spec 再开发**（母本在 `plans/`，spec 与工单在 `.scratch/`）。
 6. FR-xx / NFR-xx / R-xx / D-xx 编号体系随旧体系归档，仅用于解读归档基线；新产物不使用。
