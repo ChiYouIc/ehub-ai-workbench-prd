@@ -28,7 +28,7 @@
 3. **返回字段（Q4）**：`id/role/content/crtTime/models/inputToken/outputToken`；**不返回**内部列 `tools/params/mediaContent`
 4. **归属校验（Q5）**：查询前校验会话组归属（存在 + 本人 + 未逻辑删除），任一不满足 → 统一 `NOT_FOUND "会话不存在"`（不泄露他人会话存在性）；已逻辑删除的会话组不可查内容
 5. **内容生命周期归属（用户已明确）**：创建在 chat 接口、删除随会话组——本模块**只读**，不重复实现任何写逻辑
-6. **响应包装**：遵循全工程统一约定（`TablePageResponse` 免二次包装）；认证遵循 `requirements/auth/01-接口认证.md`
+6. **响应包装**：遵循全工程统一约定（`TablePageResponse` 免二次包装）；认证遵循归档基线 `.scratch/archive/requirements/auth/01-接口认证.md`（仍为有效约定）
 
 ## Testing Decisions
 
@@ -53,5 +53,5 @@
 - **与既有 PRD 的关系**：`chat-conversation-management-prd.md` 的 FR-04 已定义同一接口（历史消息查询）。本 PRD 独立成文、聚焦"内容只读"这一极简范围；实现时两者为**同一接口**，不重复开发
 - **现状差距**：`ErrorCodeEnum` 无 `PARAM_ERROR`（需在 2000 段补充，与既有模块共用）；MyBatis-Plus 分页插件未配置（`PaginationInnerInterceptor` 为前置开发项）
 - **数据来源**：内容数据由 chat 接口每轮落库（user + assistant 两条），查询直接读 `ai_conversation_content`
-- **设计承接**：接口设计与既有 `designs/chat-conversation/chat-conversation-design.md` 为同一实现（见其 §7.1），不另立平行设计文档
+- **设计承接**：接口设计与归档基线 `.scratch/archive/designs/chat-conversation/chat-conversation-design.md` 为同一实现（见其 §7.1），不另立平行设计文档
 - **已定版**：本文作为**决策母本**保留；实现上与 `chat-conversation-management-prd.md` FR-04 为同一接口，合并开发

@@ -2,6 +2,13 @@
 
 本文件记录文档工程的全部重要变更，按日期倒序。格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
 
+## 2026-09-02
+
+### Changed
+- **文档流程二次重定：严格按 skill 原生约束执行，超集体系整体归档（README + AGENTS.md 重写 + 目录迁移）**：主线简化为 **grill-with-docs → write-a-prd（plans/ 落 PRD + interview）→ to-spec（.scratch/&lt;feature&gt;/spec.md）→ to-tickets（.scratch/&lt;feature&gt;/issues/NN-*.md）→ 代码工程 /implement**。同日早前定案的「PRD → requirements 01–05 拆解 + 按需 UI/UX 链」方案经复核作废（该体系无 skill 模板依据：to-spec/write-a-prd 均不要求接口规范/数据模型/FR-xx 独立文档，且 to-spec 原生产物为 tracker 工单而非 specs/ 文件）。**目录迁移**：`requirements/`、`specs/`、`designs/` 三目录整体迁入 `.scratch/archive/`（只读基线：不新增、不修改、不续写，冲突时以 skill 原生产物为准）；FR-xx/NFR-xx/R-xx/D-xx 编号体系随归档停用。**skill 配置落盘**（setup-matt-pocock-skills 种子模板）：`docs/agents/issue-tracker.md`（本地 markdown tracker：spec = `.scratch/<feature>/spec.md`，工单 = `issues/NN-<slug>.md` + `Status:` 行）、`triage-labels.md`（五默认标签）、`domain.md`（single-context + GLOSSARY 补充）、`work-items.md`（write-a-prd 第 4 步引用：PRD 落 plans/ 不进 tracker）。**活跃产物回迁**：百炼 skill 镜像 `designs/customer-profile/skill.md` → `plans/customer-profile/skill.md`（仍在维护，非归档物）。**存量 PRD 路径修正**：ai-chat-sse / chat-conversation-{management,content} / model-config / customer-profile 五份 PRD 中旧路径引用改指 `.scratch/archive/...`（标注「归档基线」）或新 spec 落点；interview 为历史记录不改。
+- **文档流程重定：随 skill 原生链路 + UI/UX 按需（README「文档流程」整节重写 + 新建 `AGENTS.md`）**：新主线 = **PRD 草案 → 定稿 → requirements 01–05 拆解（产品层与技术层一并落）+ ADR → UI/UX 设计（按需）→ spec/design → 开发**。要点：① write-a-prd / to-spec 模板的 Implementation/Testing Decisions **原样保留不拆阶段**——PRD 母本即含技术决策（skill 原生约定）；② ADR 为 skill 原生行为——跨模块持久技术决策经 grill-with-docs / domain-modeling 落 `docs/adr/NNNN-*.md`（此前全工程未启用，自本日起按需创建）；③ **UI/UX 链不再强制**——本工程自绘前端才启用（先例：ai-chat / chat-conversation / scheduled-task 全链路双关卡），纯后端（model-config）或前端归宿主（customer-profile）跳过；④ spec/design 与 UI/UX 链无先后依赖；⑤ 前置拆解例外需用户显式指示 + 「前置拆解稿」标头 + 定稿复核清单。`AGENTS.md` 固化上述纪律（产物落点 / UI/UX 启用口诀 / 例外标注）供各技能遵循。同日修订注记：本日早前曾定「四阶段串行（产品拆解 → UI/UX 冻结 → 应用程序设计）」方案，当天经用户复核作废——该方案与 write-a-prd 等 skill 原生产出冲突，以本条为准。（**再注：本条方案同日被上一条二次重定取代，留档备查**）
+- **README 多处失真修正**：索引表 AI 对话 v1 PRD 版本 v1.0 → **v1.2**（plans 实际状态 2026-08-25 已定版 v1.2，specs 关联行同步失真）；索引表用户画像行「待拆解，将落 requirements/customer-profile/」→ **已落 01–05 前置拆解稿**（含 skill.md 设计产物登记与 01 §6 复核清单指引）；目录树补 AGENTS.md、model-config/、customer-profile/ 条目，customer-profile PRD 版本 v1.0 → v1.3；底部标准链路注记换为新链路并声明旧链路（2026-08-22「拆解与设计并行」）作废。
+
 ## 2026-08-27
 
 ### Changed

@@ -56,7 +56,7 @@
 ### 数据与下游
 
 5. **数据边界（Q4）**：v1 仅 `customer` + `customer_extend` 两表；行为日志数据工具 → v2
-6. **MCP 工具（Q8→Q24；v1.2 复核修订）**：下游最终 1 个工具——**复用既有 `customer detail` 命令**（MCP 脱敏接口 `/outer/mcp/customer/profile/detail`，两表合并），出参**含消费状态字段**（是否有已支付订单，口径归数据属主）与脱敏布尔信号（是否有联系方式/是否有姓名），已覆盖 v1.1 脱敏契约全部字段，**下游无需新增开发**；出参为**文案形态**（枚举命中映射表显文案、空值普通字段 `-` / 渠道字段 `--`、布尔「是/否」，出参参考见 ehub skill `customer/references/customer-detail.md`）；原「注册未消费清单」工具作废（池发现权归老系统，Q16）；正式契约随 requirements/03 与 MCP 团队定稿
+6. **MCP 工具（Q8→Q24；v1.2 复核修订）**：下游最终 1 个工具——**复用既有 `customer detail` 命令**（MCP 脱敏接口 `/outer/mcp/customer/profile/detail`，两表合并），出参**含消费状态字段**（是否有已支付订单，口径归数据属主）与脱敏布尔信号（是否有联系方式/是否有姓名），已覆盖 v1.1 脱敏契约全部字段，**下游无需新增开发**；出参为**文案形态**（枚举命中映射表显文案、空值普通字段 `-` / 渠道字段 `--`、布尔「是/否」，出参参考见 ehub skill `customer/references/customer-detail.md`）；原「注册未消费清单」工具作废（池发现权归老系统，Q16）；正式契约随 spec（`.scratch/customer-profile/spec.md`，定稿时产出）与 MCP 团队定稿。**前端 UI 链路说明（2026-09-02 流程重定）**：本模块前端由宿主业务系统承载，卡片视觉/交互决策写入本 PRD 与 ADR，无独立 UI/UX 设计文档链（旧 `designs/customer-profile/` 产物已归档至 `.scratch/archive/designs/customer-profile/`；`skill.md` 镜像移至 `plans/customer-profile/skill.md`）
 7. **PII 边界（Q15 沿用画像域基线；2026-08-27 数据契约脱敏修订）**：终端消费者 PII 不进 AI 链路；数据工具出入参以平台 ID 与画像所需字段形态提供。**脱敏清单**：`username` / `nickname` / `first_name` / `chat_account` / `chat_account_type` / `reply_to_email` 等 PII 原值不出参——客户标识仅传 `customerId`；完整度判定所需信号以布尔形态由下游计算回传（`hasContactWay` / `hasFirstName`）；`company`（业务属性）、`country`（英文名码如 US，粗粒度区域非住址）与注册区域（省级中文描述）保留原值
 
 ### 触发与并发
@@ -68,9 +68,9 @@
 
 ### AI 分析与输出
 
-12. **Agent 宿主（Q15 沿用）**：百炼非流式 `Application.call`；skill 配置于百炼侧，全文镜像本仓库为单一事实源（PR review 维护 + 手动同步百炼，镜像落 `designs/customer-profile/`）
-13. **评分分工（Q15/Q20 沿用）**：`infoCompleteness` 规则计算（恒定可解释），其余三项 AI 综合判断——AI 不得计算完整度，完整度不入 skill 输出 schema；完整度计算消费 `customer detail` 文案出参，按空值约定解析（空值 `-`/`--` 记未填、布尔按「是/否」、枚举未命中显原始值），解析口径随 requirements/03 锁定
-14. **输出 schema（Q15 沿用）**：固定枚举强校验——`leadQuality` 高/中/低、`intentHeat` 热/温/冷、`followPriority` P0/P1/P2/P3、`reading` ≤300 字、`strategy` ≤300 字、`script` 2–3 条（skill v1.1 起多条输出，每条独立可用、单条 ≤200 字合计 ≤500 字；落库形态——单串拼接或数组——随 requirements/03 定，数组化正式化 → v2）；skill 硬约束：**禁止虚构客户未表现出的意向信号**、禁止承诺具体价格/收益数字/时效
+12. **Agent 宿主（Q15 沿用）**：百炼非流式 `Application.call`；skill 配置于百炼侧，全文镜像本仓库为单一事实源（PR review 维护 + 手动同步百炼，镜像落 `plans/customer-profile/skill.md`）
+13. **评分分工（Q15/Q20 沿用）**：`infoCompleteness` 规则计算（恒定可解释），其余三项 AI 综合判断——AI 不得计算完整度，完整度不入 skill 输出 schema；完整度计算消费 `customer detail` 文案出参，按空值约定解析（空值 `-`/`--` 记未填、布尔按「是/否」、枚举未命中显原始值），解析口径随 spec 定稿锁定（`.scratch/customer-profile/spec.md`）
+14. **输出 schema（Q15 沿用）**：固定枚举强校验——`leadQuality` 高/中/低、`intentHeat` 热/温/冷、`followPriority` P0/P1/P2/P3、`reading` ≤300 字、`strategy` ≤300 字、`script` 2–3 条（skill v1.1 起多条输出，每条独立可用、单条 ≤200 字合计 ≤500 字；落库形态——单串拼接或数组——随 spec 定稿定，数组化正式化 → v2）；skill 硬约束：**禁止虚构客户未表现出的意向信号**、禁止承诺具体价格/收益数字/时效
 15. **策略按转化阶段硬分流（Q14）**：阶段判定来自实时数据（绑店状态），不由 AI 猜——未绑店 → 促绑店策略+话术；已绑店未首单 → 促首单策略+话术
 16. **冷启动（Q21）**：刚注册、问卷全空客户照常分析，`reading` 中声明"数据有限，结论仅供参考"——不设门槛、不输出降级画像
 17. **完整度基准（Q20；2026-08-27 脱敏修订；v1.3 扩容）**：五层——问卷五项（engaged_time / weekly_ad_budget / order_volume / niche / service_interest，约 60% 权重）/ 联系方式（布尔信号 `hasContactWay`＝chat_account 或 reply_to_email 非空，下游计算）/ 基础档案（布尔信号 `hasFirstName` + `company` / `country` 非空，`country` 为英文名码；出参另含注册区域省级中文描述，可作 AI 输入特征，不入完整度基准）/ 渠道归因（v1.3 纳入：渠道来源非 `--` 即记已归因，二级来源/Medium/Campaign 等细分字段不作填写要求）/ 绑店（`stores` 非空）；规则计算仍在本服务，输入从 PII 原值改为脱敏信号与非 PII 字段；具体分值 requirements 阶段定，PRD 锁字段集
@@ -84,7 +84,7 @@
 ### 前端与权限
 
 21. **双列表架构（Q16/Q26）**：① 老系统检索列表（复用老系统用户检索接口，前端接入新页面）——找客户 + 行内触发生成；② 本服务画像列表（仅已生成画像客户）——服务端五筛选排序，销售日常工作队列。不采用单列表前端拼装（筛选形同虚设）或 BFF 合流（过度工程）
-22. **画像卡片（业务线框 + Q13/Q19/Q27）**：七区块沿用业务给定线框——Header（客户标识 + **转化阶段标签**：未绑店 / 已绑店未首单 + 操作区[重新生成/刷新] + Meta 行含渠道归因；客户标识（用户名/昵称等 PII）由宿主老系统渲染，本服务链路仅流转 `customerId`，PII 不落 `profile_json`）→ 评分面板（AI×3 + 规则×1，含来源小字）→ 基础画像 → 线索速读（AI）→ 转化策略（AI）→ 销售话术（AI，可多条各带复制）→ Footer（生成时间/触发方式/模型）；设计产物落 `designs/customer-profile/`（ia.md + 原型），作为宿主侧交付规范
+22. **画像卡片（业务线框 + Q13/Q19/Q27）**：七区块沿用业务给定线框——Header（客户标识 + **转化阶段标签**：未绑店 / 已绑店未首单 + 操作区[重新生成/刷新] + Meta 行含渠道归因；客户标识（用户名/昵称等 PII）由宿主老系统渲染，本服务链路仅流转 `customerId`，PII 不落 `profile_json`）→ 评分面板（AI×3 + 规则×1，含来源小字）→ 基础画像 → 线索速读（AI）→ 转化策略（AI）→ 销售话术（AI，可多条各带复制）→ Footer（生成时间/触发方式/模型）；卡片视觉/交互决策入 PRD/ADR，作为宿主侧交付规范，细节在代码工程实现期处理
 23. **基础画像字段（Q13/Q19/Q27）**：七字段——DS 经验 / 周广告预算 / 月订单量预期 / 细分市场 / 意向服务 / 最近登录 / 绑定店铺；**无订单数/成交额**（池内客户恒为 0，Q13 明确移除）；渠道归因进 Header Meta
 24. **权限（Q15 沿用）**：v1 平台级可见（内部销售全体），不区分角色/线索归属（→v2）
 25. **无画像呈现（Q15 沿用）**：详情页无画像时展示"暂无 AI 分析" + 生成入口；有旧画像展示旧画像 + 生成时间；**无 FALLBACK 降级落库形态**
@@ -120,10 +120,10 @@
 - 定时扫描、周期重扫、自动全量回填、批量触发（v2，Q9/Q10/Q11/Q17）
 - 评分漂移约束（观测期后评估，v2）
 - 历史版本保留 + 指标快照（v2）
-- 话术字段 `scripts[]` 数组化落库形态（v2；skill 层已按 2–3 条输出，v1 落库拼接口径随 requirements/03）
+- 话术字段 `scripts[]` 数组化落库形态（v2；skill 层已按 2–3 条输出，v1 落库拼接口径随 spec 定稿定）
 - 已转化客户复盘分析（v2，Q17 衍生）
 - 角色/线索归属隔离（v2，Q24）
-- skill 正式文本（随 requirements/03 契约定稿后镜像，PR review 维护）
+- skill 正式文本（随 spec 契约定稿后镜像，PR review 维护）
 - MCP 服务实现（下游团队交付；本 PRD 定义对上契约：1 数据工具，v1.2 起复用既有 `customer detail` 脱敏接口）
 - 老系统用户检索接口实现（宿主侧已有能力，本系统仅消费其前端接入）
 
@@ -133,11 +133,11 @@
 
 1. v1 无行为数据，`intentHeat`（意向热度）证据仅问卷自报 + 渠道归因 + 最近登录——证据薄、评分偏静态（Q13 已确认接受，skill 判定标准弥补；行为日志 v2 补强）
 2. 三项评分全 AI 判断——一致性依赖 skill 质量，人工抽检必须覆盖评分一致性（验收 2）
-3. ~~下游 1 工具随本需求同步开发——进度耦合风险~~（v1.2 解除：复用既有 `customer detail` 脱敏接口，字段覆盖已确认）；剩余工作为 requirements/03 契约定稿锁定**文案解析口径**（空值约定 / 枚举映射 / 布尔形态），避免本服务侧脆弱文本解析
+3. ~~下游 1 工具随本需求同步开发——进度耦合风险~~（v1.2 解除：复用既有 `customer detail` 脱敏接口，字段覆盖已确认）；剩余工作为 spec 契约定稿锁定**文案解析口径**（空值约定 / 枚举映射 / 布尔形态），避免本服务侧脆弱文本解析
 4. 老系统检索接口能力（能否筛"注册未消费"、字段丰富度）待确认——影响检索列表体验，不影响本服务接口契约
 5. 前端宿主在业务系统侧——接口联调与上线节奏依赖宿主团队，建议接口契约先定稿并提供 mock
 6. 出池判定依赖下游消费状态口径——`has_order` 字段与支付流水的一致性归数据属主，触发校验与列表过滤共用同一口径，避免"可触发但列表不可见"裂缝
 
-**开发顺序建议**：PRD 定稿 → requirements 01–05 拆解 → 契约对齐（requirements/03 与 MCP 团队 + 老系统检索接口字段确认）→ 卡片 ia 设计（`designs/customer-profile/`）→ 开发（接口 mock 先行，宿主侧并行）。
+**开发顺序建议**：PRD 定稿 → spec（`/to-spec`，`.scratch/customer-profile/spec.md`）→ 契约对齐（spec 与 MCP 团队 + 老系统检索接口字段确认）→ 工单（`/to-tickets`）→ 开发（接口 mock 先行，宿主侧并行）。
 
-**skill 草案**：v1.0 已落 `designs/customer-profile/skill.md`（评估规则 + 输出内容契约 + 红线；**不约束输出形态**，markdown/JSON/网页由调用方决定；用户拟整合进 ehub skill）。整合时建议：ehub 入口「检索引导」加「画像分析」一行指向本 skill；`infoCompleteness` 仍归系统规则计算，skill 不输出。
+**skill 草案**：v1.0 已落 `plans/customer-profile/skill.md`（评估规则 + 输出内容契约 + 红线；**不约束输出形态**，markdown/JSON/网页由调用方决定；用户拟整合进 ehub skill）。整合时建议：ehub 入口「检索引导」加「画像分析」一行指向本 skill；`infoCompleteness` 仍归系统规则计算，skill 不输出。

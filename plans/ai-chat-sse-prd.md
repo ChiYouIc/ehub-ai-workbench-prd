@@ -2,7 +2,7 @@
 
 > 状态：**v1.2（已定版）** — 2026-08-25
 > 决策记录：Q1–Q16 已于 2026-08-20 访谈确认；Q17–Q21 于 2026-08-25 补充确认；Q22–Q30（v2 预留）于 2026-08-25 确认。本文作为**决策母本**保留。
-> 内容已拆解至 `requirements/ai-chat/01~05` 与 `specs/ai-chat-spec.md`。
+> 内容已拆解至归档基线 `.scratch/archive/requirements/ai-chat/01~05` 与 `.scratch/archive/specs/ai-chat-spec.md`（2026-09-02 体系归档）。
 
 ## Problem Statement
 
@@ -45,7 +45,7 @@
    - `event: end`：正常结束标记，data 为最终汇总 `{conversationId, models, inputToken, outputToken}`（整轮累计值，修正分片累加误差），之后关流
 5. **上下文记忆（Q5）**：完全依赖百炼 `sessionId`（Agent 自带会话记忆）：首次回复后从 Agent 响应中取出 `sessionId` 回写会话组；本服务不组装历史 messages、不调用百炼记忆体接口。风险：百炼侧记忆被清空则上下文丢失（见 Further Notes）
 6. **错误兜底（Q6）**：去掉硬编码 `:::agent-error` 文案；Agent 异常/空回复统一走 `event: error`，兜底文案做成 `WorkbenchProperties` 可配置项（默认中文提示）
-7. **认证（Q7=A）**：仅面向已登录业务用户，遵循全工程统一认证约定（见 `requirements/auth/01-接口认证.md`）。异步线程需「主线程捕获-异步线程重建」ThreadLocal 上下文（现状机制保留）。client token（服务间认证）不在 v1 范围
+7. **认证（Q7=A）**：仅面向已登录业务用户，遵循全工程统一认证约定（见归档基线 `.scratch/archive/requirements/auth/01-接口认证.md`，仍为有效约定）。异步线程需「主线程捕获-异步线程重建」ThreadLocal 上下文（现状机制保留）。client token（服务间认证）不在 v1 范围
 8. **表结构（Q8）**：沿用 ehub 库现有 `ai_conversation` / `ai_conversation_content` 两表，**不允许 DDL 变更**。现有列够用：`params`（存异常轮次 JSON 等扩展信息）、`media_content` 留空备用
 9. **落库时机**：每轮流式结束后保存 user + assistant 两条 `ai_conversation_content`（assistant 记录 models/inputToken/outputToken）；新建会话组在首轮调用前先落库
 10. **落库完整性（Q12=B / Q13=B）**：断连与错误轮次**均需落库**，不丢数据——
@@ -93,7 +93,7 @@
 - client token 服务间认证
 - 模型管理界面（v1 为静态配置）
 - /快捷指令的后端管理（v1 纯前端预填 prompt 模板）
-- 思考/工具调用过程展示（v2 自研 Agent 时实施，设计预览见 `designs/ai-chat/ai-chat-ia.md` P6；PRD 预留决策 #21~23）
+- 思考/工具调用过程展示（v2 自研 Agent 时实施，设计预览见归档基线 `.scratch/archive/designs/ai-chat/ai-chat-ia.md` P6；PRD 预留决策 #21~23）
 
 ## Further Notes
 

@@ -39,7 +39,7 @@ If you are drafting a PRD whose interview happened in an earlier conversation an
 
 ### 4. Determine the output target
 
-@../../../../conventions/work-items.md
+@../../../docs/agents/work-items.md
 
 Detect the available system and confirm with the user.
 

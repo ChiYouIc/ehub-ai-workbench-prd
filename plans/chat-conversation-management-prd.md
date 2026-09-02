@@ -25,7 +25,7 @@
 - **会话组删除**：逻辑删除（`is_del=1`），其下对话内容保留但随删除不可见
 - **历史消息查询**：按会话组分页回看对话内容（含角色、文本、token 用量）
 
-所有接口认证遵循全工程统一约定（见 `requirements/auth/01-接口认证.md`），并沿用 v1 数据隔离机制（`crt_user` 归属校验），复用现有 `ai_conversation` / `ai_conversation_content` 两表，**不引入 DDL 变更**。
+所有接口认证遵循全工程统一约定（见归档基线 `.scratch/archive/requirements/auth/01-接口认证.md`，仍为有效约定），并沿用 v1 数据隔离机制（`crt_user` 归属校验），复用现有 `ai_conversation` / `ai_conversation_content` 两表，**不引入 DDL 变更**。
 
 ## User Stories
 
@@ -53,7 +53,7 @@
 8. **分页参数边界（Q11/Q18）**：`page<1` 默认 1；`size>50` 截断为 50；`size` 非法值 → `PARAM_ERROR`；空列表返回 `total=0, data=[]` 而非错误
 9. **错误码（Q18 关联）**：校验失败用 `PARAM_ERROR`、缺失/无归属用 `NOT_FOUND`，与 v1 spec 约定一致；`ErrorCodeEnum` 当前尚无 `PARAM_ERROR` 枚举项，需随本功能（或 v1 开发）补充
 10. **并发边界（Q17）**：删除会话组时不取消进行中的 SSE 流——流照常写内容行（内容行永不物理删除）；已删组不再出现在列表。该边界作为已知限制接受
-11. **认证（Q7 关联）**：遵循全工程统一认证约定（见 `requirements/auth/01-接口认证.md`）；管理接口为短任务，无需跨线程传递，不存在 v1 的捕获-重建问题
+11. **认证（Q7 关联）**：遵循全工程统一认证约定（见归档基线 `.scratch/archive/requirements/auth/01-接口认证.md`）；管理接口为短任务，无需跨线程传递，不存在 v1 的捕获-重建问题
 
 ## Testing Decisions
 
@@ -84,4 +84,4 @@
 - **现状差距**：`ErrorCodeEnum` 无 `PARAM_ERROR` 枚举项（v1 spec 已引用）；MyBatis-Plus 分页插件未配置——两者为本功能前置开发项
 - **与 v1 的关系**：本 PRD 消费 v1 已落库数据（`ai_conversation` / `ai_conversation_content`），不依赖 v1 开发完成即可先行定义；v1 未开发前，管理接口测试可用当前 service/mapper 能力直接验证
 - **并发边界记录**：删除会话组与进行中 SSE 流并发的行为（Q17）已明确接受，若后续要求「删除即停流」需评估取消机制，另行评估
-- **已拆解**：需求文档 `requirements/chat-conversation/01~05`、实现 spec `specs/chat-conversation-spec.md`、设计 `designs/chat-conversation/chat-conversation-design.md`，本文作为**决策母本**保留
+- **已拆解（归档基线）**：需求文档 `.scratch/archive/requirements/chat-conversation/01~05`、实现 spec `.scratch/archive/specs/chat-conversation-spec.md`、设计 `.scratch/archive/designs/chat-conversation/chat-conversation-design.md`，本文作为**决策母本**保留

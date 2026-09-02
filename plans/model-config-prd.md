@@ -2,7 +2,7 @@
 
 > 状态：**v1.0（已定版）** — 2026-08-25
 > 决策记录：Q1–Q34 已于 2026-08-25 Grilling 确认，详见 `plans/model-config-interview.md`。
-> 内容已拆解至 `requirements/model-config/01~05`。
+> 内容已拆解至归档基线 `.scratch/archive/requirements/model-config/01~05`（2026-09-02 体系归档）。
 
 ## Problem Statement
 
