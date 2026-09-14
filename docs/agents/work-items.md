@@ -19,6 +19,7 @@
 | 特性 | spec | 状态 | 实现落点 | 外部回写 |
 |---|---|---|---|---|
 | 已退款产品自动拆单并下架订单 | `.scratch/refunded-sku-split-takeoff/spec.md` | done（2026-09-14） | ehub develop commit `0ed750f8ed`（工单 01–03） | TAPD 需求 1136062570001008539，评论 `1136062570001012396` |
+| 供应商收款账户支付宝对公限制 | `.scratch/offline-payment-private-account-gate/spec.md` | done（2026-09-14） | ehub-web develop commit `5acc66c99`/`336478141`/`233c18822`（工单 01–02） | TAPD 需求 1136062570001009401，评论 `1136062570001012403` |
 
 
 ## Tickets（to-tickets）
