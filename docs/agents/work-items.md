@@ -12,6 +12,14 @@
 
 - 发布为 `.scratch/<feature-slug>/spec.md`，文件头部写 `Status: ready-for-agent`
 - spec 头部与 PRD 母本互链：`PRD: plans/<feature>-prd.md (vX.Y)`；涉及 ADR 的决策互链 `docs/adr/NNNN-*.md`
+- **完成收敛**：实现并入代码仓库后，spec 头部 `Status:` 改为 `done`（注明日期、commit、验收口径），工单逐项勾选验收清单并在 `Status:` 行记完成态（规范无独立 done 标签，完成态以 `ready-for-agent → 已完成（日期）` 表达）
+
+## 已完成特性（收敛记录）
+
+| 特性 | spec | 状态 | 实现落点 | 外部回写 |
+|---|---|---|---|---|
+| 已退款产品自动拆单并下架订单 | `.scratch/refunded-sku-split-takeoff/spec.md` | done（2026-09-14） | ehub develop commit `0ed750f8ed`（工单 01–03） | TAPD 需求 1136062570001008539，评论 `1136062570001012396` |
+
 
 ## Tickets（to-tickets）
 
